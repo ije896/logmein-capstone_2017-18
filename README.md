@@ -11,4 +11,13 @@ You need to have OpenCV and NumPy installed in your computer. You can either set
 ```
 pip3 install opencv-python
 ```
-which will also install NumPy for you. That's it. For now...
+which will also install NumPy for you.
+
+## Want more insight about what's happening here?
+
+You can dive in into some OpenCV documentation [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html#lucas-kanade).
+
+Or read though some basic Python-OpenCV tuts [here](https://pythonprogramming.net/haar-cascade-face-eye-detection-python-opencv-tutorial/?completed=/mog-background-reduction-python-opencv-tutorial/).
+
+
+That's it. For now...
