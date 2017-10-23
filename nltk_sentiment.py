@@ -25,20 +25,20 @@ def nltkVaderAnalyzer(text):
 def main():
 	print("Key: \n pos: \t positive tone \n neu: \t neutral tone \n neg: \t negative tone: \n com: \t overall user experience \n")
 	
-	if sys.argv[1]:
+	try:
 		file = open(sys.argv[1], 'r')
 		text = file.read()
+		file.close()
 
 		nltkVaderAnalyzer(text)
-		exit()
+	except:
+		while(1):
+			text = input("Enter the text you want to analyze, or 'done' to exit: ")
+			if text == 'done':
+				exit()
 
-	while(1):
-		text = input("Enter the text you want to analyze, or 'done' to exit: ")
-		if text == 'done':
-			exit()
-
-		nltkVaderAnalyzer(text)
-		print()
+			nltkVaderAnalyzer(text)
+			print()
 
 
 if __name__ == '__main__':
