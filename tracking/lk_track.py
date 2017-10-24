@@ -39,12 +39,16 @@ class App:
         self.tracks = []
         self.cam = video.create_capture(video_src)
         self.frame_idx = 0
+        self.x_coords = []
+        self.font = cv2.FONT_HERSHEY_SIMPLEX
 
     def run(self):
         while True:
             _ret, frame = self.cam.read()
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             vis = frame.copy()
+            time = self.cam.get(cv2.CAP_PROP_POS_MSEC)*0.001
+
 
             if len(self.tracks) > 0:
                 img0, img1 = self.prev_gray, frame_gray
@@ -54,6 +58,8 @@ class App:
                 d = abs(p0-p0r).reshape(-1, 2).max(-1)
                 good = d < 1
                 new_tracks = []
+                old_x = 0
+                old_time = 0
                 for tr, (x, y), good_flag in zip(self.tracks, p1.reshape(-1, 2), good):
                     if not good_flag:
                         continue
@@ -62,9 +68,17 @@ class App:
                         del tr[0]
                     new_tracks.append(tr)
                     cv2.circle(vis, (x, y), 2, (0, 255, 0), -1)
+                    #record tuples of x coords and corresponding time
+                    if abs(x - old_x) < 500 and abs(old_time - time) > 10:
+                        self.x_coords.append((x,time))
+                        old_time = time
+                    old_x = x
+
                 self.tracks = new_tracks
                 cv2.polylines(vis, [np.int32(tr) for tr in self.tracks], False, (0, 255, 0))
                 draw_str(vis, (20, 20), 'track count: %d' % len(self.tracks))
+                # write time
+                cv2.putText(vis,"Time: "+ str(time)[:5],(20,60), self.font, 0.5, (0,0,255), 1, cv2.LINE_AA)
 
             if self.frame_idx % self.detect_interval == 0:
                 mask = np.zeros_like(frame_gray)
@@ -80,6 +94,7 @@ class App:
             self.frame_idx += 1
             self.prev_gray = frame_gray
             cv2.imshow('lk_track', vis)
+            print(self.x_coords)
 
             ch = cv2.waitKey(1)
             if ch == 27:
