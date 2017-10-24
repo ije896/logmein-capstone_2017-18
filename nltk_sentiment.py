@@ -20,7 +20,22 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 def nltkVaderAnalyzer(text):
 	sid = SentimentIntensityAnalyzer()
 	ss = sid.polarity_scores(text)
-	print("pos: " + str(ss['pos']) + ", neu: " + str(ss['neu']) + ", neg: " + str(ss['neg']) + ", com: " + str(ss['compound']))
+	print("pos: " + str(ss['pocls']) + ", neu: " + str(ss['neu']) + ", neg: " + str(ss['neg']) + ", com: " + str(ss['compound']))
+
+
+def wordFrequency(text):
+	# Remove unnecessary punctuation from the text
+	text = text.replace('\n', ' ')
+	punctuation = ['.', ',', '!', '?', '(', ')', '$', '"', '#', ';', ':']
+	for item in punctuation:
+		text = text.replace(item, '')
+	words = text.split(' ')
+	dict = {word: words.count(word) for word in words}
+	# Don't need the extra spaces
+	del dict['']
+	sort = [(word, dict[word]) for word in sorted(dict, key=dict.get, reverse=True)]
+	return sort
+
 
 def main():
 	print("Key: \n pos: \t positive tone \n neu: \t neutral tone \n neg: \t negative tone: \n com: \t overall user experience \n")
@@ -30,7 +45,8 @@ def main():
 		text = file.read()
 		file.close()
 
-		nltkVaderAnalyzer(text)
+		#nltkVaderAnalyzer(text)
+		print(wordFrequency(text))
 	except:
 		while(1):
 			text = input("Enter the text you want to analyze, or 'done' to exit: ")
