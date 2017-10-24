@@ -27,9 +27,9 @@ lk_params = dict( winSize  = (15, 15),
                   maxLevel = 2,
                   criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
-feature_params = dict( maxCorners = 500,
+feature_params = dict( maxCorners = 2,
                        qualityLevel = 0.3,
-                       minDistance = 7,
+                       minDistance = 400,
                        blockSize = 7 )
 
 class App:
@@ -69,10 +69,13 @@ class App:
                     new_tracks.append(tr)
                     cv2.circle(vis, (x, y), 2, (0, 255, 0), -1)
                     #record tuples of x coords and corresponding time
-                    if abs(x - old_x) < 500 and abs(old_time - time) > 10:
+                    self.x_coords.insert(0,((x,time)))
+                    if abs(self.x_coords[0][0]- old_x) < 500 and abs(self.x_coords[0][1] - old_time) > 10:
                         self.x_coords.append((x,time))
                         old_time = time
-                    old_x = x
+                        old_x = x
+                    else:
+                        self.x_coords.pop(0)
 
                 self.tracks = new_tracks
                 cv2.polylines(vis, [np.int32(tr) for tr in self.tracks], False, (0, 255, 0))
