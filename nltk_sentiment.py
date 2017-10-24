@@ -20,7 +20,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 def nltkVaderAnalyzer(text):
 	sid = SentimentIntensityAnalyzer()
 	ss = sid.polarity_scores(text)
-	print("pos: " + str(ss['pocls']) + ", neu: " + str(ss['neu']) + ", neg: " + str(ss['neg']) + ", com: " + str(ss['compound']))
+	print("pos: " + str(ss['pos']) + ", neu: " + str(ss['neu']) + ", neg: " + str(ss['neg']) + ", com: " + str(ss['compound']))
 
 
 def wordFrequency(text):
