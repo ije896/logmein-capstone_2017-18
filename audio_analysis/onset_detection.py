@@ -9,14 +9,15 @@ import csv
 import json
 
 
-differences = []
+#differences = []
 
 speech_file = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
     #librosa.util.example_audio_file()
 
 csv_file = 'onset_times.csv'
+json_file = 'onset_times.json'
 
-def calc_onset_times(afile, csv_file):
+def calc_onset_times(afile, out_file):
     y, sr = librosa.load(afile)
 
     #tempo, pulse_frames = librosa.beat.beat_track(y=y, sr=sr)
@@ -30,10 +31,24 @@ def calc_onset_times(afile, csv_file):
     print("onsets: ", onset_times)
     #print("differences: ", differences)
 
-    with open(csv_file, 'w') as cfile:
-        wr = csv.writer(cfile, quoting=csv.QUOTE_ALL)
-        wr.writerow(onset_times)
+    # with open(out_file, 'w') as cfile:
+    #     wr = csv.writer(cfile, quoting=csv.QUOTE_ALL)
+    #     wr.writerow(onset_times)
+    formatted = onset_times.tolist()
+    with open(out_file, 'w') as jfile:
+        json.dump(formatted, jfile)
     return onset_times
+
+def calc_wpm(infile):
+    with open(infile, 'r') as ifile:
+        times = json.load(ifile)
+    num_of_words = len(times)
+    len_of_speech = times[num_of_words-1] - times[0]
+    speech_in_mins = len_of_speech/60
+    wpm = num_of_words/speech_in_mins
+    print(wpm)
+
+calc_wpm(json_file)
 
 def plot_onsets():
     o_env = librosa.onset.onset_strength(y, sr=sr)
@@ -54,3 +69,5 @@ def plot_onsets():
     plt.legend(frameon=True, framealpha=0.75)
 
     plt.show()
+
+# calc_onset_times(speech_file, json_file)
