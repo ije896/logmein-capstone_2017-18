@@ -5,17 +5,23 @@ import librosa.display
 import numpy as np
 import matplotlib.pyplot as plt
 #used for rw of onset times to files
-import csv
 import json
+from sklearn.model_selection import GridSearchCV
+from sklearn.neighbors import KernelDensity
 
 
 #differences = []
 
 speech_file = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
-    #librosa.util.example_audio_file()
 
 csv_file = 'onset_times.csv'
 json_file = 'onset_times.json'
+
+
+def load_times(infile):
+    with open(infile, 'r') as ifile:
+        data = json.load(ifile)
+    return data
 
 def calc_onset_times(afile, out_file):
     y, sr = librosa.load(afile)
@@ -31,24 +37,37 @@ def calc_onset_times(afile, out_file):
     print("onsets: ", onset_times)
     #print("differences: ", differences)
 
-    # with open(out_file, 'w') as cfile:
-    #     wr = csv.writer(cfile, quoting=csv.QUOTE_ALL)
-    #     wr.writerow(onset_times)
     formatted = onset_times.tolist()
     with open(out_file, 'w') as jfile:
         json.dump(formatted, jfile)
     return onset_times
 
+def cluster_onsets(infile):
+    times = load_times(infile)
+    np_times = np.array(times)
+    onsets = np_times.reshape(-1, 1)
+
+    kde = KernelDensity(bandwidth = .3).fit(onsets)
+    plot = kde.score_samples(onsets)
+    print(plot)
+    plt.plot(plot, 'b-')
+    plt.show()
+# estimates the best fitting bandwidth for the function
+def grid_search_bandwidth():
+    return
+
+
+
 def calc_wpm(infile):
-    with open(infile, 'r') as ifile:
-        times = json.load(ifile)
+    times = load_times(infile)
     num_of_words = len(times)
     len_of_speech = times[num_of_words-1] - times[0]
     speech_in_mins = len_of_speech/60
     wpm = num_of_words/speech_in_mins
     print(wpm)
 
-calc_wpm(json_file)
+# calc_wpm(json_file)
+cluster_onsets(json_file)
 
 def plot_onsets():
     o_env = librosa.onset.onset_strength(y, sr=sr)
