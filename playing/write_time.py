@@ -23,9 +23,9 @@ while(True):
     profiles = profile_cascade.detectMultiScale(gray, 1.3, 5)
     upper_body = upper_body_cascade.detectMultiScale(gray, 1.3, 5)
     # get time in seconds
-    # time = cap.get(cv2.CAP_PROP_POS_MSEC)*0.001
+    time = cap.get(cv2.CAP_PROP_POS_MSEC)*0.001
     # #img, text, coordinates(x,y) top, font, size, color, thicknes, type of line
-    # cv2.putText(frame,"Time: "+ str(time)[:4],(10,30), font, 0.5, (0,0,255), 1, cv2.LINE_AA)
+    cv2.putText(frame,"Time: "+ str(time)[:4],(10,30), font, 0.5, (0,0,255), 1, cv2.LINE_AA)
 
     # for (x,y,w,h) in faces:
     #     cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)

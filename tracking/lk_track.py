@@ -27,10 +27,12 @@ lk_params = dict( winSize  = (15, 15),
                   maxLevel = 2,
                   criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
-feature_params = dict( maxCorners = 2,
+feature_params = dict( maxCorners = 500,
                        qualityLevel = 0.3,
                        minDistance = 400,
                        blockSize = 7 )
+
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 class App:
     def __init__(self, video_src):
@@ -48,7 +50,9 @@ class App:
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             vis = frame.copy()
             time = self.cam.get(cv2.CAP_PROP_POS_MSEC)*0.001
-
+            face = face_cascade.detectMultiScale(frame_gray, 1.3, 5)
+            # print ("Face: ")
+            # print (face)
 
             if len(self.tracks) > 0:
                 img0, img1 = self.prev_gray, frame_gray
@@ -83,21 +87,26 @@ class App:
                 # write time
                 cv2.putText(vis,"Time: "+ str(time)[:5],(20,60), self.font, 0.5, (0,0,255), 1, cv2.LINE_AA)
 
-            if self.frame_idx % self.detect_interval == 0:
+            if self.frame_idx < 1:
                 mask = np.zeros_like(frame_gray)
                 mask[:] = 255
                 for x, y in [np.int32(tr[-1]) for tr in self.tracks]:
                     cv2.circle(mask, (x, y), 5, 0, -1)
                 p = cv2.goodFeaturesToTrack(frame_gray, mask = mask, **feature_params)
+                print ("frame goodFeaturesToTrack: ")
+                print (p)
                 if p is not None:
                     for x, y in np.float32(p).reshape(-1, 2):
+                        # cv2.putText(vis,"YOOOO: ",(x,y), self.font, 0.5, (255,0,0), 1, cv2.LINE_AA)
+                        print ("x, and y: ")
+                        print (str(x) + " "+ str(y))
                         self.tracks.append([(x, y)])
 
 
             self.frame_idx += 1
             self.prev_gray = frame_gray
             cv2.imshow('lk_track', vis)
-            print(self.x_coords)
+            # print(self.x_coords)
 
             ch = cv2.waitKey(1)
             if ch == 27:
