@@ -39,6 +39,7 @@ Thumbs.db
 # Media
 #######################
 *.mov
+*.jpg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
