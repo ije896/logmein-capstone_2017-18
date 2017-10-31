@@ -2,7 +2,7 @@ import io
 import os
 from google.cloud import vision
 from google.cloud.vision import types
-from PIL import Image, ImageDraw
+import matplotlib.pyplot as plt
 import sys
 import numpy as np
 import cv2
@@ -31,7 +31,11 @@ images_path = "/Users/Josue/Desktop/FALL17/Capstone/logmein-capstone_2017-18/goo
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
 x_coords = []
-done = False
+div_dict = {
+            "area_1": 0,
+            "area_2": 0,
+            "area_3": 0
+            }
 ###################################
 # ---------- Helper funcs ------- #
 ###################################
@@ -61,11 +65,21 @@ def google_faces_coords(path, final_x_coords):
         # I want to print -> face bounds: (69,57),(505,57),(505,564),(69,564)
         # print('face bounds: {}'.format(','.join(vertices)))
         # print(vertices)
-        width = vertices[1] - vertices[0]
-        interest_x = vertices[0] + (width/2)
-        final_x_coords.append(int(interest_x))
-        done = True
+        if len(vertices) != 0:
+            width = vertices[1] - vertices[0]
+            interest_x = vertices[0] + (width/2)
+            final_x_coords.append(int(interest_x))
+            if interest_x < 426:
+                div_dict["area_1"] += 1
+            if interest_x > 426 and interest_x < 852:
+                div_dict["area_2"] += 1
+            else:
+                div_dict["area_3"] += 1
 
+def plot_res(dict):
+    plt.bar(range(len(dict)), dict.values(), align='center')
+    plt.xticks(range(len(dict)), list(dict.keys()))
+    plt.show()
 ###################################
 # ------------ Main ------------- #
 ###################################
@@ -83,9 +97,17 @@ while True:
         # our first attempt is to use haarcascades
         face = face_cascade.detectMultiScale(gray, 1.3, 5)
         if(len(face) != 0):
+            print("Haarcascade succesful")
             for (x,y,w,h) in face:
                 cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-                x_coords.append(int(x+(w/2)))
+                interest_x = int(x+(w/2))
+                x_coords.append(interest_x)
+                if interest_x < 426:
+                    div_dict["area_1"] += 1
+                if interest_x > 426 and interest_x < 852:
+                    div_dict["area_2"] += 1
+                else:
+                    div_dict["area_3"] += 1
                 # print(face)
         else:
             # we try to find a face with google API
@@ -103,7 +125,8 @@ while True:
     if k == 27:
         break
 
-if done:
-    cap.release()
-    cv2.destroyAllWindows()
-    print (x_coords)
+cap.release()
+cv2.destroyAllWindows()
+print (x_coords)
+print (div_dict)
+plot_res(div_dict)
