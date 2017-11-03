@@ -15,8 +15,9 @@ elif len(sys.argv) > 2:
 else:
     cap = cv2.VideoCapture(sys.argv[1])
 
+###############################
 #some initial variables
-##################################
+###############################
 counter = 1
 # get vcap property
 if cap.isOpened():
@@ -31,15 +32,28 @@ images_path = "/Users/Josue/Desktop/FALL17/Capstone/logmein-capstone_2017-18/goo
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
 x_coords = []
+#dict to keep track of overall area usage
 div_dict = {
             "area_1": 0,
             "area_2": 0,
             "area_3": 0
             }
+#dict to keep track user doesn't cross area time threshold
+alpha_dict = {
+            "area_1": 0,
+            "area_2": 0,
+            "area_3": 0
+            }
+# tracker to know if current coord belongs to last area registered
+last_area = ""
+current_area = ""
+alpha1 = 0
+alpha2 = 0
+alpha3 = 0
 ###################################
 # ---------- Helper funcs ------- #
 ###################################
-def google_faces_coords(path, final_x_coords):
+def google_faces_coords(path, x_coords, alpha1, alpha2, alpha3):
     print("using google api...")
     with io.open(path, 'rb') as image_file:
         content = image_file.read()
@@ -68,12 +82,56 @@ def google_faces_coords(path, final_x_coords):
         if len(vertices) != 0:
             width = vertices[1] - vertices[0]
             interest_x = vertices[0] + (width/2)
-            final_x_coords.append(int(interest_x))
-            if interest_x < 426:
+            x_coords.append(int(interest_x))
+
+            if interest_x <= div:
+                if current_area == '':
+                    current_area = "area_1"
+                    last_area = current_area
+                else:
+                    current_area = "area_1"
+                if current_area == last_area:
+                    alpha_dict[current_area] += 0.25
+                    alpha1 = alpha_dict[current_area]
+                else:
+                    current_area, last_area = "", ""
+                    alpha_dict["area_1"], alpha1 = 0, 0
+                    alpha_dict["area_2"], alpha2 = 0, 0
+                    alpha_dict["area_3"], alpha3 = 0, 0
                 div_dict["area_1"] += 1
-            if interest_x > 426 and interest_x < 852:
+
+            elif interest_x > div and interest_x <= (div*2):
+                if current_area == '':
+                    current_area = "area_2"
+                    last_area = current_area
+                else:
+                    current_area = "area_2"
+                if current_area == last_area:
+                    alpha_dict[current_area] += 0.25
+                    alpha2 = alpha_dict[current_area]
+                else:
+                    current_area, last_area = "", ""
+                    alpha_dict["area_1"], alpha1 = 0, 0
+                    alpha_dict["area_2"], alpha2 = 0, 0
+                    alpha_dict["area_3"], alpha3 = 0, 0
                 div_dict["area_2"] += 1
+
             else:
+                print("interest_x: {}".format(interest_x))
+                print("div_value: {}".format(div))
+                if current_area == '':
+                    current_area = "area_3"
+                    last_area = current_area
+                else:
+                    current_area = "area_3"
+                if current_area == last_area:
+                    alpha_dict[current_area] += 0.25
+                    alpha3 = alpha_dict[current_area]
+                else:
+                    current_area, last_area = "", ""
+                    alpha_dict["area_1"], alpha1 = 0, 0
+                    alpha_dict["area_2"], alpha2 = 0, 0
+                    alpha_dict["area_3"], alpha3 = 0, 0
                 div_dict["area_3"] += 1
 
 def plot_res(dict):
@@ -87,10 +145,10 @@ def plot_res(dict):
 while True:
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    #divide the window in three sections
-    cv2.line(frame, (div, 0), (div,height), (0,255,0), 5)
-    cv2.line(frame, (div*2, 0), (div*2,height), (0,255,0), 5)
+    output = frame.copy()
+    overlay1 = frame.copy()
+    overlay2 = frame.copy()
+    overlay3 = frame.copy()
 
     #if for seconds have passed we record track of face
     if counter % 120 == 30:
@@ -99,27 +157,87 @@ while True:
         if(len(face) != 0):
             print("Haarcascade succesful")
             for (x,y,w,h) in face:
-                cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+                cv2.rectangle(output,(x,y),(x+w,y+h),(255,0,0),2)
                 interest_x = int(x+(w/2))
                 x_coords.append(interest_x)
-                if interest_x < 426:
+
+                if interest_x <= div:
+                    if current_area == '':
+                        current_area = "area_1"
+                        last_area = current_area
+                    else:
+                        current_area = "area_1"
+                    if current_area == last_area:
+                        alpha_dict[current_area] += 0.25
+                        alpha1 = alpha_dict[current_area]
+                    else:
+                        current_area, last_area = "", ""
+                        alpha_dict["area_1"], alpha1 = 0, 0
+                        alpha_dict["area_2"], alpha2 = 0, 0
+                        alpha_dict["area_3"], alpha3 = 0, 0
                     div_dict["area_1"] += 1
-                if interest_x > 426 and interest_x < 852:
+
+                elif interest_x > div and interest_x <= (div*2):
+                    if current_area == '':
+                        current_area = "area_2"
+                        last_area = current_area
+                    else:
+                        current_area = "area_2"
+                    if current_area == last_area:
+                        alpha_dict[current_area] += 0.25
+                        alpha2 = alpha_dict[current_area]
+                    else:
+                        current_area, last_area = "", ""
+                        alpha_dict["area_1"], alpha1 = 0, 0
+                        alpha_dict["area_2"], alpha2 = 0, 0
+                        alpha_dict["area_3"], alpha3 = 0, 0
                     div_dict["area_2"] += 1
+
                 else:
+                    print("interest_x: {}".format(interest_x))
+                    print("div_value: {}".format(div))
+                    if current_area == '':
+                        current_area = "area_3"
+                        last_area = current_area
+                    else:
+                        current_area = "area_3"
+                    if current_area == last_area:
+                        alpha_dict[current_area] += 0.25
+                        alpha3 = alpha_dict[current_area]
+                    else:
+                        current_area, last_area = "", ""
+                        alpha_dict["area_1"], alpha1 = 0, 0
+                        alpha_dict["area_2"], alpha2 = 0, 0
+                        alpha_dict["area_3"], alpha3 = 0, 0
                     div_dict["area_3"] += 1
-                # print(face)
-        else:
-            # we try to find a face with google API
-            file_name = "frame_{}.jpg".format(counter-30)
-            file_path = os.path.join(images_path, file_name)
-            cv2.imwrite(file_path, gray)
-            # print(file_path)
-            google_faces_coords(file_path,x_coords)
+
+        # else:
+        #     # we try to find a face with google API
+        #     file_name = "frame_{}.jpg".format(counter-30)
+        #     file_path = os.path.join(images_path, file_name)
+        #     cv2.imwrite(file_path, gray)
+        #     # print(file_path)
+        #     google_faces_coords(file_path,x_coords,alpha1,alpha2,alpha3)
 
     # this will help us know in what second of the video we are
     counter += 1
-    cv2.imshow('frame', frame)
+
+
+    cv2.rectangle(overlay1, (0,0), (div,60), (0,0,230), -1)
+    cv2.rectangle(overlay2, (div,0), (div*2,60), (0,0,230), -1)
+    cv2.rectangle(overlay3, (div*2,0), (div*3,60), (0,0,230), -1)
+    #apply overlay
+    #fourth arg is beta, 5th is gamma (scalar added to the weighted sum)
+    cv2.addWeighted(overlay1, alpha1,output, 1 - alpha1, 0, output)
+    cv2.addWeighted(overlay2, alpha2,output, 1 - alpha2, 0, output)
+    cv2.addWeighted(overlay3, alpha3,output, 1 - alpha3, 0, output)
+
+    #divide the window in three sections
+    cv2.line(output, (div, 0), (div,height), (0,255,0), 5)
+    cv2.line(output, (div*2, 0), (div*2,height), (0,255,0), 5)
+
+
+    cv2.imshow('frame', output)
     #press esc to quit
     k = cv2.waitKey(30) & 0xff
     if k == 27:
