@@ -20,11 +20,11 @@ while True:
     cv2.line(output, (div, 0), (div,height), (0,255,0), 2)
     cv2.line(output, (div*2, 0), (div*2,height), (0,255,0), 2)
 
-    if(counter % 120 == 30):
-        alpha += 0.1
     cv2.rectangle(overlay, (0,0), (div,60), (0,0,230), -1)
     cv2.rectangle(overlay, (div,0), (div*2,60), (0,0,230), -1)
     cv2.rectangle(overlay, (div*2,0), (div*3,60), (0,0,230), -1)
+    if(counter % 120 == 30):
+        alpha += 0.1
     #apply overlay
     #fourth arg is beta, 5th is gamma (scalar added to the weighted sum)
     cv2.addWeighted(overlay, alpha,output, 1 - alpha, 0, output)
