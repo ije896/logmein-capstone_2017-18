@@ -11,63 +11,76 @@ from sklearn.neighbors import KernelDensity
 
 from watson_developer_cloud import SpeechToTextV1
 
-#differences = []
+speech_file_long = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
+speech_file_short = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/halloween.wav'
 
-#speech_file = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
-speech_file = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/halloween.wav'
+json_file = 'long_stt.json'
 
-json_file = 'watson_transcript.json'
-
-def get_watsonSTT(out_file):
+### We don't really need to dump to json file. Just pass the stt onto next method
+def get_watson_STT(afile, out_file):
     speech_to_text = SpeechToTextV1(
     username='1e702356-275c-4f54-bf57-7c670774ea86',
     password='qEmrozAb1ug7',
     x_watson_learning_opt_out=False
     )
-
     print(json.dumps(speech_to_text.get_model('en-US_BroadbandModel'), indent=2))
 
-    with open(speech_file, 'rb') as audio_file:
+    with open(afile, 'rb') as audio_file:
         with open(out_file, 'w') as jfile:
             stt = speech_to_text.recognize(
                 audio_file, content_type='audio/wav', timestamps=True,
-                word_confidence=True)
+                word_confidence=False)
             json.dump(stt, jfile)
 
-# get_watsonSTT(json_file)
-
+### upper comment makes this method irrelevant
 def load_json_stt_file(infile):
     with open(infile, 'r') as ifile:
-        data = json.load(ifile)
-    return data
+        stt_json = json.load(ifile)
+    return stt_json
 
-def get_word_count(stt_json):
-    transcript = stt_json['results'][0]['alternatives'][0]['transcript'].split()
-    num_words = len(transcript)
+# returns list of timestamps
+def scrub_json(jfile):
+    timestamps = []
+    stt_json = load_json_stt_file(jfile)
+    for phrase in stt_json['results']:
+        for word in phrase['alternatives'][0]['timestamps']:
+            timestamps.append(word)
+    return timestamps
+
+def get_word_count(timestamps):
+    num_words = len(timestamps)
     return num_words
 
-def get_len_speech(stt_json):
-    start = stt_json['results'][0]['alternatives'][0]['timestamps'][0][1]
-    end = stt_json['results'][0]['alternatives'][0]['timestamps'][-1][-1]
+def get_len_speech(timestamps):
+    start = timestamps[0][1]
+    end = timestamps[-1][-1]
     length = end - start
-    return(length)
+    return length
 
-def calc_wpm(infile):
-    data = load_json_stt_file(infile)
-    num_of_words = get_word_count(data)
-    speech_in_secs = get_len_speech(data)
-    speech_in_mins = speech_in_secs/60
-    wpm = num_of_words/speech_in_mins
-    print(wpm)
+def get_wpm(length, word_count):
+    speech_in_mins = length/60
+    wpm = word_count/speech_in_mins
+    return round(wpm)
 
-def cluster_onsets(infile):
-    times = load_json_stt_file(infile)
-    print(len(times))
+def get_transcript(timestamps):
+    transcript = ""
+    for word in timestamps:
+        transcript += word[0] + " "
+    return transcript
+
+def get_word_times(timestamps):
+    times = []
+    for word in timestamps:
+        mid = (word[2] + word[1])/2
+        times.append(mid)
+    return times
+
+def cluster_words(times):
     np_times = np.array(times)
-    onsets = np_times.reshape(-1, 1)
+    words = np_times.reshape(-1, 1)
 
-    kde = KernelDensity(bandwidth = .3).fit(onsets)
-    plot = kde.score_samples(onsets)
+    kde = KernelDensity(bandwidth = .3).fit(words)
+    plot = kde.score_samples(words)
     print(plot)
     plt.plot(plot, 'b-')
     plt.show()
@@ -76,7 +89,21 @@ def cluster_onsets(infile):
 def grid_search_bandwidth():
     return
 
+
+# best practice will probably be to return list of timestamps from json scrub
+# then call methods on timestamps to extract script, length of speech, word count
 def main():
+    final = {}
+    #get_watson_STT(speech_file_long, json_file)
+    timestamps = scrub_json(json_file)
+    wc = get_word_count(timestamps)
+    final['transcript'] = get_transcript(timestamps)
+    final['length'] = get_len_speech(timestamps)
+    final['wpm'] = get_wpm(final['length'], wc)
+    times = get_word_times(timestamps)
+    print(final)
+
+main()
 
 
 
