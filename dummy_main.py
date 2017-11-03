@@ -29,6 +29,8 @@ def main():
 	print(social)
 	print(freq)
 
+	ta.syns.output_test_strings()
+
 
 
 if __name__ == '__main__':

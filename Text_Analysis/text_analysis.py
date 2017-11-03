@@ -3,13 +3,16 @@
 import os
 import sys
 from Text_Analysis import watson_analyzer
+from Text_Analysis import synonyms
 
 # Watson Tone (Sentiment) Analysis
 	# json object
 	# emotion dictionary
 	# social dictionary
 # Word Frequency
+	# (frequencies.py)
 # Synonym Lookup
+	# (synonyms.py)
 
 # This class can be invoked with either the text itself
 # or the relative path of the text file
@@ -18,6 +21,7 @@ class text_analysis:
 		self.script          = self.check_file(text)
 		self.watson_analysis = watson_analyzer(self.script)
 		self.freq            = self.word_frequency()
+		self.syns            = synonyms.synonyms()
 
 	def get_json(self):
 		return self.watson_analysis.json
@@ -30,6 +34,9 @@ class text_analysis:
 
 	def get_freq(self):
 		return self.freq
+
+	def get_syn(self, word):
+		return self.syns.get_syns(word)
 
 	def check_file(self, data):
 		# Try to open it as a file
