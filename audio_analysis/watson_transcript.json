@@ -1,0 +1,21 @@
+{"results":
+  [{"alternatives":
+    [{"transcript": "hello Ian is my favorite holiday ",
+      "confidence": 0.773,
+      "word_confidence":
+        [["hello", 0.369],
+        ["Ian", 0.099],
+        ["is", 0.933],
+        ["my", 1.0],
+        ["favorite", 1.0],
+        ["holiday", 0.997]],
+      "timestamps":
+        [["hello", 0.64, 1.01],
+        ["Ian", 1.01, 1.23],
+        ["is", 1.23, 1.49],
+        ["my", 1.49, 1.64],
+        ["favorite", 1.64, 2.04],
+        ["holiday", 2.04, 2.63]]}],
+      "final": true}],
+      "result_index": 0,
+      "warnings": ["Unknown arguments: continuous."]}
