@@ -4,7 +4,7 @@ import librosa
 import librosa.display
 import numpy as np
 import matplotlib.pyplot as plt
-#used for rw of onset times to files
+
 import json
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KernelDensity
@@ -38,20 +38,30 @@ def load_json_stt_file(infile):
         stt_json = json.load(ifile)
     return stt_json
 
-# returns list of timestamps
+# eventually pass just the stt json object
+# returns structured list of list of timestamps(list)
+# list of list of lists
 def scrub_json(jfile):
     timestamps = []
     stt_json = load_json_stt_file(jfile)
     for phrase in stt_json['results']:
-        for word in phrase['alternatives'][0]['timestamps']:
-            timestamps.append(word)
+        timestamps.append(phrase['alternatives'][0]['timestamps'])
     return timestamps
+
+
+# should return list of lists
+def simplify_timestamps(timestamps):
+    simple = []
+    for phrase in timestamps:
+        for word in phrase:
+            simple.append(word)
+    return simple
 
 def get_word_count(timestamps):
     num_words = len(timestamps)
     return num_words
 
-def get_len_speech(timestamps):
+def get_len_sample(timestamps):
     start = timestamps[0][1]
     end = timestamps[-1][-1]
     length = end - start
@@ -75,36 +85,37 @@ def get_word_times(timestamps):
         times.append(mid)
     return times
 
-def cluster_words(times):
-    np_times = np.array(times)
-    words = np_times.reshape(-1, 1)
-
-    kde = KernelDensity(bandwidth = .3).fit(words)
-    plot = kde.score_samples(words)
-    print(plot)
-    plt.plot(plot, 'b-')
-    plt.show()
-
-# estimates the best fitting bandwidth for the function
-def grid_search_bandwidth():
-    return
 
 
 # best practice will probably be to return list of timestamps from json scrub
 # then call methods on timestamps to extract script, length of speech, word count
 def main():
     final = {}
-    #get_watson_STT(speech_file_long, json_file)
+    # get_watson_STT(speech_file_long, json_file)
     timestamps = scrub_json(json_file)
-    wc = get_word_count(timestamps)
-    final['transcript'] = get_transcript(timestamps)
-    final['length'] = get_len_speech(timestamps)
+    simple_ts = simplify_timestamps(timestamps)
+    wc = get_word_count(simple_ts)
+    final['transcript'] = get_transcript(simple_ts)
+    final['length'] = get_len_sample(simple_ts)
     final['wpm'] = get_wpm(final['length'], wc)
-    times = get_word_times(timestamps)
     print(final)
 
 main()
 
+
+# def cluster_words(times):
+#     np_times = np.array(times)
+#     words = np_times.reshape(-1, 1)
+#
+#     kde = KernelDensity(bandwidth = .3).fit(words)
+#     plot = kde.score_samples(words)
+#     print(plot)
+#     plt.plot(plot, 'b-')
+#     plt.show()
+#
+# # estimates the best fitting bandwidth for the function
+# def grid_search_bandwidth():
+#     return
 
 
 # def calc_onset_times(afile, out_file):
