@@ -16,6 +16,6 @@ The Text_Analysis module provides a number of functions to aid in analyzing a pr
 
 - Can be queried for synonyms
 
-USAGE:
+**USAGE**:
 
 All calls to the text analysis module can be done through text_analysis.py, which serves as a class that integrates the various submodules (watson_analyzer, synonyms, etc)
