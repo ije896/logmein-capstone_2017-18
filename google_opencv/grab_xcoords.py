@@ -53,86 +53,7 @@ alpha3 = 0
 ###################################
 # ---------- Helper funcs ------- #
 ###################################
-def google_faces_coords(path, x_coords, alpha1, alpha2, alpha3):
-    print("using google api...")
-    with io.open(path, 'rb') as image_file:
-        content = image_file.read()
 
-    image = types.Image(content=content)
-
-    response = client.face_detection(image=image)
-    faces = response.face_annotations
-
-    # Names of likelihood from google.cloud.vision.enums
-    likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
-                       'LIKELY', 'VERY_LIKELY')
-    # print('Faces:')
-
-    for face in faces:
-        # print('anger: {}'.format(likelihood_name[face.anger_likelihood]))
-        # print('joy: {}'.format(likelihood_name[face.joy_likelihood]))
-        # print('surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
-
-        vertices = ([vertex.x
-                    for vertex in face.bounding_poly.vertices])
-
-        # I want to print -> face bounds: (69,57),(505,57),(505,564),(69,564)
-        # print('face bounds: {}'.format(','.join(vertices)))
-        # print(vertices)
-        if len(vertices) != 0:
-            width = vertices[1] - vertices[0]
-            interest_x = vertices[0] + (width/2)
-            x_coords.append(int(interest_x))
-
-            if interest_x <= div:
-                if current_area == '':
-                    current_area = "area_1"
-                    last_area = current_area
-                else:
-                    current_area = "area_1"
-                if current_area == last_area:
-                    alpha_dict[current_area] += 0.25
-                    alpha1 = alpha_dict[current_area]
-                else:
-                    current_area, last_area = "", ""
-                    alpha_dict["area_1"], alpha1 = 0, 0
-                    alpha_dict["area_2"], alpha2 = 0, 0
-                    alpha_dict["area_3"], alpha3 = 0, 0
-                div_dict["area_1"] += 1
-
-            elif interest_x > div and interest_x <= (div*2):
-                if current_area == '':
-                    current_area = "area_2"
-                    last_area = current_area
-                else:
-                    current_area = "area_2"
-                if current_area == last_area:
-                    alpha_dict[current_area] += 0.25
-                    alpha2 = alpha_dict[current_area]
-                else:
-                    current_area, last_area = "", ""
-                    alpha_dict["area_1"], alpha1 = 0, 0
-                    alpha_dict["area_2"], alpha2 = 0, 0
-                    alpha_dict["area_3"], alpha3 = 0, 0
-                div_dict["area_2"] += 1
-
-            else:
-                print("interest_x: {}".format(interest_x))
-                print("div_value: {}".format(div))
-                if current_area == '':
-                    current_area = "area_3"
-                    last_area = current_area
-                else:
-                    current_area = "area_3"
-                if current_area == last_area:
-                    alpha_dict[current_area] += 0.25
-                    alpha3 = alpha_dict[current_area]
-                else:
-                    current_area, last_area = "", ""
-                    alpha_dict["area_1"], alpha1 = 0, 0
-                    alpha_dict["area_2"], alpha2 = 0, 0
-                    alpha_dict["area_3"], alpha3 = 0, 0
-                div_dict["area_3"] += 1
 
 def plot_res(dict):
     plt.bar(range(len(dict)), dict.values(), align='center')
@@ -211,17 +132,81 @@ while True:
                         alpha_dict["area_3"], alpha3 = 0, 0
                     div_dict["area_3"] += 1
 
-        # else:
-        #     # we try to find a face with google API
-        #     file_name = "frame_{}.jpg".format(counter-30)
-        #     file_path = os.path.join(images_path, file_name)
-        #     cv2.imwrite(file_path, gray)
-        #     # print(file_path)
-        #     google_faces_coords(file_path,x_coords,alpha1,alpha2,alpha3)
+        else:
+            # we try to find a face with google API
+            file_name = "frame_{}.jpg".format(counter-30)
+            file_path = os.path.join(images_path, file_name)
+            cv2.imwrite(file_path, gray)
+            # google_faces_coords(file_path,x_coords,alpha1,alpha2,alpha3,current_area, last_area, not_Google)
+            print("using google api...")
+            with io.open(file_path, 'rb') as image_file:
+                content = image_file.read()
 
+            image = types.Image(content=content)
+
+            response = client.face_detection(image=image)
+            faces = response.face_annotations
+
+            for face in faces:
+                vertices = ([vertex.x
+                            for vertex in face.bounding_poly.vertices])
+
+                if len(vertices) != 0:
+                    width = vertices[1] - vertices[0]
+                    interest_x = vertices[0] + (width/2)
+                    x_coords.append(int(interest_x))
+
+                    if interest_x <= div:
+                        if current_area == '':
+                            current_area = "area_1"
+                            last_area = current_area
+                        else:
+                            current_area = "area_1"
+                        if current_area == last_area:
+                            alpha_dict[current_area] += 0.25
+                            alpha1 = alpha_dict[current_area]
+                        else:
+                            current_area, last_area = "", ""
+                            alpha_dict["area_1"], alpha1 = 0, 0
+                            alpha_dict["area_2"], alpha2 = 0, 0
+                            alpha_dict["area_3"], alpha3 = 0, 0
+                        div_dict["area_1"] += 1
+
+                    elif interest_x > div and interest_x <= (div*2):
+                        if current_area == '':
+                            current_area = "area_2"
+                            last_area = current_area
+                        else:
+                            current_area = "area_2"
+                        if current_area == last_area:
+                            alpha_dict[current_area] += 0.25
+                            alpha2 = alpha_dict[current_area]
+                        else:
+                            current_area, last_area = "", ""
+                            alpha_dict["area_1"], alpha1 = 0, 0
+                            alpha_dict["area_2"], alpha2 = 0, 0
+                            alpha_dict["area_3"], alpha3 = 0, 0
+                        div_dict["area_2"] += 1
+
+                    else:
+                        print("interest_x: {}".format(interest_x))
+                        print("div_value: {}".format(div))
+                        if current_area == '':
+                            current_area = "area_3"
+                            last_area = current_area
+                        else:
+                            current_area = "area_3"
+                        if current_area == last_area:
+                            alpha_dict[current_area] += 0.25
+                            alpha3 = alpha_dict[current_area]
+                        else:
+                            current_area, last_area = "", ""
+                            alpha_dict["area_1"], alpha1 = 0, 0
+                            alpha_dict["area_2"], alpha2 = 0, 0
+                            alpha_dict["area_3"], alpha3 = 0, 0
+                        div_dict["area_3"] += 1
     # this will help us know in what second of the video we are
     counter += 1
-
 
     cv2.rectangle(overlay1, (0,0), (div,60), (0,0,230), -1)
     cv2.rectangle(overlay2, (div,0), (div*2,60), (0,0,230), -1)
@@ -233,8 +218,8 @@ while True:
     cv2.addWeighted(overlay3, alpha3,output, 1 - alpha3, 0, output)
 
     #divide the window in three sections
-    cv2.line(output, (div, 0), (div,height), (0,255,0), 5)
-    cv2.line(output, (div*2, 0), (div*2,height), (0,255,0), 5)
+    cv2.line(output, (div, 0), (div,height), (0,255,0), 3)
+    cv2.line(output, (div*2, 0), (div*2,height), (0,255,0), 3)
 
 
     cv2.imshow('frame', output)
