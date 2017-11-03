@@ -44,6 +44,7 @@ def calc_onset_times(afile, out_file):
 
 def cluster_onsets(infile):
     times = load_times(infile)
+    print(len(times))
     np_times = np.array(times)
     onsets = np_times.reshape(-1, 1)
 
