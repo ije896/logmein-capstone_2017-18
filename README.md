@@ -6,12 +6,15 @@ This repository contains the work done for the UCSB course, CS189A-B, for the co
 
 # MODULES
 
-##Text_Analysis
+## Text_Analysis
 
 The Text_Analysis module provides a number of functions to aid in analyzing a presentation's script.
-	* Analyzes sentiment (tone) with watson_analyzer.py
-	* Gets (sorted) frequencies of each word in text_analysis.py
-	* Can be queried for synonyms
+
+- Analyzes sentiment (tone) with watson_analyzer.py
+
+- Gets (sorted) frequencies of each word in text_analysis.py
+
+- Can be queried for synonyms
 
 USAGE:
 
