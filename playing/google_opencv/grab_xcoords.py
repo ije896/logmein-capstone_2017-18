@@ -28,7 +28,7 @@ if cap.isOpened():
 # haarcascade for face detection
 # detectMultiScale(image[, scaleFactor[, minNeighbors[, flags[, minSize[, maxSize]]]]])
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-images_path = "/Users/Josue/Desktop/FALL17/Capstone/logmein-capstone_2017-18/google_opencv/frames"
+images_path = "/Users/Josue/Desktop/FALL17/Capstone/logmein-capstone_2017-18/playing/google_opencv/frames"
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
 x_coords = []
