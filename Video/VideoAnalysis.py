@@ -7,7 +7,7 @@ This video analyzer tracks the users movement using face tracking
 and returns those coordinates as an array of (coords and timestamps)
 Usage
 -----
-VideoAnalysis.py [<video_source>] [<path_to_save_temp_images>]
+VideoAnalysis.py [<video_source>]
 ----
 ESC - exit
 '''
@@ -20,7 +20,6 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-images_path = "/Users/Josue/Desktop/FALL17/Capstone/logmein-capstone_2017-18/playing/google_opencv/frames"
 client = vision.ImageAnnotatorClient()
 
 class VideoAnalysis:
@@ -35,8 +34,18 @@ class VideoAnalysis:
         self.images_path = None
         self.current_frame = 0
 
-    def set_image_path(self, images_path):
-        self.images_path = images_path
+    def get_coords(self):
+        return self.coords_and_time
+        print (self.coords_and_time)
+
+    def get_fps(self):
+        return self.fps
+
+    def get_video_width(self):
+        return self.width
+
+    def get_video_height(self):
+        return self.height
 
     def google_analysis(self,file_path, video_time):
         with io.open(file_path, 'rb') as image_file:
@@ -71,17 +80,17 @@ class VideoAnalysis:
                 if(video_time % 1 >= 0.0 and video_time % 1 <= 0.03):
                     face = face_cascade.detectMultiScale(gray, 1.3, 5)
                     if(len(face) != 0):
-                        print("Haarcascade succesful")
+                        # print("Haarcascade succesful")
                         for (x,y,w,h) in face:
                             cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
                             interest_x = int(x+(w/2))
                             interest_y = int(y+(h/2))
                             self.coords_and_time.append([interest_x, interest_y, video_time])
                     else:
+                        # print("using google api...")
                         file_name = "frame_{}.jpg".format(int(video_time))
-                        file_path = os.path.join(images_path, file_name)
+                        file_path = os.path.join("./", file_name)
                         cv2.imwrite(file_path, gray)
-                        print("using google api...")
                         self.google_analysis(file_path, video_time)
 
                 cv2.imshow('frame', vis)
@@ -100,8 +109,8 @@ def main():
 
     print(__doc__)
     app = VideoAnalysis(video_src)
-    # app.set_image_path(images_path)
     app.run()
+    app.get_coords()
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
