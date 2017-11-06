@@ -4,9 +4,13 @@ This repository contains the work done for the UCSB course, CS189A-B, for the co
 - A visual and aural analyzer that helps you improve your presentation skills
 - Web app (thin-client) that records you using your webcam and gives you scores and gives you recommendations for your presentation
 
+## Module
+
+The Video module intended to go into our MVP can be found in the ``Video`` folder. The ``playing`` folder is just me playing around with different technologies in order to build the Video module.
+
 ## How to play with things in this branch
 
-You need to have OpenCV and NumPy installed in your computer. You can either set up a virtual environment for this current project, or you can just install the mentioned packages using
+You need to have OpenCV, NumPy and Matplot installed in your computer. You can either set up a virtual environment for this current project, or you can just install the mentioned packages using
 
 ```
 pip3 install opencv-python
