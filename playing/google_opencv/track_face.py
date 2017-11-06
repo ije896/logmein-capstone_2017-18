@@ -29,10 +29,15 @@ def detect_faces(path):
         print('joy: {}'.format(likelihood_name[face.joy_likelihood]))
         print('surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
 
-        vertices = (['({},{})'.format(vertex.x, vertex.y)
+        # vertices = (['({},{})'.format(vertex.x, vertex.y)
+        #             for vertex in face.bounding_poly.vertices])
+
+        vertices = ([(vertex.x, vertex.y)
                     for vertex in face.bounding_poly.vertices])
 
-        print('face bounds: {}'.format(','.join(vertices)))
+        # print('face bounds: {}'.format(','.join(vertices)))
+        print('face bounds: ')
+        print(vertices)
 
 
 if len(sys.argv) != 2:
