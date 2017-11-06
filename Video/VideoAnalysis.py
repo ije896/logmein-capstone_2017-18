@@ -21,6 +21,7 @@ from google.cloud.vision import types
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 client = vision.ImageAnnotatorClient()
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 class VideoAnalysis:
     def __init__(self, video_src):
@@ -30,8 +31,6 @@ class VideoAnalysis:
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
         self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        self.font = cv2.FONT_HERSHEY_SIMPLEX
-        self.images_path = None
         self.current_frame = 0
 
     def get_coords(self):
@@ -47,7 +46,10 @@ class VideoAnalysis:
     def get_video_height(self):
         return self.height
 
-    def google_analysis(self,file_path, video_time):
+    def get_video_duration(self):
+        return self.video_duration
+
+    def _google_analysis(self,file_path, video_time):
         with io.open(file_path, 'rb') as image_file:
             content = image_file.read()
 
@@ -91,7 +93,7 @@ class VideoAnalysis:
                         file_name = "frame_{}.jpg".format(int(video_time))
                         file_path = os.path.join("./", file_name)
                         cv2.imwrite(file_path, gray)
-                        self.google_analysis(file_path, video_time)
+                        self._google_analysis(file_path, video_time)
 
                 cv2.imshow('frame', vis)
                 # press esc to quit
@@ -100,6 +102,7 @@ class VideoAnalysis:
                     break
             else:
                 break
+        self.vide_duration = video_time
 
 def main():
     try:
