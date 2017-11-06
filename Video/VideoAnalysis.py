@@ -8,7 +8,6 @@ and returns those coordinates as an array of (coords and timestamps)
 Usage
 -----
 VideoAnalysis.py [<video_source>] [<path_to_save_temp_images>]
-Keys
 ----
 ESC - exit
 '''
@@ -27,7 +26,7 @@ client = vision.ImageAnnotatorClient()
 class VideoAnalysis:
     def __init__(self, video_src):
         self.coords_and_time = [] #a tuple of x, y coord, sec
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(video_src)
         self.vide_duration = None
         self.fps = self.cap.get(cv2.CAP_PROP_FPS)
         self.width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -39,52 +38,59 @@ class VideoAnalysis:
     def set_image_path(self, images_path):
         self.images_path = images_path
 
+    def google_analysis(self,file_path, video_time):
+        with io.open(file_path, 'rb') as image_file:
+            content = image_file.read()
+
+        image = types.Image(content=content)
+
+        response = client.face_detection(image=image)
+        faces = response.face_annotations
+
+        for face in faces:
+            vertices = ([(vertex.x, vertex.y)
+                        for vertex in face.bounding_poly.vertices])
+            if len(vertices) != 0:
+                width = vertices[1][0] - vertices[0][0]
+                height = vertices[2][1] - vertices[1][1]
+                interest_x = vertices[0][0] + (width/2)
+                interest_y = vertices[0][1] + (height/2)
+                self.coords_and_time.append([interest_x, interest_y, video_time])
+
+        os.remove(file_path)
+
     def run(self):
-        while True:
+        while self.cap.isOpened():
             ret, frame = self.cap.read()
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            self.current_frame += 1
-            video_time = self.current_frame/self.fps
-            # print (video_time)
+            if ret:
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                vis = frame.copy()
+                self.current_frame += 1
+                video_time = round(self.current_frame/self.fps,2)
 
-            if(video_time % 1 == 0.0):
-                face = face_cascade.detectMultiScale(gray, 1.3, 5)
-                if(len(face) != 0):
-                    print("Haarcascade succesful")
-                    for (x,y,w,h) in face:
-                        interest_x = int(x+(w/2))
-                        interest_y = int(y+(h/2))
-                        self.coords_and_time.append([interest_x, interest_y, video_time])
-                else:
-                    file_name = "frame_{}.jpg".format(int(video_time))
-                    file_path = os.path.join(images_path, file_name)
-                    cv2.imwrite(file_path, gray)
-                    print("using google api...")
-
-                    with io.open(file_path, 'rb') as image_file:
-                        content = image_file.read()
-
-                    image = types.Image(content=content)
-
-                    response = client.face_detection(image=image)
-                    faces = response.face_annotations
-
-                    for face in faces:
-                        vertices = ([(vertex.x, vertex.y)
-                                    for vertex in face.bounding_poly.vertices])
-                        if len(vertices) != 0:
-                            width = vertices[1][0] - vertices[0][0]
-                            height = vertices[2][1] - vertices[1][1]
-                            interest_x = vertices[0][0] + (width/2)
-                            interest_y = vertices[0][1] + (height/2)
+                if(video_time % 1 >= 0.0 and video_time % 1 <= 0.03):
+                    face = face_cascade.detectMultiScale(gray, 1.3, 5)
+                    if(len(face) != 0):
+                        print("Haarcascade succesful")
+                        for (x,y,w,h) in face:
+                            cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
+                            interest_x = int(x+(w/2))
+                            interest_y = int(y+(h/2))
                             self.coords_and_time.append([interest_x, interest_y, video_time])
+                    else:
+                        file_name = "frame_{}.jpg".format(int(video_time))
+                        file_path = os.path.join(images_path, file_name)
+                        cv2.imwrite(file_path, gray)
+                        print("using google api...")
+                        self.google_analysis(file_path, video_time)
 
-            cv2.imshow('frame', gray)
-            #press esc to quit
-            k = cv2.waitKey(30) & 0xff
-            if k == 27:
+                cv2.imshow('frame', vis)
+                # press esc to quit
+                k = cv2.waitKey(30) & 0xff
+                if k == 27:
+                    break
+            else:
                 break
-        print(self.coords_and_time)
 
 def main():
     try:
