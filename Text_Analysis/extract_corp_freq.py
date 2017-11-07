@@ -31,6 +31,7 @@ counts = Counter(corp_words)
 # Write our vectorized result to csv
 # Credit to https://stackoverflow.com/a/19739263/8829491 for csv.write one-liner
 with args.output as csv:
+	csv.write("len(corpus),{}\n".format(len(corp_words)))
 	[csv.write('{0},{1}\n'.format(key, value)) for key, value in counts.items()]
 
 
