@@ -33,6 +33,8 @@ class VideoAnalysis:
         self.width = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_WIDTH))
         self.height = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_HEIGHT))
         self.current_frame = 0
+        self.google_api_requests = 0
+        self.open_cv_requests = 0
         self.frame_filepath = ""
 
     def get_coords(self):
@@ -63,6 +65,7 @@ class VideoAnalysis:
         with io.open(file_path, 'rb') as image_file:
             content = image_file.read()
 
+        self.google_api_requests += 1
         image = types.Image(content=content)
 
         response = client.face_detection(image=image)
@@ -102,18 +105,19 @@ class VideoAnalysis:
                     # print("Haarcascade succesful")
                     for (x,y,w,h) in face:
                         # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
+                        self.open_cv_requests += 1
                         interest_x = int(x+(w/2))
                         interest_y = int(y+(h/2))
                         self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
                 else:
                     # print("using google api...")
-                    file_name = "frame_{}.jpg".format(int(video_time))
+                    file_name = "frame_{}_{}.jpg".format(int(video_time), self.video_src)
                     file_path = os.path.join("./", file_name)
                     cv2.imwrite(file_path, gray)
                     self._google_analysis(file_path, video_time)
 
-                # cv2.imshow('frame', vis)
-                # press esc to quit
+                # cv2.imshow('frame', frame)
+                # # press esc to quit
                 # k = cv2.waitKey(30) & 0xff
                 # if k == 27:
                 #     break
