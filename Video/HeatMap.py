@@ -5,7 +5,7 @@ Heat Map
 ====================
 The Heat Map module plots a graph indicating user's movement
 throughout a pre analyzed video. Some dummy data has been placed
-in main for demonstration
+in main() for demonstration
 Usage
 -----
 HeatMap.py
