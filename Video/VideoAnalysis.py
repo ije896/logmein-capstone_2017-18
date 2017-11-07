@@ -28,6 +28,7 @@ class VideoAnalysis:
         self.coords_and_time = [] #a tuple of x, y coord, sec
         self.video_src = video_src
         self.vide_duration = None
+        self.total_frames = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FPS)
         self.width = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_WIDTH))
         self.height = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -35,7 +36,7 @@ class VideoAnalysis:
         self.frame_filepath = ""
 
     def get_coords(self):
-        # print (self.coords_and_time)
+        print (self.coords_and_time)
         return self.coords_and_time
 
     def get_fps(self):
@@ -55,7 +56,7 @@ class VideoAnalysis:
 
     def to_json(self):
         json_obj = json.dumps(self,default=lambda o: o.__dict__)
-        # print(res)
+        print(json_obj)
         return json_obj
 
     def _google_analysis(self,file_path, video_time):
@@ -81,40 +82,41 @@ class VideoAnalysis:
 
     def run(self):
         cap = cv2.VideoCapture(self.video_src)
-        while cap.isOpened():
+        # Will only analyze the frame at every second
+        for frame_no in np.arange(0, self.total_frames, self.fps):
+            cap.set(1, frame_no)
             ret, frame = cap.read()
-            self.current_frame += 1
+            self.current_frame = frame_no
             video_time = round(self.current_frame/self.fps,2)
 
             if ret:
-                if(self.current_frame == 90):
+                if(video_time == 3.0):
                     file_name = "frame_excerpt.jpg"
                     file_path = os.path.join("./", file_name)
                     cv2.imwrite(file_path, frame)
                     self.frame_filepath = file_path
-                if(video_time % 1 >= 0.0 and video_time % 1 <= 0.03):
-                    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                    face = face_cascade.detectMultiScale(gray, 1.3, 5)
-                    if(len(face) != 0):
-                        # print("Haarcascade succesful")
-                        for (x,y,w,h) in face:
-                            cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
-                            interest_x = int(x+(w/2))
-                            interest_y = int(y+(h/2))
-                            self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
-                    else:
-                        # print("using google api...")
-                        file_name = "frame_{}.jpg".format(int(video_time))
-                        file_path = os.path.join("./", file_name)
-                        cv2.imwrite(file_path, gray)
-                        self._google_analysis(file_path, video_time)
+                face = face_cascade.detectMultiScale(gray, 1.3, 5)
+                if(len(face) != 0):
+                    # print("Haarcascade succesful")
+                    for (x,y,w,h) in face:
+                        # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
+                        interest_x = int(x+(w/2))
+                        interest_y = int(y+(h/2))
+                        self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
+                else:
+                    # print("using google api...")
+                    file_name = "frame_{}.jpg".format(int(video_time))
+                    file_path = os.path.join("./", file_name)
+                    cv2.imwrite(file_path, gray)
+                    self._google_analysis(file_path, video_time)
 
-                    # cv2.imshow('frame', vis)
-                    # press esc to quit
-                    k = cv2.waitKey(30) & 0xff
-                    if k == 27:
-                        break
+                # cv2.imshow('frame', vis)
+                # press esc to quit
+                # k = cv2.waitKey(30) & 0xff
+                # if k == 27:
+                #     break
             else:
                 break
         self.vide_duration = video_time
