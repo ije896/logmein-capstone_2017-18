@@ -128,7 +128,6 @@ def main():
     print(__doc__)
     app = VideoAnalysis(video_src)
     app.run()
-    app.get_coords()
     app.to_json()
     cv2.destroyAllWindows()
 

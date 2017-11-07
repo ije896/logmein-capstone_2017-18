@@ -54,6 +54,11 @@ class HeatMap:
             self.x_times.append([time,x])
 
     def plot(self):
+        self.set_x_coords()
+        self.set_y_coords()
+        self.set_xrange(900)
+        self.set_yrange(500)
+        self.set_xtimes()
         x_times = self.x_times
         plt.scatter(*zip(*x_times))
         plt.xlabel("Time (s)")
@@ -73,11 +78,6 @@ def main():
     [355, 303, 32.0], [522, 213, 33.0], [569.5, 103.5, 34.0], [635.5, 271.5, 35.01]]
     print(__doc__)
     app = HeatMap(test)
-    app.set_x_coords()
-    app.set_y_coords()
-    app.set_xrange(900)
-    app.set_yrange(500)
-    app.set_xtimes()
     app.plot()
 
 if __name__ == '__main__':
