@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src= "../static/Chart.min.js"></script>
+		<script>
+			var watson_data = {{watson_data | safe}};
+		</script>
+		<script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'analysis.js') }}" ></script>
+		<link rel="stylesheet" href="../static/index.css">
+	</head>
+	<body>
+		<canvas id="marksChart" width="3100" height="900"></canvas>
+	</body>
+</html>
