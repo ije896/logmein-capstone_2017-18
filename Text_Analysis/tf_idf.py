@@ -40,7 +40,7 @@ class tf_idf:
 
     '''
 	Text frequency  - inverse corpus frequency
-	equivalent to freq(word) / [ corpus_freq(word) / len(corpus) ]
+	equivalent to freq(word) / [ corpus_freq(word) ]
 	'''
 
     # We use the Decimal library to preserve arbitrary precision

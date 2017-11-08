@@ -13,6 +13,8 @@ parser.add_argument('idf_output', nargs='?', type=argparse.FileType('w'), defaul
 
 args = parser.parse_args()
 
+# TODO: remove numbers (we have words like 2146 in corpus)
+
 # Set up translation table for use with string.translate(translator)
 translator = str.maketrans('', '', punctuation)
 
