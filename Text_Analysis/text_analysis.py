@@ -34,10 +34,10 @@ class text_analysis:
 		except:
 			return data
 
-	def get_tf_idf_top5(self):
-		return self.tfidf.get_tf_idf_top5(self.script)
+	def get_tf_idf(self):
+		return self.tfidf.get_tf_idf(self.script)
 
-	def get_tf_cf_top5(self):
-		return self.tfidf.get_tf_cf_top5(self.script)
+	def get_tf_cf(self):
+		return self.tfidf.get_tf_cf(self.script)
 
 
