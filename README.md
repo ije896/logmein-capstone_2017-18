@@ -38,6 +38,19 @@ heatmap = HeatMap(coords)
 heatmap.plot()
 ```
 
+### Dependencies
+The video module uses the following python packages which might need to be installed in your virtual environment:
+* OpenCV 3.3
+* Numpy
+* Matplot
+* Google Vision API (ask me for the api auth if you want to test it)
+
+### Want more insight about what's happening here?
+
+You can dive in into some OpenCV documentation [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html#lucas-kanade).
+
+Or read though some basic Python-OpenCV tuts [here](https://pythonprogramming.net/haar-cascade-face-eye-detection-python-opencv-tutorial/?completed=/mog-background-reduction-python-opencv-tutorial/).
+
 ## Audio Module
 
 The Audio module analyzes the speech to extract the following features:
@@ -47,19 +60,6 @@ Future:
 - Volume tracking of speaker
 - Pitch tracking of speaker
 
-
-### Dependencies
-The video module uses the following python packages which might need to be installed in your virtual environment:
-* OpenCV 3.3
-* Numpy
-* Matplot
-* Google Vision API (ask me for the api auth if you want to test it)
-
+Dependencies:
 * Watson Developer Cloud
 * Librosa
-
-### Want more insight about what's happening here?
-
-You can dive in into some OpenCV documentation [here](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_video/py_lucas_kanade/py_lucas_kanade.html#lucas-kanade).
-
-Or read though some basic Python-OpenCV tuts [here](https://pythonprogramming.net/haar-cascade-face-eye-detection-python-opencv-tutorial/?completed=/mog-background-reduction-python-opencv-tutorial/).
