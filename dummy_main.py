@@ -31,6 +31,7 @@ def main():
 	'''
 	idf_syns = ta.get_top5_idf_syns()
 	cf_syns = ta.get_top5_cf_syns()
+	print("\nAnalyzing {}:\n".format(text_file))
 	print("Here are the top 5 TF-IDF Synonyms: \n")
 	print(idf_syns)
 	print("\nHere are the top 5 TF-CF Synonyms: \n")
