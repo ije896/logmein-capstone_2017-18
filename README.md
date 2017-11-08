@@ -38,6 +38,16 @@ heatmap = HeatMap(coords)
 heatmap.plot()
 ```
 
+## Audio Module
+
+The Audio module analyzes the speech to extract the following features:
+- Words per minute (over the entire speech, and during continuous phrases)
+
+Future:
+- Volume tracking of speaker
+- Pitch tracking of speaker
+
+
 ### Dependencies
 The video module uses the following python packages which might need to be installed in your virtual environment:
 * OpenCV 3.3
@@ -45,6 +55,8 @@ The video module uses the following python packages which might need to be insta
 * Matplot
 * Google Vision API (ask me for the api auth if you want to test it)
 
+* Watson Developer Cloud
+* Librosa
 
 ### Want more insight about what's happening here?
 
