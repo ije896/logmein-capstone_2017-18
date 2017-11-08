@@ -96,16 +96,14 @@ class tf_idf:
                 stripped_text.append(word)
         return ' '.join(stripped_text)
 
-    # For now hard coding to get top 5 words
-    # Future make dynamic number of words
-    def get_tf_idf_top5(self, text):
+    def get_tf_idf(self, text):
         tf_idf_list = self.tf_idf(text)
-        top5_list = [word for (word,count) in tf_idf_list[:5]]
-        return top5_list
+        tf_idf = [word for (word,count) in tf_idf_list]
+        return tf_idf
 
-    def get_tf_cf_top5(self, text):
+    def get_tf_cf(self, text):
         tf_cf_list = self.tf_cf(text)
-        top5_list = [word for (word,count) in tf_cf_list[:5]]
-        return top5_list
+        tf_cf = [word for (word,count) in tf_cf_list]
+        return tf_cf
 
 

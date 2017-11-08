@@ -29,10 +29,34 @@ class text_module:
 		recent_text = self.get_sentiment(index)
 		return recent_text.get_freq()
 
-	def get_top5_syns(self, index=-1):
+	def get_top5_idf_syns(self, index=-1):
 		recent_text = self.get_sentiment(index)
-		top5_idf = recent_text.get_tf_idf_top5()
-		syns = {word:self.syns.get_syns(word) for word in top5_idf}
+
+		tf_idf = recent_text.get_tf_idf()
+		syns = {}
+		idf_index = 0
+		while len(syns) < 5 and idf_index < len(tf_idf):
+			word = tf_idf[idf_index]
+			synonym = self.syns.get_syns(word)
+			if synonym != -1:
+				syns[word] = synonym
+			idf_index += 1
+
+		return syns
+
+	def get_top5_cf_syns(self, index=-1):
+		recent_text = self.get_sentiment(index)
+
+		tf_cf = recent_text.get_tf_cf()
+		syns = {}
+		cf_index = 0
+		while len(syns) < 5 and cf_index < len(tf_cf):
+			word = tf_cf[cf_index]
+			synonym = self.syns.get_syns(word)
+			if synonym != -1:
+				syns[word] = synonym
+			cf_index += 1
+
 		return syns
 
 	def get_sentiment(self, index=-1):
