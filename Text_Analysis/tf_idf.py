@@ -33,7 +33,7 @@ class tf_idf:
         with open(self.idf_csv, 'r') as csv:
             for line in csv.readlines():
                 (word, idf) = line.strip().split(',')
-                self.idfs[word] = double(idf)
+                self.idfs[word] = float(idf)
 
 
 
@@ -65,19 +65,25 @@ class tf_idf:
         tfidf = []
         for w in text_words:
             w = w.lower()
-            (ct, cf) = (Decimal(text.count(w)), Decimal(self.freqs.get(w, 0)))
+            (ct, idf) = (Decimal(text.count(w)), Decimal(self.idfs.get(w, 0)))
             assert (ct > 0)
 
-            if cf == 0:  # Word does not appear in corpus, ignore it for now
+            if idf == 0:  # Word appears in all corpus documents so we don't care
                 continue
-            tficf.append((w, ct / cf))
+            tfidf.append((w, ct * idf))
         # print("tf_icf(): (w, ct / cf) = ({}, {})".format( w, ct/cf ))
 
-        return sorted(tficf, key=lambda tup: tup[1], reverse=True)
+        return sorted(tfidf, key=lambda tup: tup[1], reverse=True)
 
 
 if __name__ == '__main__':
     test = tf_idf()
-    testit = test.tf_icf("I have a dream that one day this nation will rise up")
-    for x in testit:
+    test1 = test.tf_icf("I have a dream that one day this nation will rise up")
+    for x in test1:
         print("(w, ct/cf) = ({}, {})".format(x[0], x[1]))
+
+    print("\n")
+    test2 = test.tf_idf("I have a dream that one day this nation will rise up")
+    for x in test2:
+        print("(w, ct*idf) = ({}, {})".format(x[0], x[1]))
+
