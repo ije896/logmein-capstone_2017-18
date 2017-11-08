@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="../static/index.css">
+		<script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'index.js') }}" ></script>
+	</head>
+	<div class="page-bg"></div>
+   <body>
+
+
+
+       <div id="page-title">
+		   <h1>Presentation Trainer.</h1>
+       </div>
+	   <div id="inputs">
+		   <form action = "http://localhost:5000/analyze" method = "post">
+		   		<input type="text" id="video-filepath" size="50" placeholder="Video filepath" name="video-filepath"><br><br>
+		   		<input type="text" id="script-filepath" size="50" placeholder="Script filepath" name="audio-filepath">
+			   <p><input type = "submit" value = "submit" /></p>
+		   </form>
+	   </div>
+		<!--<div id="actions">-->
+			<!--<button id="process" onClick="process()">Analyze Presentation.</button>-->
+		<!--</div>-->
+
+   </body>
+</html>
