@@ -3,16 +3,8 @@
 import os
 import sys
 from Text_Analysis import watson_analyzer
-from Text_Analysis import synonyms
+from Text_Analysis import tf_idf
 
-# Watson Tone (Sentiment) Analysis
-	# json object
-	# emotion dictionary
-	# social dictionary
-# Word Frequency
-	# (frequencies.py)
-# Synonym Lookup
-	# (synonyms.py)
 
 # This class can be invoked with either the text itself
 # or the relative path of the text file
@@ -20,8 +12,7 @@ class text_analysis:
 	def __init__(self, text):
 		self.script          = self.check_file(text)
 		self.watson_analysis = watson_analyzer(self.script)
-		self.freq            = self.word_frequency()
-		self.syns            = synonyms.synonyms()
+		self.tfidf			 = tf_idf.tf_idf()
 
 	def get_json(self):
 		return self.watson_analysis.json
@@ -31,12 +22,6 @@ class text_analysis:
 
 	def get_social(self):
 		return self.watson_analysis.social
-
-	def get_freq(self):
-		return self.freq
-
-	def get_syn(self, word):
-		return self.syns.get_syns(word)
 
 	def check_file(self, data):
 		# Try to open it as a file
@@ -49,23 +34,10 @@ class text_analysis:
 		except:
 			return data
 
-	def word_frequency(self):
-		# Remove unnecessary punctuation from the text
-		simple_text = self.script.replace('\n', ' ')
+	def get_tf_idf_top5(self):
+		return self.tfidf.get_tf_idf_top5(self.script)
 
-		punctuation = ['.', ',', '!', '?', '(', ')', '$', '"', '#', ';', ':']
-		for item in punctuation:
-			simple_text = simple_text.replace(item, '')
+	def get_tf_cf_top5(self):
+		return self.tfidf.get_tf_cf_top5(self.script)
 
-		words = simple_text.split(' ')
 
-		d = {word: words.count(word) for word in words}
-		# Don't need the extra spaces
-		try:
-			del d['']
-		# If there isn't a space key in the dictionary
-		# We don't need to worry, pass
-		except:
-			pass
-		sort = [(word, d[word]) for word in sorted(d, key=d.get, reverse=True)]
-		return sort

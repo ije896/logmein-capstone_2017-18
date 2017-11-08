@@ -2,6 +2,10 @@ import re
 import os
 import sys
 
+
+#TODO place the thesaurus in a permanent spot relative to main
+# The thesaurus file right now needs to be relative to 
+# the main
 class synonyms:
 	def __init__(self):
 		self.thes_csv = "Text_Analysis/thesaurus.csv"

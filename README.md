@@ -7,7 +7,7 @@ This repository contains the work done for the UCSB course, CS189A-B, for the co
 
 # MODULES
 
-## Text_Analysis
+## Text Module
 
 The Text_Analysis module provides a number of functions to aid in analyzing a presentation's script.
 
@@ -19,7 +19,29 @@ The Text_Analysis module provides a number of functions to aid in analyzing a pr
 
 **USAGE**:
 
-All calls to the text analysis module can be done through text_analysis.py, which serves as a class that integrates the various submodules (watson_analyzer, synonyms, etc)
+All calls to the text analysis module can be done through text_module.py, which serves as a class that integrates the various submodules (watson_analyzer, synonyms, etc)
+
+In order to create a text_module object 'text_module' needs to be imported from 'Text_Analysis' and the object needs to be instantiated with the text file (this can be either the text itself or the relative path to the text file).
+
+```
+text_obj = text_module(<text_path>)
+```
+
+From here you can access a json object of the sentiment analysis, dictionary of the emotion analysis, dictionary of the social analysis, frequency of the words, and synonyms of the most common words.  These can be done by:
+
+```
+text_obj.get_json()
+text_obj.get_emotion()
+text_obj.get_social()
+text_obj.get_top5_syns()
+```
+
+Additionally, you can create multiple text_analysis objects on separate texts within the ame text module.  They can be created and then accessed with the following:
+
+```
+text_obj.new_sentiment(<text_path>)
+text_obj.get_sentiment(<text_analysis_index>)		NOTE: This is 0 indexed and defaults to most recent
+```
 
 ## Video Module
 
