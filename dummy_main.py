@@ -33,7 +33,7 @@ def main():
 	cf_syns = ta.get_top5_cf_syns()
 	print("Here are the top 5 TF-IDF Synonyms: \n")
 	print(idf_syns)
-	print("Here are the top 5 TF-CF Synonyms: \n")
+	print("\nHere are the top 5 TF-CF Synonyms: \n")
 	print(cf_syns)
 
 
