@@ -33,10 +33,15 @@ From here you can access a json object of the sentiment analysis, dictionary of 
 text_obj.get_json()
 text_obj.get_emotion()
 text_obj.get_social()
-text_obj.get_freq()
-text_obj.get_syns()		NOTE: This hasn't been implemented yet
+text_obj.get_top5_syns()
 ```
 
+Additionally, you can create multiple text_analysis objects on separate texts within the ame text module.  They can be created and then accessed with the following:
+
+```
+text_obj.new_sentiment(<text_path>)
+text_obj.get_sentiment(<text_analysis_index>)		NOTE: This is 0 indexed and defaults to most recent
+```
 
 ## Video Module
 
