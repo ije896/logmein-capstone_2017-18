@@ -3,7 +3,6 @@
 import os
 import sys
 from Text_Analysis import watson_analyzer
-from Text_Analysis import synonyms
 
 # Watson Tone (Sentiment) Analysis
 	# json object
@@ -21,7 +20,6 @@ class text_analysis:
 		self.script          = self.check_file(text)
 		self.watson_analysis = watson_analyzer(self.script)
 		self.freq            = self.word_frequency()
-		self.syns            = synonyms.synonyms()
 
 	def get_json(self):
 		return self.watson_analysis.json
