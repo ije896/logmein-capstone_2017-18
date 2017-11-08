@@ -1,4 +1,5 @@
 from decimal import *
+from string import punctuation
 
 
 # Reads in from csv file for use in calculating tf_idf
@@ -7,8 +8,8 @@ from decimal import *
 
 class tf_idf:
     def __init__(self):
-        self.freqs_csv = "corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
-        self.idf_csv   = "corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
+        self.freqs_csv = "Text_Analysis/corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
+        self.idf_csv   = "Text_Analysis/corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
 
         self.len_corp = 0
         self.freqs = {}
@@ -36,8 +37,6 @@ class tf_idf:
                 self.idfs[word] = float(idf)
 
 
-
-
     '''
 	Text frequency  - inverse corpus frequency
 	equivalent to freq(word) / [ corpus_freq(word) / len(corpus) ]
@@ -45,45 +44,68 @@ class tf_idf:
 
     # We use the Decimal library to preserve arbitrary precision
     # TODO: decide if we want to ignore words not in the corpus or instead do something like freqs.get(w, .25)
-    def tf_icf(self, text):
-        text_words = text.split(' ')
-        tficf = []
+    
+    def tf_cf(self, text):
+        stripped_text = self.strip_punctuation(text)
+        text_words = stripped_text.split(' ')
+        tfcf = []
         for w in text_words:
             w = w.lower()
-            (ct, cf) = (Decimal(text.count(w)), Decimal(self.freqs.get(w, 0)))
+            (ct, cf) = (Decimal(stripped_text.count(w)), Decimal(self.freqs.get(w, 0)))
             assert (ct > 0)
 
             if cf == 0:  # Word does not appear in corpus, ignore it for now
                 continue
-            tficf.append((w, ct / cf))
-        # print("tf_icf(): (w, ct / cf) = ({}, {})".format( w, ct/cf ))
+            tfcf.append((w, ct / cf))
 
-        return sorted(tficf, key=lambda tup: tup[1], reverse=True)
+        # Remove duplicates
+        tfcf = list(set(tfcf))
+
+        return sorted(tfcf, key=lambda tup: tup[1], reverse=True)
 
     def tf_idf(self, text):
-        text_words = text.split(' ')
+        stripped_text = self.strip_punctuation(text)
+        text_words = stripped_text.split(' ')
         tfidf = []
         for w in text_words:
             w = w.lower()
-            (ct, idf) = (Decimal(text.count(w)), Decimal(self.idfs.get(w, 0)))
+            (ct, idf) = (Decimal(stripped_text.count(w)), Decimal(self.idfs.get(w, 0)))
             assert (ct > 0)
 
             if idf == 0:  # Word appears in all corpus documents so we don't care
                 continue
             tfidf.append((w, ct * idf))
-        # print("tf_icf(): (w, ct / cf) = ({}, {})".format( w, ct/cf ))
+
+        # Remove duplicates
+        tfidf = list(set(tfidf))
 
         return sorted(tfidf, key=lambda tup: tup[1], reverse=True)
 
+    # Strip punctuation from text, only want words
+    # Also place all letters to lower case to avoid duplication 
+    def strip_punctuation(self, text):
+        # Set up translation table for use with string.translate(translator)
+        translator = str.maketrans('', '', punctuation)
 
-if __name__ == '__main__':
-    test = tf_idf()
-    test1 = test.tf_icf("I have a dream that one day this nation will rise up")
-    for x in test1:
-        print("(w, ct/cf) = ({}, {})".format(x[0], x[1]))
+        text = text.replace('\n', ' ')
 
-    print("\n")
-    test2 = test.tf_idf("I have a dream that one day this nation will rise up")
-    for x in test2:
-        print("(w, ct*idf) = ({}, {})".format(x[0], x[1]))
+        stripped_text = []
+        for item in text.split(' '):
+            word = item.lower().translate(translator).strip()
+            if len(word) > 1:
+                stripped_text.append(word)
+        return ' '.join(stripped_text)
+
+    # For now hard coding to get top 5 words
+    # Future make dynamic number of words
+    def get_tf_idf_top5(self, text):
+        tf_idf_list = self.tf_idf(text)
+        top5_list = [word for (word,count) in tf_idf_list[:5]]
+        return top5_list
+
+    def get_tf_cf_top5(self, text):
+        tf_cf_list = self.tf_cf(text)
+        top5_list = [word for (word,count) in tf_cf_list[:5]]
+        return top5_list
+
 

@@ -5,6 +5,7 @@ import sys
 from Text_Analysis import synonyms
 from Text_Analysis import text_analysis
 
+
 # This class can be invoked with either the text itself
 # or the relative path of the text file
 class text_module:
@@ -28,8 +29,11 @@ class text_module:
 		recent_text = self.get_sentiment_idx(index)
 		return recent_text.get_freq()
 
-	def get_syn(self, word):
-		return self.syns.get_syns(word)
+	def get_top5_syns(self, index=-1):
+		recent_text = self.get_sentiment_idx(index)
+		top5_idf = recent_text.get_tf_idf_top5()
+		syns = {word:self.syns.get_syns(word) for word in top5_idf}
+		return syns
 
 	def get_sentiment(self):
 		return self.text_list[-1]
@@ -39,3 +43,4 @@ class text_module:
 
 	def new_sentiment(text):
 		self.text_list.append(text_analysis(text))
+
