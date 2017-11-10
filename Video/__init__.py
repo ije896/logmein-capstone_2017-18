@@ -1,2 +1,2 @@
-from VideoAnalysis import VideoAnalysis
-from HeatMap import HeatMap
+from .VideoAnalysis import *
+from .HeatMap import *
