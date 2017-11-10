@@ -8,7 +8,7 @@ import sys
 # the main
 class synonyms:
 	def __init__(self):
-		self.thes_csv = "Text_Analysis/thesaurus.csv"
+		self.thes_csv = "/Users/zacharyfeinn/Repos/logmein-capstone_2017-18/Text_Analysis/thesaurus.csv"
 		self.thesaurus = {}
 		self.parse_thesaurus()
 

@@ -24,7 +24,7 @@ class word_detector:
 
         with open(afile, 'rb') as audio_file:
             stt = speech_to_text.recognize(
-                audio_file, content_type='audio/wav', timestamps=True,
+                audio_file, content_type='audio/mp3', timestamps=True,
                 word_confidence=False)
         return stt
 

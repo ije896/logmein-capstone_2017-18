@@ -1,6 +1,6 @@
 import sys
 import os
-from word_detection import word_detector
+from .word_detection import word_detector
 import json
 
 # speech_file = str(sys.argv[1])
