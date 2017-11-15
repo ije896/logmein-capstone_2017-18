@@ -1,6 +1,7 @@
 import sys
 import os
 from word_detection import word_detector
+import json
 
 # speech_file = str(sys.argv[1])
 
@@ -22,3 +23,7 @@ class audio_analyzer:
 
     def get_phrase_wpms(self):
         return self.word_detector.phrase_wpms
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+            sort_keys=True, indent=2)
