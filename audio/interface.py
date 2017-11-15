@@ -3,19 +3,24 @@ import os
 import json
 
 from audio_package import word_detection
+from audio_package import pitch_detection
 # speech_file = str(sys.argv[1])
 
 class Interface:
     def __init__(self):
         self.word_detector = None
+        self.pitch_detector = None
 
-    def process_filepath(self, afile, run_all=False, word_data=False):
+    def process_filepath(self, afile, run_all=False, word_data=False, pitch_data=False):
         if run_all:
             word_data = True
+            pitch_data = True
 
         if word_data:
             self.word_detector = word_detection.word_detector(afile)
 
+        if pitch_data:
+            a = 0
         return self.to_json()
 
     def get_speech_length(self):
