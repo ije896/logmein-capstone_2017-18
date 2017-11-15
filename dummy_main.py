@@ -2,7 +2,7 @@
 
 import sys
 import os
-from Text_Analysis import text_module
+from text import Interface
 
 
 def main():
@@ -17,7 +17,13 @@ def main():
 	#file_object.close()
 
 	# This can be called with either the text file or the text itself
-	ta = text_module(text_file)
+	ta = Interface()
+	
+	output = ta.processFilepath(text_file, run_all=True)
+
+	print(output)
+
+	'''
 	json = ta.get_json()
 	emotion = ta.get_emotion()
 	social = ta.get_social()
@@ -35,7 +41,7 @@ def main():
 	print(cf_syns)
 
 	ta.output_readability_tests()
-
+	'''
 
 
 if __name__ == '__main__':
