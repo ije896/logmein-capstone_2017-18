@@ -1,2 +1,6 @@
+from .watson_analyzer import *
+from .text_analysis import *
+from .readability import *
 from .interface import *
-from .text_package import *
+from .synonyms import *
+from .tf_idf import *

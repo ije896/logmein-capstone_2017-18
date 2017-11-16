@@ -2,17 +2,17 @@
 
 import os
 import sys
-from Text_Analysis import watson_analyzer
-from Text_Analysis import tf_idf
+from text import WatsonAnalyzer
+from text import tf_idf
 
 
 # This class can be invoked with either the text itself
 # or the relative path of the text file
-class text_analysis:
+class TextAnalysis:
 	def __init__(self, text):
 		self.script          = self.check_file(text)
-		self.watson_analysis = watson_analyzer(self.script)
-		self.tfidf			 = tf_idf.tf_idf()
+		self.watson_analysis = WatsonAnalyzer(self.script)
+		self.tfidf			 = tf_idf.TfIdf()
 
 	def get_json(self):
 		return self.watson_analysis.json

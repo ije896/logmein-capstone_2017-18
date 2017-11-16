@@ -11,7 +11,7 @@ from watson_developer_cloud import ToneAnalyzerV3
 # These credentials were made with a trial account
 # The free trial expires on Nov 22
 
-class watson_analyzer:
+class WatsonAnalyzer:
 	def __init__(self, text):
 		tone_tuple 	 = self.tone_analysis(text)
 		self.json 	 = tone_tuple[0]
