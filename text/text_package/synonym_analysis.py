@@ -5,11 +5,11 @@ import sys
 
 #TODO place the thesaurus in a permanent spot relative to main
 # The thesaurus file right now needs to be relative to the main
-class synonyms:
+class synonym_analysis:
 	def __init__(self):
-		self.thes_csv = "Text_Analysis/thesaurus.csv"
-		self.thesaurus = {}
-		self.parse_thesaurus()
+	        self.thes_csv = "text/text_package/thesaurus.csv" # TODO: make permanent location
+	        self.thesaurus = {}
+	        self.parse_thesaurus()
 
 	def parse_thesaurus(self):
 

@@ -8,8 +8,8 @@ from string import punctuation
 
 class tf_idf:
     def __init__(self):
-        self.freqs_csv = "Text_Analysis/corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
-        self.idf_csv   = "Text_Analysis/corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
+        self.freqs_csv = "text/text_package/corp_freq_brown.csv"  # TODO: make permanent location
+        self.idf_csv   = "text/text_package/corp_idf_brown.csv"   # TODO: make permanent location
 
         self.len_corp = 0
         self.freqs = {}
@@ -39,7 +39,7 @@ class tf_idf:
 
     '''
 	Text frequency  - inverse corpus frequency
-	equivalent to freq(word) / [ corpus_freq(word) ]
+	equivalent to freq(word) / [ corpus_freq(word) / len(corpus) ]
 	'''
 
     # We use the Decimal library to preserve arbitrary precision
