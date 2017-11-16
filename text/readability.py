@@ -2,7 +2,7 @@ import string
 # TODO: implement more than just flesch-kincaid (SMOG, etc)
 # TODO: Consider using https://pypi.python.org/pypi/textstat/ - might be easier but writing the code ourselves = less dependencies
 
-class readability_analysis:
+class Readability:
 	def __init__(self):
 		print("") # TODO: delete this
 

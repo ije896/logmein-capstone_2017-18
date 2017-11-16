@@ -6,10 +6,10 @@ from string import punctuation
 # TODO: remove numbers (we have words like 2146 in corpus)
 # TODO: do we even need len(corpus)? [probably not, remove eventually]
 
-class tf_idf:
+class TfIdf:
     def __init__(self):
-        self.freqs_csv = "text/text_package/corp_freq_brown.csv"  # TODO: make permanent location
-        self.idf_csv   = "text/text_package/corp_idf_brown.csv"   # TODO: make permanent location
+        self.freqs_csv = "text/corp_freq_brown.csv"  # TODO: make permanent location
+        self.idf_csv   = "text/corp_idf_brown.csv"   # TODO: make permanent location
 
         self.len_corp = 0
         self.freqs = {}

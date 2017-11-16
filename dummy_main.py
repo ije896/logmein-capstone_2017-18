@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-import os
 from text import Interface
-
 
 def main():
 	try:
@@ -13,16 +11,19 @@ def main():
 		exit(1)
 
 	#file_object = open(text_file, 'r')
-	#text = file_object.read()
+	#text_fail = file_object.read()
 	#file_object.close()
 
-	# This can be called with either the text file or the text itself
+	# This can be called with either the text_fail file or the text_fail itself
 	ta = Interface()
 	
 	output = ta.processFilepath(text_file, run_all=True)
 
 	print(output)
 
+	#ta = text_module(text_file)
+	#emotion = ta.get_emotion()
+	#print(emotion)
 	'''
 	json = ta.get_json()
 	emotion = ta.get_emotion()
