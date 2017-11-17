@@ -33,7 +33,9 @@ class Readability:
 
 	def get_words(self, text):
 		text = text.translate({ ord(c): '' for c in ".?!-:;="} ) # TODO: figure out if we've replaced enough (maybe use string.punctuation)
-		return text.split(' ') 
+		words = text.split(' ')
+		words = [w for w in words if len(w) > 0]
+		return words
 
 	def get_num_sents(self, text):
 		text = text.replace("...", " ") # ellipses aren't a new sentence
