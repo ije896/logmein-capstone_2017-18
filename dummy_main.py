@@ -17,32 +17,9 @@ def main():
 	# This can be called with either the text_fail file or the text_fail itself
 	ta = Interface()
 	
-	output = ta.processFilepath(text_file, run_all=True)
+	output = ta.processFilepath(text_file, {'run_all':True})
 
 	print(output)
-
-	#ta = text_module(text_file)
-	#emotion = ta.get_emotion()
-	#print(emotion)
-	'''
-	json = ta.get_json()
-	emotion = ta.get_emotion()
-	social = ta.get_social()
-
-	print(json)
-	print(emotion)
-	print(social)
-	
-	idf_syns = ta.get_top5_idf_syns()
-	cf_syns = ta.get_top5_cf_syns()
-	print("\nAnalyzing {}:\n".format(text_file))
-	print("Here are the top 5 TF-IDF Synonyms: \n")
-	print(idf_syns)
-	print("\nHere are the top 5 TF-CF Synonyms: \n")
-	print(cf_syns)
-
-	ta.output_readability_tests()
-	'''
 
 
 if __name__ == '__main__':

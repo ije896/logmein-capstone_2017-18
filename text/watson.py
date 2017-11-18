@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import os
-import sys
 import json
 from watson_developer_cloud import ToneAnalyzerV3
 
@@ -12,29 +10,28 @@ from watson_developer_cloud import ToneAnalyzerV3
 # The free trial expires on Nov 22
 
 class WatsonAnalyzer:
-	def __init__(self, text):
-		tone_tuple 	 = self.tone_analysis(text)
-		self.json 	 = tone_tuple[0]
-		self.emotion = tone_tuple[1]
-		self.social  = tone_tuple[2]
 
-	def parse_analysis(self, data):
+	@staticmethod
+	def parse_analysis(data):
 		emotion_tone =  data["document_tone"]["tone_categories"][0]["tones"]
 		social_tone =  data["document_tone"]["tone_categories"][1]["tones"]
 
-		emotion_dict = {}
-		social_dict = {}
+		emotion = {}
+		social = {}
 
 		# Parse items out of 
 		for item in emotion_tone:
-			emotion_dict[item["tone_name"]] = item["score"]
+			emotion[item["tone_name"]] = item["score"]
 
 		for item in social_tone:
-			social_dict[item["tone_name"]] = item["score"]
+			social[item["tone_name"]] = item["score"]
 
-		return (emotion_dict, social_dict)
+		tones = {'emotion': emotion, 'social': social}
 
-	def tone_analysis(self, text):
+		return tones
+
+	@staticmethod
+	def tone_analysis(text):
 		tone_analyzer = ToneAnalyzerV3(
 			version='2016-05-19',
 			username='3eb02c6f-fe6e-4f90-b619-f6d93ba0e9e8',
@@ -47,16 +44,11 @@ class WatsonAnalyzer:
 		# content_type: content type of request, text/plain, text/html, application/json (default text/plain)
 		tone = tone_analyzer.tone(text, tones='emotion, social', sentences='false', content_type='text/plain')
 
-		json_tone = json.dumps(tone, indent=2)
+		return WatsonAnalyzer.parse_analysis(tone)
 
-		analysis_tuple = self.parse_analysis(tone)
-		
-		tone_tuple = (json_tone, analysis_tuple[0], analysis_tuple[1])
-
-		return tone_tuple
-
-
-
+	@staticmethod
+	def get_sentiment(text):
+		return WatsonAnalyzer.tone_analysis(text)
 
 
 

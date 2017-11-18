@@ -2,26 +2,50 @@
 
 import os
 import sys
-from text import WatsonAnalyzer
+from text import synonyms
+from text import readability
 from text import tf_idf
+from text import watson
 
 
 # This class can be invoked with either the text itself
 # or the relative path of the text file
 class TextAnalysis:
 	def __init__(self, text):
-		self.script          = self.check_file(text)
-		self.watson_analysis = WatsonAnalyzer(self.script)
-		self.tfidf			 = tf_idf.TfIdf()
+		self.script = self.check_file(text)
+		self.syn = synonyms.Synonyms()
 
-	def get_json(self):
-		return self.watson_analysis.json
+	def get_sentiment(self):
+		tones = watson.WatsonAnalyzer.get_sentiment(self.script)
+		sentiment = {'sentiment': tones}
+		return sentiment
 
-	def get_emotion(self):
-		return self.watson_analysis.emotion
+	def get_synonyms(self):
+		tfidf = tf_idf.TfIdf.get_tf_idf(self.script)
 
-	def get_social(self):
-		return self.watson_analysis.social
+		syns = {}
+		idf_index = 0
+		while len(syns) < 5 and idf_index < len(tfidf):
+			word = tfidf[idf_index]
+			synonym = self.syn.get_syns(word)
+			if synonym != -1:
+				syns[word] = synonym
+			idf_index += 1
+		syn_list = {'synonyms': syns}
+		return syn_list
+
+	def get_readability(self):
+		score = readability.Readability.f_k(self.script)
+		grade = readability.Readability.f_k_grade_level(self.script)
+
+		read_list = {'score': score, 'grade': grade}
+		read = {'readability': read_list}
+		return read
+
+
+	# Temporary function for demo purposes, can eat later
+	def output_readability_tests(self):
+		readability.Readability.output_tests()
 
 	def check_file(self, data):
 		# Try to open it as a file
@@ -30,14 +54,6 @@ class TextAnalysis:
 			text = file_object.read()
 			file_object.close()
 			return text
-		# If the file doesn't exist, then assume we were given the text
+		# If the file doesn't exist, then assume we were given the text_fail
 		except:
 			return data
-
-	def get_tf_idf(self):
-		return self.tfidf.get_tf_idf(self.script)
-
-	def get_tf_cf(self):
-		return self.tfidf.get_tf_cf(self.script)
-
-
