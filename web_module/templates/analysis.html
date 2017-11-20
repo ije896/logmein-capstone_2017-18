@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='analysis.css')}}">
+		<script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'Chart.min.js') }}" ></script>
+		<script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'jquery-3.2.1.min.js') }}" ></script>
+		<script>
+			var watson_data = {{watson_data | safe}};
+			var frequent_words = {{frequent_words | safe}};
+			var audio_data = {{audio_data | safe}};
+		</script>
+		<script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'analysis.js') }}" ></script>
+	</head>
+	<body>
+		<table id="frequent-words">
+			<tr>
+				<td>Frequently Used Words</td>
+				<td>Synonyms</td>
+			</tr>
+			{% for word, syns in frequent_words.items() %}
+    			<tr>
+      				<td>{{word}}</td>
+      				<td>{{syns}}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<canvas id="marksChart" width="3100" height="900"></canvas>
+
+	</body>
+</html>

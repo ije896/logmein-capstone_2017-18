@@ -1,0 +1,37 @@
+html {
+	max-height: 100%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+  text-align: center;
+  font-family: "Arial";
+  color: #fff;
+  //background-color: yellow;
+  margin: 0;
+  padding: 0;
+}
+
+#marksChart {
+	left: 0%;
+	float: left;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    color: black;
+}
+
+#frequent-words {
+	margin-left: auto;
+    margin-right: auto;
+}
