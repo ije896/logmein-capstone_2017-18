@@ -18,17 +18,14 @@ def main():
 
 	# This can be called with either the text file or the text itself
 	ta = text_module(text_file)
-	'''
 	json = ta.get_json()
 	emotion = ta.get_emotion()
 	social = ta.get_social()
-	freq = ta.get_freq()
 
 	print(json)
 	print(emotion)
 	print(social)
-	print(freq)
-	'''
+	
 	idf_syns = ta.get_top5_idf_syns()
 	cf_syns = ta.get_top5_cf_syns()
 	print("\nAnalyzing {}:\n".format(text_file))
@@ -36,6 +33,8 @@ def main():
 	print(idf_syns)
 	print("\nHere are the top 5 TF-CF Synonyms: \n")
 	print(cf_syns)
+
+	ta.output_readability_tests()
 
 
 

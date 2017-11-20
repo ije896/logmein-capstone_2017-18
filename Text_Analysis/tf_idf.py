@@ -4,12 +4,12 @@ from string import punctuation
 
 # Reads in from csv file for use in calculating tf_idf
 # TODO: remove numbers (we have words like 2146 in corpus)
-# TODO: do we even need len(corpus)?
+# TODO: do we even need len(corpus)? [probably not, remove eventually]
 
 class tf_idf:
     def __init__(self):
-        self.freqs_csv = "/Users/zacharyfeinn/Repos/logmein-capstone_2017-18/Text_Analysis/corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
-        self.idf_csv   = "/Users/zacharyfeinn/Repos/logmein-capstone_2017-18/Text_Analysis/corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
+        self.freqs_csv = "Text_Analysis/corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
+        self.idf_csv   = "Text_Analysis/corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
 
         self.len_corp = 0
         self.freqs = {}
