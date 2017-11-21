@@ -13,35 +13,24 @@ The Text_Analysis module provides a number of functions to aid in analyzing a pr
 
 - Analyzes sentiment (tone) with watson_analyzer.py
 
-- Gets (sorted) frequencies of each word in text_analysis.py
+- Provides synonyms for the top 5 most used words (not including words such as the, is, etc)
 
-- Can be queried for synonyms
+- Does an analysis on readability and provides a score and a grade
 
 **USAGE**:
 
-All calls to the text analysis module can be done through text_module.py, which serves as a class that integrates the various submodules (watson_analyzer, synonyms, etc)
+All calls to the text analysis module can be done through interface.py, which serves as a class that integrates the various submodules (watson_analyzer, synonyms, etc)
 
-In order to create a text_module object 'text_module' needs to be imported from 'Text_Analysis' and the object needs to be instantiated with the text file (this can be either the text itself or the relative path to the text file).
+Interface is a static class and therefore cannot be instantiated as an object
 
-```
-text_obj = text_module(<text_path>)
-```
+In order to query the text analysis process_filepath() can be called with the text file and a dictionary of options
+    options = {run_all:True/False, sentiment:True/False, synonyms:True/False, readability:True/False}
 
-From here you can access a json object of the sentiment analysis, dictionary of the emotion analysis, dictionary of the social analysis, frequency of the words, and synonyms of the most common words.  These can be done by:
-
-```
-text_obj.get_json()
-text_obj.get_emotion()
-text_obj.get_social()
-text_obj.get_top5_idf_syns()
-text_obj.get_top5_cf_syns()
-```
-
-Additionally, you can create multiple text_analysis objects on separate texts within the ame text module.  They can be created and then accessed with the following:
+process_filepath() will return a JSON object containing the queried information
 
 ```
-text_obj.new_sentiment(<text_path>)
-text_obj.get_sentiment(<text_analysis_index>)		NOTE: This is 0 indexed and defaults to most recent
+text_obj = text.Interface()
+text_json = text_obj.process_filepath(file, options)
 ```
 
 ## Video Module

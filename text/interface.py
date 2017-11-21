@@ -8,44 +8,44 @@ from text import text_analysis
 
 
 class Interface:
-    def __init__(self):
-        self.st  = False
-        self.sy  = False
-        self.r   = False
 
     # Make a dictionary of features as booleans
-    def processFilepath(self, text, options):
+    @staticmethod
+    def process_filepath(text, options):
+        st = False
+        sy = False
+        r = False
         ta = text_analysis.TextAnalysis(text)
 
         for (opt, val) in options.items():
             if val:
                 if opt == "run_all":
-                    self.st = True
-                    self.sy = True
-                    self.r  = True
+                    st = True
+                    sy = True
+                    r  = True
                     break
                 elif opt == "sentiment":
-                    self.st = True
+                    st = True
                 elif opt == "synonyms":
-                    self.sy = True
+                    sy = True
                 elif opt == "readability":
-                    self.r = True
+                    r = True
                 else:
                     print("ERROR: Options are {run_all, sentiment, synonyms, readability}")
                     exit(1)
 
         json_list = []
-        if self.st:
+        if st:
             sentiment = ta.get_sentiment()
             json_list.append(sentiment)
 
-        if self.sy and self.st:
+        if sy:
             synonyms = ta.get_synonyms()
             json_list.append(synonyms)
 
-        if self.r:
+        if r:
             readability = ta.get_readability()
             json_list.append(readability)
 
-        self.json = json.dumps(json_list, indent=2)
-        return self.json
+        json_object = json.dumps(json_list, indent=2)
+        return json_object
