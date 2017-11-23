@@ -26,6 +26,7 @@ client = vision.ImageAnnotatorClient()
 class VideoAnalysis:
     def __init__(self, video_src):
         self.coords_and_time = [] #a tuple of x, y coord, sec
+        self.sentiment_and_time = []
         self.video_src = video_src
         self.vide_duration = None
         self.total_frames = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
@@ -35,11 +36,13 @@ class VideoAnalysis:
         self.current_frame = 0
         self.google_api_requests = 0
         self.open_cv_requests = 0
-        self.frame_filepath = ""
         self.run();
 
     def get_coords(self):
         return self.coords_and_time
+
+    def get_sentiment(self):
+        return self.sentiment_and_time
 
     def get_fps(self):
         return self.fps
@@ -69,8 +72,16 @@ class VideoAnalysis:
 
         response = client.face_detection(image=image)
         faces = response.face_annotations
+        likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
+                           'LIKELY', 'VERY_LIKELY')
+        sent_conf = []
 
         for face in faces:
+            sent_conf.append( 'anger: {}'.format(likelihood_name[face.anger_likelihood]))
+            sent_conf.append('joy: {}'.format(likelihood_name[face.joy_likelihood]))
+            sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.sorrow_likelihood]))
+            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise®_likelihood]))
+
             vertices = ([(vertex.x, vertex.y)
                         for vertex in face.bounding_poly.vertices])
             if len(vertices) != 0:
@@ -79,6 +90,7 @@ class VideoAnalysis:
                 interest_x = vertices[0][0] + (width/2)
                 interest_y = vertices[0][1] + (height/2)
                 self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
+                self.sentiment_and_time.append({"sentiment": sent_conf, "sec": video_time })
 
         os.remove(file_path)
 
@@ -92,28 +104,23 @@ class VideoAnalysis:
             video_time = round(self.current_frame/self.fps,2)
 
             if ret:
-                if(video_time == 3.0):
-                    file_name = "frame_excerpt.jpg"
-                    file_path = os.path.join("./", file_name)
-                    cv2.imwrite(file_path, frame)
-                    self.frame_filepath = file_path
-                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                face = face_cascade.detectMultiScale(gray, 1.3, 5)
-                if(len(face) != 0):
-                    # print("Haarcascade succesful")
-                    for (x,y,w,h) in face:
-                        # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
-                        self.open_cv_requests += 1
-                        interest_x = int(x+(w/2))
-                        interest_y = int(y+(h/2))
-                        self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
-                else:
-                    # print("using google api...")
-                    file_name = "frame_{}.jpg".format(int(video_time))
-                    file_path = os.path.join("./", file_name)
-                    cv2.imwrite(file_path, gray)
-                    self._google_analysis(file_path, video_time)
+                # face = face_cascade.detectMultiScale(gray, 1.3, 5)
+                # if(len(face) != 0):
+                #     # print("Haarcascade succesful")
+                #     for (x,y,w,h) in face:
+                #         # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
+                #         self.open_cv_requests += 1
+                #         interest_x = int(x+(w/2))
+                #         interest_y = int(y+(h/2))
+                #         self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
+                # else:
+                # print("using google api...")
+                file_name = "frame_{}.jpg".format(int(video_time))
+                file_path = os.path.join("./", file_name)
+                cv2.imwrite(file_path, frame)
+                self._google_analysis(file_path, video_time)
 
                 # cv2.imshow('frame', frame)
                 # # press esc to quit
