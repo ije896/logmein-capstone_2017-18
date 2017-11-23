@@ -80,7 +80,7 @@ class VideoAnalysis:
             sent_conf.append( 'anger: {}'.format(likelihood_name[face.anger_likelihood]))
             sent_conf.append('joy: {}'.format(likelihood_name[face.joy_likelihood]))
             sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.sorrow_likelihood]))
-            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise®_likelihood]))
+            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
 
             vertices = ([(vertex.x, vertex.y)
                         for vertex in face.bounding_poly.vertices])
