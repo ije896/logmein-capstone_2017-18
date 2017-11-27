@@ -20,7 +20,7 @@ import sys
 from google.cloud import vision
 from google.cloud.vision import types
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('./Video/haarcascade_frontalface_default.xml')
 client = vision.ImageAnnotatorClient()
 
 class VideoAnalysis:
@@ -36,9 +36,9 @@ class VideoAnalysis:
         self.google_api_requests = 0
         self.open_cv_requests = 0
         self.frame_filepath = ""
+        self.run();
 
     def get_coords(self):
-        print (self.coords_and_time)
         return self.coords_and_time
 
     def get_fps(self):
@@ -58,7 +58,6 @@ class VideoAnalysis:
 
     def to_json(self):
         json_obj = json.dumps(self,default=lambda o: o.__dict__)
-        print(json_obj)
         return json_obj
 
     def _google_analysis(self,file_path, video_time):
@@ -111,7 +110,7 @@ class VideoAnalysis:
                         self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
                 else:
                     # print("using google api...")
-                    file_name = "frame_{}_{}.jpg".format(int(video_time), self.video_src)
+                    file_name = "frame_{}.jpg".format(int(video_time))
                     file_path = os.path.join("./", file_name)
                     cv2.imwrite(file_path, gray)
                     self._google_analysis(file_path, video_time)
@@ -133,7 +132,6 @@ def main():
 
     print(__doc__)
     app = VideoAnalysis(video_src)
-    app.run()
     app.to_json()
     cv2.destroyAllWindows()
 
