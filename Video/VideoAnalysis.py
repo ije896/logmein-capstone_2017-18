@@ -4,8 +4,8 @@
 Video Analysis
 ====================
 This video analyzer tracks the users movement using face tracking
-and returns those coordinates as an array of (coords and timestamps)
-Usage
+and returns sentiment and face-tracking coordinates along with a timestamp
+as a list or json object.
 -----
 VideoAnalysis.py [<video_source>]
 ----
@@ -56,9 +56,6 @@ class VideoAnalysis:
     def get_video_duration(self):
         return self.video_duration
 
-    def get_frame_filepath(self):
-        return self.frame_filepath
-
     def to_json(self):
         json_obj = json.dumps(self,default=lambda o: o.__dict__)
         return json_obj
@@ -104,29 +101,11 @@ class VideoAnalysis:
             video_time = round(self.current_frame/self.fps,2)
 
             if ret:
-                # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-                # face = face_cascade.detectMultiScale(gray, 1.3, 5)
-                # if(len(face) != 0):
-                #     # print("Haarcascade succesful")
-                #     for (x,y,w,h) in face:
-                #         # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
-                #         self.open_cv_requests += 1
-                #         interest_x = int(x+(w/2))
-                #         interest_y = int(y+(h/2))
-                #         self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
-                # else:
-                # print("using google api...")
                 file_name = "frame_{}.jpg".format(int(video_time))
                 file_path = os.path.join("./", file_name)
                 cv2.imwrite(file_path, frame)
                 self._google_analysis(file_path, video_time)
 
-                # cv2.imshow('frame', frame)
-                # # press esc to quit
-                # k = cv2.waitKey(30) & 0xff
-                # if k == 27:
-                #     break
             else:
                 break
         self.vide_duration = video_time
