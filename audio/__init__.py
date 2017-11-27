@@ -1,3 +1,2 @@
-from .interface import *
-from .audio import *
-from .audio_package import *
+from .word_detection import *
+from .pitch_detection import *

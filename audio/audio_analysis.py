@@ -1,11 +1,12 @@
 import sys
 import os
-from .word_detection import word_detector
 import json
+from audio import word_detection
+from audio import pitch_detection
 
 # speech_file = str(sys.argv[1])
 
-class audio_analyzer:
+class AudioAnalyzer:
     def __init__(self, afile):
         self.word_detector = word_detector(afile)
 
