@@ -7,10 +7,10 @@ from watson_developer_cloud import ToneAnalyzerV3
 # https://www.ibm.com/watson/developercloud/tone-analyzer/api/v3/?python#error-handling
 
 # These credentials were made with a trial account
-# The free trial expires on Nov 22
+# The free trial expires on Dec 27
+
 
 class WatsonAnalyzer:
-
 	@staticmethod
 	def parse_analysis(data):
 		emotion_tone =  data["document_tone"]["tone_categories"][0]["tones"]
@@ -19,7 +19,7 @@ class WatsonAnalyzer:
 		emotion = {}
 		social = {}
 
-		# Parse items out of 
+		# Parse items out of
 		for item in emotion_tone:
 			emotion[item["tone_name"]] = item["score"]
 
@@ -34,8 +34,8 @@ class WatsonAnalyzer:
 	def tone_analysis(text):
 		tone_analyzer = ToneAnalyzerV3(
 			version='2016-05-19',
-			username='3eb02c6f-fe6e-4f90-b619-f6d93ba0e9e8',
-			password='3Ipxrj3bXs4T'
+			username='b81ad822-8f05-4eba-8b26-c0df3ff7bb9c',
+			password='HrKpzUdan1yq'
 		)
 
 		# Tone Analysis

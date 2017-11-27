@@ -11,11 +11,11 @@ class Interface:
 
     # Make a dictionary of features as booleans
     @staticmethod
-    def process_filepath(text, options):
+    def process_filepath(fp, options):
         st = False
         sy = False
         r = False
-        ta = text_analysis.TextAnalysis(text)
+        ta = text_analysis.TextAnalysis(fp)
 
         for (opt, val) in options.items():
             if val:

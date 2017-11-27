@@ -11,8 +11,8 @@ from text import watson
 # This class can be invoked with either the text itself
 # or the relative path of the text file
 class TextAnalysis:
-	def __init__(self, text):
-		self.script = self.check_file(text)
+	def __init__(self, fp):
+		self.script = self.check_file(fp)
 		self.syn = synonyms.Synonyms()
 
 	def get_sentiment(self):
@@ -42,12 +42,13 @@ class TextAnalysis:
 		read = {'readability': read_list}
 		return read
 
-
 	# Temporary function for demo purposes, can eat later
-	def output_readability_tests(self):
+	@staticmethod
+	def output_readability_tests():
 		readability.Readability.output_tests()
 
-	def check_file(self, data):
+	@staticmethod
+	def check_file(data):
 		# Try to open it as a file
 		try:
 			file_object = open(data, 'r')
