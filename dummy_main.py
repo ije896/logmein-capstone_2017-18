@@ -7,7 +7,7 @@ def main():
 	try:
 		text_file = sys.argv[1]
 	except:
-		print("Usage: python3 %s input_file (max 128kB) ", sys.argv[0])
+		print( "Usage: python3 {} input_file (max 128kB) ".format(sys.argv[0]) )
 		exit(1)
 
 	
