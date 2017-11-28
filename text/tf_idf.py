@@ -6,35 +6,31 @@ from string import punctuation
 # TODO: remove numbers (we have words like 2146 in corpus)
 # TODO: do we even need len(corpus)? [probably not, remove eventually]
 
-class tf_idf:
-    def __init__(self):
-        self.freqs_csv = "Text_Analysis/corp_freq_brown.csv"  # TODO: add Text_Analysis/ before file
-        self.idf_csv   = "Text_Analysis/corp_idf_brown.csv"   # TODO: add Text_Analysis/ before file
+class TfIdf:
 
-        self.len_corp = 0
-        self.freqs = {}
-        self.idfs  = {}
-        self.parse_freqs()
-        self.parse_idfs()
-
-    def parse_freqs(self):
-        with open(self.freqs_csv, 'r') as csv:
+    @staticmethod
+    def parse_freqs(freqs_csv):
+        freqs = {}
+        with open(freqs_csv, 'r') as csv:
             first = csv.readline()
             rest = csv.readlines()
 
             (sentinel, length) = first.rstrip().split(',')
             assert (sentinel == "len(corpus)")
-            self.len_corp = int(length)
 
             for line in rest:
                 (word, f) = line.strip().split(',')
-                self.freqs[word] = int(f)
+                freqs[word] = int(f)
+        return freqs
 
-    def parse_idfs(self):
-        with open(self.idf_csv, 'r') as csv:
+    @staticmethod
+    def parse_idfs(idf_csv):
+        idfs = {}
+        with open(idf_csv, 'r') as csv:
             for line in csv.readlines():
                 (word, idf) = line.strip().split(',')
-                self.idfs[word] = float(idf)
+                idfs[word] = float(idf)
+        return idfs
 
 
     '''
@@ -44,14 +40,15 @@ class tf_idf:
 
     # We use the Decimal library to preserve arbitrary precision
     # TODO: decide if we want to ignore words not in the corpus or instead do something like freqs.get(w, .25)
-    
-    def tf_cf(self, text):
-        stripped_text = self.strip_punctuation(text)
+
+    @staticmethod
+    def tf_cf(text, freqs):
+        stripped_text = TfIdf.strip_punctuation(text)
         text_words = stripped_text.split(' ')
         tfcf = []
         for w in text_words:
             w = w.lower()
-            (ct, cf) = (Decimal(stripped_text.count(w)), Decimal(self.freqs.get(w, 0)))
+            (ct, cf) = (Decimal(stripped_text.count(w)), Decimal(freqs.get(w, 0)))
             assert (ct > 0)
 
             if cf == 0:  # Word does not appear in corpus, ignore it for now
@@ -63,13 +60,14 @@ class tf_idf:
 
         return sorted(tfcf, key=lambda tup: tup[1], reverse=True)
 
-    def tf_idf(self, text):
-        stripped_text = self.strip_punctuation(text)
+    @staticmethod
+    def tf_idf(text, idfs):
+        stripped_text = TfIdf.strip_punctuation(text)
         text_words = stripped_text.split(' ')
         tfidf = []
         for w in text_words:
             w = w.lower()
-            (ct, idf) = (Decimal(stripped_text.count(w)), Decimal(self.idfs.get(w, 0)))
+            (ct, idf) = (Decimal(stripped_text.count(w)), Decimal(idfs.get(w, 0)))
             assert (ct > 0)
 
             if idf == 0:  # Word appears in all corpus documents so we don't care
@@ -82,8 +80,9 @@ class tf_idf:
         return sorted(tfidf, key=lambda tup: tup[1], reverse=True)
 
     # Strip punctuation from text, only want words
-    # Also place all letters to lower case to avoid duplication 
-    def strip_punctuation(self, text):
+    # Also place all letters to lower case to avoid duplication
+    @staticmethod
+    def strip_punctuation(text):
         # Set up translation table for use with string.translate(translator)
         translator = str.maketrans('', '', punctuation)
 
@@ -96,14 +95,28 @@ class tf_idf:
                 stripped_text.append(word)
         return ' '.join(stripped_text)
 
-    def get_tf_idf(self, text):
-        tf_idf_list = self.tf_idf(text)
-        tf_idf = [word for (word,count) in tf_idf_list]
+
+    @staticmethod
+    def get_tf_idf(text):
+        idf_csv   = "text/corp_idf_brown.csv"  # TODO: make permanent location
+
+        idfs = TfIdf.parse_idfs(idf_csv)
+
+        tf_idf_list = TfIdf.tf_idf(text, idfs)
+
+        tf_idf = [word for (word, count) in tf_idf_list]
+
         return tf_idf
 
-    def get_tf_cf(self, text):
-        tf_cf_list = self.tf_cf(text)
-        tf_cf = [word for (word,count) in tf_cf_list]
-        return tf_cf
+    @staticmethod
+    def get_tf_cf(text):
+        freqs_csv = "text/corp_freq_brown.csv"  # TODO: make permanent location
 
+        freqs = TfIdf.parse_freqs(freqs_csv)
+
+        tf_cf_list = TfIdf.tf_idf(text, freqs)
+
+        tf_cf = [word for (word, count) in tf_cf_list]
+
+        return tf_cf
 
