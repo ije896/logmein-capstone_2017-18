@@ -4,6 +4,7 @@ import json
 
 from audio import audio_analysis
 
+# turn this into the audio analysis class
 # speech_file = str(sys.argv[1])
 class Interface:
     @staticmethod
