@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 
-import os
-import sys
 import json
 
-from text import text_analysis
+from text import synonyms
+from text import readability
+from text import tf_idf
+from text import watson
 
 
 class Interface:
+    def __init__(self):
+        self.syn_dict = synonyms.Synonyms()
+        self.script = None
 
     # Make a dictionary of features as booleans
-    @staticmethod
-    def process_filepath(fp, options):
+    def process_filepath(self, fp, options):
         st = False
         sy = False
         r = False
-        ta = text_analysis.TextAnalysis(fp)
+
+        self.script = Interface.check_file(fp)
 
         for (opt, val) in options.items():
             if val:
@@ -36,16 +40,61 @@ class Interface:
 
         json_list = []
         if st:
-            sentiment = ta.get_sentiment()
-            json_list.append(sentiment)
+            sent_dict = Interface.get_sentiment(self.script)
+            json_list.append(sent_dict)
 
         if sy:
-            synonyms = ta.get_synonyms()
-            json_list.append(synonyms)
+            syn_list = Interface.get_synonyms(self.script, self.syn_dict)
+            json_list.append(syn_list)
 
         if r:
-            readability = ta.get_readability()
-            json_list.append(readability)
+            read_dict = Interface.get_readability(self.script)
+            json_list.append(read_dict)
 
         json_object = json.dumps(json_list, indent=2)
         return json_object
+
+    @staticmethod
+    def get_sentiment(script):
+        tones = watson.WatsonAnalyzer.get_sentiment(script)
+        sentiment = {'sentiment': tones}
+        return sentiment
+
+    @staticmethod
+    def get_synonyms(script, syn):
+        tfidf = tf_idf.TfIdf.get_tf_idf(script)
+
+        syns = {}
+        idf_index = 0
+        while len(syns) < 5 and idf_index < len(tfidf):
+            word = tfidf[idf_index]
+            synonym = syn.get_syns(word)
+            if synonym != -1:
+                syns[word] = synonym
+            idf_index += 1
+        syn_list = {'synonyms': syns}
+        return syn_list
+
+    @staticmethod
+    def get_readability(script):
+        score = readability.Readability.f_k(script)
+        grade = readability.Readability.f_k_grade_level(script)
+
+        read_list = {'score': score, 'grade': grade}
+        read = {'readability': read_list}
+        return read
+
+    @staticmethod
+    def output_readability_tests():
+        readability.Readability.output_tests()
+
+    @staticmethod
+    def check_file(fp):
+        #Try to open it as a file
+        try:
+            file_object = open(fp, 'r')
+            text = file_object.read()
+            file_object.close()
+            return text
+        except:
+            return fp
