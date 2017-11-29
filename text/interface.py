@@ -11,13 +11,13 @@ from text import watson
 class Interface:
     def __init__(self):
         self.syn_dict = synonyms.Synonyms()
-        self.script = None
+        self.script   = None
 
     # Make a dictionary of features as booleans
     def process_filepath(self, fp, options):
         st = False
         sy = False
-        r = False
+        r  = False
 
         self.script = Interface.check_file(fp)
 
@@ -33,7 +33,7 @@ class Interface:
                 elif opt == "synonyms":
                     sy = True
                 elif opt == "readability":
-                    r = True
+                    r  = True
                 else:
                     print("ERROR: Options are {run_all, sentiment, synonyms, readability}")
                     exit(1)
@@ -44,7 +44,7 @@ class Interface:
             json_list.append(sent_dict)
 
         if sy:
-            syn_list = Interface.get_synonyms(self.script, self.syn_dict)
+            syn_list  = Interface.get_synonyms(self.script, self.syn_dict)
             json_list.append(syn_list)
 
         if r:
