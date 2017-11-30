@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import json
 from watson_developer_cloud import SpeechToTextV1
 
-class word_detector:
+class WordDetector:
     def __init__(self, afile):
         results = self.run_word_detection(afile)
         self.transcript = results['transcript']
@@ -16,15 +16,15 @@ class word_detector:
 
     def get_watson_STT(self, afile):
         speech_to_text = SpeechToTextV1(
-        username='1e702356-275c-4f54-bf57-7c670774ea86',
-        password='qEmrozAb1ug7',
+        username= "4c2c6f6c-d4ef-4458-b479-98bc900320f2",
+        password= "BKNAbarogTNu",
         x_watson_learning_opt_out=False
         )
         print(json.dumps(speech_to_text.get_model('en-US_BroadbandModel'), indent=2))
 
         with open(afile, 'rb') as audio_file:
             stt = speech_to_text.recognize(
-                audio_file, content_type='audio/mp3', timestamps=True,
+                audio_file, content_type='audio/wav', timestamps=True,
                 word_confidence=False)
         return stt
 
