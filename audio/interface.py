@@ -2,12 +2,16 @@ import sys
 import os
 import json
 
-import word_detection as wd
-import pitch_detection as pd
+from audio import word_detection as wd
+from audio import pitch_detection as pd
 
 # turn this into the audio analysis class
 # speech_file = str(sys.argv[1])
 class Interface:
+    def __init__(self):
+        self.word_detector = None
+        self.pitch_detector = None
+        
     def process_filepath(self, afile, options):
         word = False
         pitch = False
