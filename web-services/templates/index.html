@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block imports_head %}
+
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'pages/index/index.css') }}">
+
+	<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'pages/index/index.js') }}" ></script>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Frank+Ruhl+Libre|Source+Serif+Pro|Cormorant+Garamond');
+	</style>
+
+	<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'resources/js/chart.min.js') }}" ></script>
+
+{% endblock %}
+
+{% block body %}
+{#	<img class="scene" src="{{url_for('static', filename='pages/index/presentation-blue-bottom-grad-black.png')}}" />#}
+	<div class="scene bg-image-top hidden" id="index-top-scene">
+		<div class="site-title text-center hidden" id="index-top-scene-label">Stage<br>Presence</div>
+	</div>
+
+	<div class="scene bg-black hidden" id="index-section-1">
+
+		<div class="section-label text-center hidden" id="index-section-1-label">
+			<div class="animated-border-left"></div>
+			<div class="animated-border-top"></div>
+			Charisma
+			<div class="animated-border-right"></div>
+			<div class="animated-border-bottom"></div>
+		</div>
+		<div class="section-text-main-center hidden" id="section-1-text">
+			<p id="section-1-p1">Good presentations are all alike. Music, comedy, politics, business... the language of charisma is universal.</p>
+			<br>
+			<p id="section-1-p2">We believe charisma can be learned, especially for delivering presentations. Below you will find some of the elements of charisma that Stage Presence teaches.</p>
+		</div>
+	</div>
+
+	<div class="scene bg-black hidden" id="index-section-2">
+{#		<img class="index-section-2-image hidden" id="index-section-2-image" src="{{ url_for('static', filename='pages/index/presentation-comic-inverted.png') }}" />#}
+		<div class="animated-border-top hidden"></div>
+
+		<div class="section-label text-center hidden" id="index-section-2-label">
+			<div class="animated-border-left"></div>
+			<div class="animated-border-top"></div>
+			Voicing
+			<div class="animated-border-right"></div>
+			<div class="animated-border-bottom"></div>
+		</div>
+
+		<canvas class="leftbar" id="myChart"></canvas>
+		<div class="section-text-main-right hidden" id="section-2-text">
+			<p>A good presentation will maintain a steady <b>rate of speech</b>. An excellent presentation will include some variation, such as speeding up when driving to a point, and speaking a bit slower to emphasize several words.</p>
+		</div>
+
+		<canvas class="rightChart" id="myChart-2"></canvas>
+		<div class="section-text-main-left hidden" id="section-2-text-2">
+			<p><b>Pitch</b> variation helps maintain your audience's interest, and it helps you make your point. However, too much variation may lull your audience to sleep.</p>
+		</div>
+
+	</div>
+
+	<div class="scene bg-black hidden" id="index-section-3">
+
+		<div class="animated-border-top hidden"></div>
+
+		<div class="section-label text-center hidden" id="index-section-3-label">
+			<div class="animated-border-left"></div>
+			<div class="animated-border-top"></div>
+			Content
+			<div class="animated-border-right"></div>
+			<div class="animated-border-bottom"></div>
+		</div>
+
+		<canvas class="rightChart" id="myChart-3"></canvas>
+		<div class="section-text-main-left hidden" id="section-3-text">
+			<p>Great presentations use content to effectively communicate emotion. The word choice should be appropriate to the event, and have an <b>emotional impact</b>.</p>
+		</div>
+
+		<canvas class="leftbar" id="myChart-4"></canvas>
+		<div class="section-text-main-right hidden" id="section-3-text-2">
+			<p>The <b>vocabulary</b> of a presentation should be understandable to its audience, and a great presentation will vary its word choice while building several themes.</p>
+		</div>
+
+
+
+	</div>
+
+
+	<div class="scene bg-black hidden" id="index-section-4">
+{#		<img class="index-section-2-image hidden" id="index-section-2-image" src="{{ url_for('static', filename='pages/index/presentation-comic-inverted.png') }}" />#}
+		<div class="animated-border-top hidden"></div>
+
+		<div class="section-label text-center hidden" id="index-section-4-label">
+			<div class="animated-border-left"></div>
+			<div class="animated-border-top"></div>
+			Physicality
+			<div class="animated-border-right"></div>
+			<div class="animated-border-bottom"></div>
+		</div>
+
+		<canvas class="leftbar" id="myChart-5"></canvas>
+		<div class="section-text-main-right hidden" id="section-4-text">
+			<p>A presentation is like a play. Consider yourself an actor, <b>filling the space</b>. You should cross the stage to build momentum and hit your marks to make a point.</p>
+		</div>
+
+		<canvas class="rightChart" id="myChart-6"></canvas>
+		<div class="section-text-main-left hidden" id="section-4-text-2">
+			<p><b>Facial Expressions</b> are important to connecting with your audience. When you feel something, so will they. Try to use strong expressions to make points, and smile throughout.</p>
+		</div>
+
+	</div>
+
+
+{% endblock %}
+
+{#
+voicing
+word choice
+physicality
+#}

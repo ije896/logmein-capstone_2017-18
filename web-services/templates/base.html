@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+
+		<link rel="stylesheet" href="{{ url_for('static', filename = 'resources/css/mastersheet.css') }}">
+
+		<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'resources/js/jquery-3.2.1.min.js') }}" ></script>
+
+		{% block imports_head %} {% endblock %}
+
+	</head>
+
+	<body>
+
+		{% block body %} {% endblock %}
+
+	</body>
+</html>
