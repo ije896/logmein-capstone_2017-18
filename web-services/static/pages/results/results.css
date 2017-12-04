@@ -1,0 +1,283 @@
+html {
+    overflow: hidden;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    overflow: auto;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*overflow: auto;*/
+}
+
+.bg-black {
+    background-color: white;
+}
+
+.bg-image-top {
+    background: url('/static/pages/index/presentation-blue-bottom-grad-black.png');
+    background-size: cover;
+}
+
+.site-title {
+    position: relative;
+    min-width: 20%;
+    color: white;
+    /*font-family: "Times New Roman", Times, serif;*/
+    /*font-family: 'Source Serif Pro', serif;*/
+    /*font-family: 'Barlow Semi Condensed', sans-serif;*/
+    /*font-family: 'Playfair Display', serif;*/
+    /*font-family: 'Rokkitt', serif;*/
+    /*font-family: 'Cinzel', serif;*/
+    /*font-family: 'Playfair Display SC', serif;*/
+    /*font-family: 'Volkhov', serif;*/
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 15vmin;
+}
+
+.section-label {
+    position: relative;
+    /*min-width: 10%;*/
+    max-width: 40%;
+    max-height: 15vh;
+    /*margin-top: 15%;*/
+    top: 10vh;
+    left: 30%;
+    color: black;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    font-size: 6vmin;
+
+    /*background-color: yellow;*/
+    /*display: inline-block;*/
+}
+
+.section-text-main-center {
+    position: relative;
+    max-width: 60%;
+    /*margin-left: 15%;*/
+    top: 15vh; /* Will change to 15vh on animation */
+    left: 20%;
+    color: black;
+    font-family: 'Cormorant Garamond', serif;
+    /*font-family: 'Source Serif Pro', serif;*/
+    /*text-align: justify;*/
+    /*hyphens: auto;*/
+    /*background-color: blue;*/
+    font-size: 3.5vmin;
+    /*display: inline-block;*/
+}
+
+.animated-border-left {
+    position: absolute;
+    width: 0.5vmin;
+    background-color: black;
+    height: 1vmin;
+    left: 0;
+    bottom: 0;
+}
+
+.animated-border-top {
+    position: absolute;
+    width: 1vmin;
+    background-color: black;
+    height: 0.5vmin;
+    top: 0;
+    right: 0;
+}
+
+.animated-border-right {
+    position: absolute;
+    width: 0.5vmin;
+    background-color: black;
+    height: 1vmin;
+    right: 0;
+    top: 0;
+}
+
+.animated-border-bottom {
+    position: absolute;
+    width: 1vmin;
+    background-color: black;
+    height: 0.5vmin;
+    bottom: 0;
+}
+
+.index-section-2-image {
+    position: absolute;
+    left: 0;
+    bottom: -15%; /* Will change to 0 on animation */
+    height: 40vmin;
+    opacity: 0.8;
+}
+
+.section-text-main-right {
+    position: absolute;
+    max-width: 35%;
+    /*margin-left: 15%;*/
+    top: 28vh;
+    right: 0%; /* Will change to 15% on animation */
+    color: black;
+    font-family: 'Cormorant Garamond', serif;
+    /*text-align: justify;*/
+    /*hyphens: auto;*/
+
+    /*background-color: blue;*/
+    font-size: 3.5vmin;
+    /*display: inline-block;*/
+}
+
+.section-text-main-left {
+    position: relative;
+    max-width: 40%;
+    /*margin-left: 15%;*/
+    top: 15vh;
+    left: 5%; /* Will change to 15% on animation */
+    color: black;
+    font-family: 'Cormorant Garamond', serif;
+    /*text-align: justify;*/
+    /*hyphens: auto;*/
+
+    /*background-color: blue;*/
+    font-size: 3.5vmin;
+    /*display: inline-block;*/
+}
+
+.leftbar {
+    position: absolute;
+    top: 0;
+    max-width: 40%;
+    left: 5%;
+    /*max-height: 30vh;*/
+}
+
+.rightChart {
+    position: absolute;
+    top: 0;
+    max-width: 40%;
+    right: 5%;
+    /*max-height: 30vh;*/
+}
+
+#section-1-p1 {
+    position: relative;
+    left: -10%;
+}
+
+#section-1-p2 {
+    position: relative;
+    right: -10%;
+}
+
+.card {
+    /* Rectangle Copy 2: */
+    background: #FFFFFF;
+    border: 1px solid #979797;
+    box-shadow: 0 2px 4px 0 rgba(59,57,57,0.50);
+}
+
+#top-card {
+    height: 25%;
+    width: 80%;
+    left: 10%;
+    position: absolute;
+}
+
+.left-card {
+    position: relative;
+    height: 25%;
+    width: 75%;
+    left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+}
+
+.right-card {
+    position: relative;
+    height: 25%;
+    width: 75%;
+    left: 20%;
+    /*top: 5%;*/
+}
+
+#mlk-svg {
+    height: 25%;
+    width: 25%;
+    position: relative;
+    margin: 10%;
+}
+
+#obama {
+    height: 70%;
+    width: 50%;
+    position: relative;
+    margin: 10%;
+}
+
+.left-card-text {
+    position: absolute;
+    width: 55%;
+    height: 100%;
+    left: 0;
+    /*background-color: yellow;*/
+    /*display: table;*/
+}
+
+.right-card-text {
+    position: absolute;
+    width: 55%;
+    height: 100%;
+    right: 0;
+    /*background-color: yellow;*/
+    /*display: table;*/
+}
+
+.right-card-text > p {
+    /*display: table-cell;*/
+    /*vertical-align: middle;*/
+    /*position: relative;*/
+    /*left: 5%;*/
+    position: absolute;
+    margin: 5%;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.left-card-text > p {
+    /*display: table-cell;*/
+    /*vertical-align: middle;*/
+    /*position: relative;*/
+    /*left: 5%;*/
+    position: absolute;
+    margin: 5%;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.left-card-chart {
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    right: 0;
+    /*background-color: blue;*/
+}
+
+.right-card-chart {
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    left: 0;
+    /*background-color: blue;*/
+}
+
+.chart {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}

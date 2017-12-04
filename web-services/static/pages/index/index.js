@@ -4,21 +4,24 @@ var section_1_text_visible = false;
 // var section_2_image_visible = false;
 var section_2_label_visible = false;
 var section_2_text_visible = false;
-var section_2_text_2_visible = false;
 
 var section_3_label_visible = false;
 var section_3_text_visible = false;
-var section_3_text_2_visible = false;
 
 var section_4_label_visible = false;
 var section_4_text_visible = false;
-var section_4_text_2_visible = false;
+
+var section_5_label_visible = false;
 
 // $(document).ready(function() {
 //
 // });
 
 window.onload = function() {
+	var obama_svg = $('#obama').drawsvg({});
+	var mlk_svg = $('#mlk').drawsvg({});
+	var lincoln_svg = $('#lincoln').drawsvg({});
+
 	$('#index-top-scene').fadeIn(500, function() {
 		$('#index-top-scene-label').fadeIn(1000);
 		$('#index-section-1').show();
@@ -37,68 +40,37 @@ window.onload = function() {
 		var section_2_height =
 			($('#index-section-2-label').show().height() +
 				$('#section-2-text').show().height() +
-				$('#section-2-text-2').show().height() +
 				0.5 * $(window).height()).toString() + 'px';
 		$('#index-section-2').show().css('height', section_2_height);
 
-		$('#myChart').css('max-height', ($('#section-2-text').show().height()).toString() + 'px');
-		$('#myChart').css('top', ($('#section-2-text').position().top + $('#myChart').height() / 2).toString() + 'px' );
-
-		$('#section-2-text-2').css('top', ($('#section-2-text').position().top + $('#section-2-text').height() + 0.05 * $(window).height()).toString() + 'px');
-
-		$('#myChart-2').css('max-height', ($('#section-2-text-2').show().height()).toString() + 'px');
-		$('#myChart-2').css('top', ($('#section-2-text-2').position().top + $('#myChart-2').height() / 4).toString() + 'px' );
-
 		$('#index-section-2-label').hide();
 		$('#section-2-text').hide();
-		$('#section-2-text-2').hide();
 
 		var section_3_height =
 			($('#index-section-3-label').show().height() +
 				$('#section-3-text').show().height() +
-				$('#section-3-text-2').show().height() +
 				0.4 * $(window).height()).toString() + 'px';
 		$('#index-section-3').show().css('height', section_3_height);
 
-		$('#myChart-3').css('max-height', ($('#section-3-text').height()).toString() + 'px');
-		$('#myChart-3').css('top', ($('#section-3-text').position().top + $('#myChart-3').height() / 6).toString() + 'px' );
-
-		// console.log($('#section-3-text').position().top);
-		// console.log($('#section-3-text').height());
-		// console.log(0.05 * $(window).height());
-		// console.log(($('#section-3-text').position().top + $('#section-3-text').height() + 0.05 * $(window).height()).toString() + 'px');
-		$('#section-3-text-2').css('top', ($('#section-3-text').position().top + $('#section-3-text').height() + 0.1 * $(window).height()).toString() + 'px');
-
-		$('#myChart-4').css('max-height', ($('#section-3-text-2').show().height()).toString() + 'px');
-		$('#myChart-4').css('top', ($('#section-3-text-2').position().top + $('#myChart-4').height() / 5.5).toString() + 'px' );
-
 		$('#index-section-3-label').hide();
 		$('#section-3-text').hide();
-		$('#section-3-text-2').hide();
 
 
 		var section_4_height =
 			($('#index-section-4-label').show().height() +
 				$('#section-4-text').show().height() +
-				$('#section-4-text-2').show().height() +
 				0.5 * $(window).height()).toString() + 'px';
 		$('#index-section-4').show().css('height', section_4_height);
 
-		$('#myChart-5').css('max-height', ($('#section-4-text').height()).toString() + 'px');
-		$('#myChart-5').css('top', ($('#section-4-text').position().top + $('#myChart-5').height() / 6).toString() + 'px' );
-
-		// console.log($('#section-3-text').position().top);
-		// console.log($('#section-3-text').height());
-		// console.log(0.05 * $(window).height());
-		// console.log(($('#section-3-text').position().top + $('#section-3-text').height() + 0.05 * $(window).height()).toString() + 'px');
-		$('#section-4-text-2').css('top', ($('#section-4-text').position().top + $('#section-4-text').height() + 0.025 * $(window).height()).toString() + 'px');
-
-		$('#myChart-6').css('max-height', ($('#section-4-text-2').show().height()).toString() + 'px');
-		$('#myChart-6').css('top', ($('#section-4-text-2').position().top + $('#myChart-6').height() / 5.5).toString() + 'px' );
-
 		$('#index-section-4-label').hide();
 		$('#section-4-text').hide();
-		$('#section-4-text-2').hide();
+
+		var section_5_height =
+			($('#index-section-5-label').show().height() +
+				0.5 * $(window).height()).toString() + 'px';
+		$('#index-section-5').show().css('height', section_5_height);
+
+		$('#index-section-5-label').hide();
 
 	});
 
@@ -155,7 +127,7 @@ window.onload = function() {
 		// }
 
 		if (!section_2_label_visible) {
-			if ($('#index-section-2-label').show().offset().top < $(window).height() - $('#index-section-2-label').height()) {
+			if ($('#index-section-2-label').show().offset().top < $(window).height() - $('#index-section-2-label').height() * 0.9) {
 				$('#index-section-2-label').hide();
 
 				$('#index-section-2 > .animated-border-top').show().animate({width: '100%'}, 1000);
@@ -178,91 +150,24 @@ window.onload = function() {
 			if ($('#section-2-text').show().offset().top < $(window).height() - $('#section-2-text').height() * 0.75) {
 				$('#section-2-text').hide();
 				$('#section-2-text').fadeIn({queue: false, duration: 500});
-				$('#section-2-text').animate({right: '6%'}, 700);
+				$('#section-2-text').animate({right: '12%'}, 700);
 				section_2_text_visible = true;
 				// console.log('scrolled');
 
-				var ctx = document.getElementById("myChart").getContext('2d');
-				var myChart = new Chart(ctx, {
-					type: 'horizontalBar',
-					data: {
-						labels: ["110 - 120 wpm", "120 - 130 wpm", "130 - 140 wpm", "140 - 150 wpm"],
-						datasets: [{
-							label: 'Frequency of Speech Rate',
-							data: [0.5, 0.1, 0.3, 0.1],
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)'
-							],
-							borderColor: [
-								'rgba(255,99,132,1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)'
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							xAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}],
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
+
+				obama_svg.drawsvg('animate');
+        		$('#obama > g').css({fill: '#000000', transition: '2.0s'});
+
 			} else {
 				$('#section-2-text').hide();
 			}
 		}
 
-		if (!section_2_text_2_visible) {
-			if ($('#section-2-text-2').show().offset().top < $(window).height() - $('#section-2-text-2').height() * 0.75) {
-				$('#section-2-text-2').hide();
-				$('#section-2-text-2').fadeIn({queue: false, duration: 500});
-				$('#section-2-text-2').animate({left: '10%'}, 700);
-				section_2_text_2_visible = true;
-				// console.log('scrolled');
-
-				var ctx_2 = document.getElementById("myChart-2").getContext('2d');
-				var myChart_2 = new Chart(ctx_2, {
-					"type":"line",
-					"data": {
-						"labels": ["Start","","","","","","End"],
-						"datasets":
-							[{"label":"Pitch ","data":[125,140,130,120,120,125,140],
-								"fill":false,"borderColor":"rgb(75, 192, 192)",
-								"lineTension":0.1
-							}]},
-					"options":{
-						scales: {
-							yAxes: [{
-								ticks: {
-									min: 100,
-									max: 160
-								}
-							}]
-						}
-					}});
-
-			} else {
-				$('#section-2-text-2').hide();
-			}
-		}
 
 
 
 		if (!section_3_label_visible) {
-			if ($('#index-section-3-label').show().offset().top < $(window).height() - $('#index-section-3-label').height()) {
+			if ($('#index-section-3-label').show().offset().top < $(window).height() - $('#index-section-3-label').height() * 0.9) {
 				$('#index-section-3-label').hide();
 
 				$('#index-section-3 > .animated-border-top').show().css('left', '0').css('right', 'unset').animate({width: '100%'}, 1000);
@@ -284,101 +189,21 @@ window.onload = function() {
 			if ($('#section-3-text').show().offset().top < $(window).height() - $('#section-3-text').height() * 0.75) {
 				$('#section-3-text').hide();
 				$('#section-3-text').fadeIn({queue: false, duration: 500});
-				$('#section-3-text').animate({left: '10%'}, 700);
+				$('#section-3-text').animate({left: '15%'}, 700);
 				section_3_text_visible = true;
 				// console.log('scrolled');
 
-				var ctx_3 = document.getElementById("myChart-3").getContext('2d');
-				var myChart_3 = new Chart(ctx_3,{
-					"type": "radar",
-					"data": {
-						"labels": ["Anger", "Disgust", "Fear", "Joy", "Sadness"],
-						"datasets": [
-							{
-								"label": "Emotional Tone",
-								"data": [0.4, 0.1, 0.3, 0.7, 0.6],
-								"fill": true,
-								"backgroundColor": "rgba(255, 99, 132, 0.2)",
-								"borderColor": "rgb(255, 99, 132)",
-								"pointBackgroundColor": "rgb(255, 99, 132)",
-								"pointBorderColor": "#fff",
-								"pointHoverBackgroundColor": "#fff",
-								"pointHoverBorderColor": "rgb(255, 99, 132)"
-							}
-							]
-					},
-					"options":
-						{
-							"elements":
-								{
-									"line":
-										{
-											"tension": 0,
-											"borderWidth": 3
-										}
-								}
-						}
-				});
+				// mlk_svg.drawsvg('animate');
+        		$('#mlk > g').css({fill: '#000000', transition: '2.0s'});
+
 			} else {
 				$('#section-3-text').hide();
 			}
 		}
 
-		if (!section_3_text_2_visible) {
-			if ($('#section-3-text-2').show().offset().top < $(window).height() - $('#section-3-text-2').height() * 0.75) {
-				$('#section-3-text-2').hide();
-				$('#section-3-text-2').fadeIn({queue: false, duration: 500});
-				$('#section-3-text-2').animate({right: '6%'}, 700);
-				section_3_text_2_visible = true;
-				// console.log('scrolled');
-
-				var ctx_4 = document.getElementById("myChart-4").getContext('2d');
-				var myChart_4 = new Chart(ctx_4, {
-					"type":"line",
-					"data": {
-						"labels": ["3rd","4th","5th","6th","7th", "8th", "9th", "10th", "11th", "12th", "12+"],
-						"datasets":
-							[{"label":"Grade Level Readability ","data":[,,,,,,0,,,],
-								"fill":false,"borderColor":"rgb(75, 192, 192)",
-								"lineTension":0.1
-							}]},
-					"options":{
-						scaleShowLabels: false,
-						scales: {
-							yAxes: [{
-								// display: false,
-								gridLines : {
-                    				drawBorder: false,
-                				},
-								ticks: {
-									min: 0,
-									max: 0
-								},
-								afterBuildTicks: function(myChart_4) {
-									myChart_4.ticks = [];
-									myChart_4.ticks.push();
-								  }
-
-							}],
-							xAxes: [
-								{
-									gridLines: {
-
-									}
-								}
-							]
-
-						}
-					}});
-
-			} else {
-				$('#section-3-text-2').hide();
-			}
-		}
-
 
 		if (!section_4_label_visible) {
-			if ($('#index-section-4-label').show().offset().top < $(window).height() - $('#index-section-4-label').height()) {
+			if ($('#index-section-4-label').show().offset().top < $(window).height() - $('#index-section-4-label').height() * 0.8) {
 				$('#index-section-4-label').hide();
 
 				$('#index-section-4 > .animated-border-top').show().animate({width: '100%'}, 1000);
@@ -401,111 +226,79 @@ window.onload = function() {
 			if ($('#section-4-text').show().offset().top < $(window).height() - $('#section-4-text').height() * 0.75) {
 				$('#section-4-text').hide();
 				$('#section-4-text').fadeIn({queue: false, duration: 500});
-				$('#section-4-text').animate({right: '6%'}, 700);
+				$('#section-4-text').animate({right: '12%'}, 700);
 				section_4_text_visible = true;
 				// console.log('scrolled');
 
-				var ctx_5 = document.getElementById("myChart-5").getContext('2d');
-				var myChart_5 = new Chart(ctx_5, {
-					type: 'bar',
-					data: {
-						labels: ["Left", "Mid-left", "Mid", "Mid-right", "Right"],
-						datasets: [{
-							label: 'Time spent in portion of stage',
-							data: [0.25, 0.1, 0.4, 0.1, 0.15],
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)',
-								"rgba(54, 162, 235, 0.2)"
-							],
-							borderColor: [
-								'rgba(255,99,132,1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)',
-								"rgb(54, 162, 235)"
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							xAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}],
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
+				// lincoln_svg.drawsvg('animate');
+        		// $('#mlk > g').css({fill: '#000000', transition: '2.0s'});
+				$('#path2490').css({fill: '#9d9d9d', transition: '0.75s'});
+				$('#path2488').css({fill: '#5d5d5d', transition: '0.5s'});
+				$('#path2486').css({fill: '#2f2f2f', transition: '1.0s'});
+				$('#path2484').css({fill: '#0d0d0d', transition: '0.25s'});
+
 			} else {
 				$('#section-4-text').hide();
 			}
 		}
 
-		if (!section_4_text_2_visible) {
-			if ($('#section-4-text-2').show().offset().top < $(window).height() - $('#section-4-text-2').height() * 0.75) {
-				$('#section-4-text-2').hide();
-				$('#section-4-text-2').fadeIn({queue: false, duration: 500});
-				$('#section-4-text-2').animate({left: '10%'}, 700);
-				section_4_text_2_visible = true;
-				// console.log('scrolled');
+		if (!section_5_label_visible) {
+			if ($('#index-section-5-label').show().offset().top < $(window).height() - $('#index-section-5-label').height() * 0.9) {
+				$('#index-section-5-label').hide();
 
-				var ctx_6 = document.getElementById("myChart-6").getContext('2d');
-				var myChart_6 = new Chart(ctx_6, {
-					type: 'horizontalBar',
-					data: {
-						labels: ["Joy", "Sorrow", "Anger", "Surprise"],
-						datasets: [{
-							label: 'Expression Likelihood',
-							data: [0.75, 0.05, 0.05, 0.15],
-							backgroundColor: [
-								'rgba(255, 99, 132, 0.2)',
-								'rgba(54, 162, 235, 0.2)',
-								'rgba(255, 206, 86, 0.2)',
-								'rgba(75, 192, 192, 0.2)'
-							],
-							borderColor: [
-								'rgba(255,99,132,1)',
-								'rgba(54, 162, 235, 1)',
-								'rgba(255, 206, 86, 1)',
-								'rgba(75, 192, 192, 1)'
-							],
-							borderWidth: 1
-						}]
-					},
-					options: {
-						scales: {
-							xAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}],
-							yAxes: [{
-								ticks: {
-									beginAtZero: true
-								}
-							}]
-						}
-					}
-				});
+				$('#index-section-5 > .animated-border-top').show().css('left', '0').css('right', 'unset').animate({width: '100%'}, 1000);
+
+				$('#index-section-5-label').fadeIn(500);
+				$('#upload-button').fadeIn(500);
+				section_5_label_visible = true;
+
+				$('#index-section-5-label > .animated-border-left').animate({height: '100%'}, 1000);
+				$('#index-section-5-label > .animated-border-top').animate({width: '100%'}, 1000);
+				$('#index-section-5-label > .animated-border-right').animate({height: '100%'}, 1000);
+				$('#index-section-5-label > .animated-border-bottom').animate({width: '100%'}, 1000);
+
+
 
 			} else {
-				$('#section-4-text-2').hide();
+				$('#index-section-5-label').hide();
 			}
 		}
 
 	});
 
+
+	// $('#upload-button').on('mouseenter', function() {
+	// 	// $('#upload-button').css({border: 'black', transition: '1.0s'});
+	// 	console.log('yep');
+	// });
+
+	$('#upload-button').on('click', function() {
+		// console.log('clicked');
+		$('.popup').fadeIn(600);
+	});
+
+	$('#submit-fp').on('click', function() {
+		// console.log('click2');
+
+		$('.popup > .popup-in').fadeOut(500, function() {
+
+			var image = new Image();
+			image.src ='/static/pages/index/loading_spinner.gif';
+			$('.loading-spinner').attr('src',image.src);
+			$('.loading-spinner').fadeIn(500);
+		});
+
+		setTimeout(function() {
+			console.log('done waiting');
+			window.location.href = 'http://127.0.0.1:5000/results';
+		}, 2500);
+
+
+
+	});
+
+
 	// if ($('#myChart').show().offset().top < $('#myChart').height()) {
 
 	// }
 };
-

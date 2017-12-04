@@ -138,7 +138,7 @@ body {
     position: relative;
     max-width: 40%;
     /*margin-left: 15%;*/
-    top: 15vh;
+    top: 20vh;
     left: 5%; /* Will change to 15% on animation */
     color: black;
     font-family: 'Cormorant Garamond', serif;
@@ -174,4 +174,71 @@ body {
 #section-1-p2 {
     position: relative;
     right: -10%;
+}
+
+#obama {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 70%;
+    width: 70%;
+}
+
+#mlk {
+    position: absolute;
+    right: 0%;
+    bottom: 0;
+    height: 70%;
+    width: 30%;
+}
+
+#lincoln {
+    position: absolute;
+    left: 10%;
+    bottom: 0;
+    height: 70%;
+    width: 30%;
+}
+
+#upload-button {
+    position: absolute;
+    height: 10vmin;
+    width: 10vmin;
+    left: calc(50% - 5vmin);
+    top: 45%;
+    /*background-color: red;*/
+    background-image: url('/static/pages/index/upload-icon.png');
+    background-size: cover;
+    /*background: #0D6DFF;*/
+    border: 3px solid white;
+}
+
+/*#upload-button:hover {*/
+  /*border: 3px solid black;*/
+/*}*/
+
+/*.upload-button:hover {*/
+    /*!*background-image: url('/static/pages/index/upload-button-image-dark-blue.png');*!*/
+        /*!*box-shadow: 0 2px 4px 0 rgba(59,57,57,0.50);*!*/
+    /**/
+/*}*/
+
+.popup {
+    position: fixed;
+    height: 50%;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    /*background-color: blue;*/
+    z-index: 999999;
+    background: #FFFFFF;
+    border: 1px solid #979797;
+    box-shadow: 0 2px 4px 0 rgba(59,57,57,0.50);
+    text-align: center;
+}
+
+.loading-spinner {
+    position: absolute;
+    left: calc(50% - 100px);
+    top: calc(50% - 100px);
 }

@@ -8,9 +8,12 @@ def index():
 	return Index.Index.page()
 
 # Results page
-@app.route('/results', methods = ['POST', 'GET'])
+# @app.route('/results', methods = ['POST', 'GET'])
+# def results():
+# 	return Results.Results.page(request)
+@app.route('/results')
 def results():
-	return Results.Results.page(request)
+	return Results.Results.page()
 
 
 # MAIN

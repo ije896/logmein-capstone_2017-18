@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block imports_head %}
+
+	<link rel="stylesheet" href="{{ url_for('static', filename = 'pages/results/results.css') }}">
+
+	<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'pages/results/results.js') }}" ></script>
+
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed|Frank+Ruhl+Libre|Source+Serif+Pro|Cormorant+Garamond');
+	</style>
+
+	<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'resources/js/chart.min.js') }}" ></script>
+
+	<script type = "text/javascript"
+		src = "{{ url_for('static', filename = 'resources/js/jquery.drawsvg.js') }}" ></script>
+
+{% endblock %}
+
+{% block body %}
+{#	<img class="scene" src="{{url_for('static', filename='pages/index/presentation-blue-bottom-grad-black.png')}}" />#}
+	<div class="card left-card">
+		<div class="left-card-text">
+			<p>Your pitch variation was effective to keep your audience engaged without being distracting.<br><br>
+			Next time try to do the same.</p>
+		</div>
+		<div class="left-card-chart">
+			<canvas class="chart" id="myChart-2"></canvas>
+		</div>
+	</div>
+
+	<div class="card right-card">
+		<div class="right-card-text">
+			<p>Your rate of speech fell in the normal range for adult speakers.<br><br>
+				However, there were some consistently outlying phrases. Try to maintain a steadier rate throughout.</p>
+		</div>
+		<div class="right-card-chart">
+			<canvas class="chart" id="myChart"></canvas>
+		</div>
+	</div>
+
+	<div class="card left-card">
+		<div class="left-card-text">
+			<p>Your emotional tone is effective for a performance setting, but may be too emotional for a business setting.<br><br>
+			Try focusing on a single emotion and reducing other emotional biases.</p>
+		</div>
+		<div class="left-card-chart">
+			<canvas class="chart" id="myChart-3"></canvas>
+		</div>
+	</div>
+
+	<div class="card right-card">
+		<div class="right-card-text">
+			<p>Your speech is written at a 9th grade level. This is an effective level to be understood by most audiences.<br><br> You may consider whether your presentation is detailed enough for a technical setting.</p>
+		</div>
+		<div class="right-card-chart">
+			<canvas class="chart" id="myChart-4"></canvas>
+		</div>
+	</div>
+
+		<div class="card left-card">
+		<div class="left-card-text">
+			<p>You did an effective job of filling the space, while keeping a main position in the center.<br><br>
+			You may consider crossing more often, however, and standing in place for less time.</p>
+		</div>
+		<div class="left-card-chart">
+			<canvas class="chart" id="myChart-5"></canvas>
+		</div>
+	</div>
+
+	<div class="card right-card" style="margin-bottom:5%;">
+		<div class="right-card-text">
+			<p>Your facial expression matched the emotional content of your script.<br><br>
+				However, you may consider using slightly more variation in expression, or using expressions more carefully to emphasize points.</p>
+		</div>
+		<div class="right-card-chart">
+			<canvas class="chart" id="myChart-6"></canvas>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{#
+voicing
+word choice
+physicality
+#}
