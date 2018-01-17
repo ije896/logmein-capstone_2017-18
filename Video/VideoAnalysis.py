@@ -57,7 +57,8 @@ class VideoAnalysis:
         return self.video_duration
 
     def to_json(self):
-        json_obj = json.dumps(self,default=lambda o: o.__dict__)
+        json_obj = json.dumps(self,indent=2,default=lambda o: o.__dict__)
+        print (json_obj)
         return json_obj
 
     def _google_analysis(self,file_path, video_time):
@@ -79,16 +80,13 @@ class VideoAnalysis:
             sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.sorrow_likelihood]))
             sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
 
-            vertices = ([(vertex.x, vertex.y)
-                        for vertex in face.bounding_poly.vertices])
-            if len(vertices) != 0:
-                width = vertices[1][0] - vertices[0][0]
-                height = vertices[2][1] - vertices[1][1]
-                interest_x = vertices[0][0] + (width/2)
-                interest_y = vertices[0][1] + (height/2)
-                self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
-                self.sentiment_and_time.append({"sentiment": sent_conf, "sec": video_time })
+            vertices = ['(x: {}, y: {})'.format(vertex.x, vertex.y)
+                        for vertex in face.bounding_poly.vertices]
 
+            if len(vertices) != 0:
+                face_bounds = "{}".format(','.join(vertices))
+                self.coords_and_time.append({"face_bounds": face_bounds,"sec": video_time})
+                self.sentiment_and_time.append({"sentiment": sent_conf, "sec": video_time })
         os.remove(file_path)
 
     def run(self):
