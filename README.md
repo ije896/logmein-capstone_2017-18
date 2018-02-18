@@ -39,7 +39,6 @@ The Video module analyses a video and captures a presenter's face x,y coordinate
 
 ```
 video_obj = VideoAnalysis(<video_path>)
-video_obj.run()
 video_details = video_obj.to_json()
 ```
 

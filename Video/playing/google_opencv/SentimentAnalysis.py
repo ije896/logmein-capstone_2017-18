@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 '''
-Video Analysis
+Sentiment Analysis
 ====================
 This video analyzer tracks the users movement using face tracking
-and returns sentiment and face-tracking coordinates along with a timestamp
-as a list or json object.
+and returns those coordinates as an array of (coords and timestamps)
+Usage
 -----
-VideoAnalysis.py [<video_source>]
+SentimentAnalysis.py [<video_source>]
 ----
 ESC - exit
 '''
@@ -20,13 +20,12 @@ import sys
 from google.cloud import vision
 from google.cloud.vision import types
 
-face_cascade = cv2.CascadeClassifier('./Video/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 client = vision.ImageAnnotatorClient()
 
-class VideoAnalysis:
+class SentimentAnalysis:
     def __init__(self, video_src):
-        self.coords_and_time = [] #a tuple of x, y coord, sec
-        self.sentiment_and_time = []
+        self.coords_sentiment_time = [] #a tuple of x, y coord, sentiment, sec
         self.video_src = video_src
         self.vide_duration = None
         self.total_frames = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
@@ -36,13 +35,11 @@ class VideoAnalysis:
         self.current_frame = 0
         self.google_api_requests = 0
         self.open_cv_requests = 0
-        self.run();
+        self.frame_filepath = ""
 
     def get_coords(self):
+        print (self.coords_and_time)
         return self.coords_and_time
-
-    def get_sentiment(self):
-        return self.sentiment_and_time
 
     def get_fps(self):
         return self.fps
@@ -56,9 +53,12 @@ class VideoAnalysis:
     def get_video_duration(self):
         return self.video_duration
 
+    def get_frame_filepath(self):
+        return self.frame_filepath
+
     def to_json(self):
-        json_obj = json.dumps(self,indent=2,default=lambda o: o.__dict__)
-        print (json_obj)
+        json_obj = json.dumps(self,default=lambda o: o.__dict__)
+        print(json_obj)
         return json_obj
 
     def _google_analysis(self,file_path, video_time):
@@ -70,23 +70,27 @@ class VideoAnalysis:
 
         response = client.face_detection(image=image)
         faces = response.face_annotations
+
         likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
                            'LIKELY', 'VERY_LIKELY')
+
         sent_conf = []
-
         for face in faces:
+            # sent_conf.append( 'detection_confidence: {}'.format(face.detectionConfidence))
             sent_conf.append( 'anger: {}'.format(likelihood_name[face.anger_likelihood]))
-            sent_conf.append('joy: {}'.format(likelihood_name[face.joy_likelihood]))
-            sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.sorrow_likelihood]))
-            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
+            sent_conf.append('joy: {}'.format(likelihood_name[face.anger_likelihood]))
+            sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.anger_likelihood]))
+            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.anger_likelihood]))
 
-            vertices = ['(x: {}, y: {})'.format(vertex.x, vertex.y)
-                        for vertex in face.bounding_poly.vertices]
-
+            vertices = ([(vertex.x, vertex.y)
+                        for vertex in face.bounding_poly.vertices])
             if len(vertices) != 0:
-                face_bounds = "{}".format(','.join(vertices))
-                self.coords_and_time.append({"face_bounds": face_bounds,"sec": video_time})
-                self.sentiment_and_time.append({"sentiment": sent_conf, "sec": video_time })
+                width = vertices[1][0] - vertices[0][0]
+                height = vertices[2][1] - vertices[1][1]
+                interest_x = vertices[0][0] + (width/2)
+                interest_y = vertices[0][1] + (height/2)
+                self.coords_sentiment_time.append({"x": interest_x, "y": interest_y,"annotation:": sent_conf, "sec": video_time})
+
         os.remove(file_path)
 
     def run(self):
@@ -99,11 +103,34 @@ class VideoAnalysis:
             video_time = round(self.current_frame/self.fps,2)
 
             if ret:
+                if(video_time == 3.0):
+                    file_name = "frame_excerpt.jpg"
+                    file_path = os.path.join("./", file_name)
+                    cv2.imwrite(file_path, frame)
+                    self.frame_filepath = file_path
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                # face = face_cascade.detectMultiScale(gray, 1.3, 5)
+                # if(len(face) != 0):
+                #     # print("Haarcascade succesful")
+                #     for (x,y,w,h) in face:
+                #         # cv2.rectangle(gray,(x,y),(x+w,y+h),(255,0,0),2)
+                #         self.open_cv_requests += 1
+                #         interest_x = int(x+(w/2))
+                #         interest_y = int(y+(h/2))
+                #         self.coords_and_time.append({"x": interest_x, "y": interest_y,"sec": video_time})
+                # else:
+                # print("using google api...")
                 file_name = "frame_{}.jpg".format(int(video_time))
                 file_path = os.path.join("./", file_name)
-                cv2.imwrite(file_path, frame)
+                cv2.imwrite(file_path, gray)
                 self._google_analysis(file_path, video_time)
 
+                cv2.imshow('frame', frame)
+                # press esc to quit
+                k = cv2.waitKey(30) & 0xff
+                if k == 27:
+                    break
             else:
                 break
         self.vide_duration = video_time
@@ -115,7 +142,8 @@ def main():
         video_src = 0
 
     print(__doc__)
-    app = VideoAnalysis(video_src)
+    app = SentimentAnalysis(video_src)
+    app.run()
     app.to_json()
     cv2.destroyAllWindows()
 
