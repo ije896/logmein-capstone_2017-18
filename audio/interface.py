@@ -53,8 +53,8 @@ class Interface:
             sort_keys=True, indent=2)
 
 # a = Interface()
-# speech_file = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
-# speech_file_short = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/halloween.wav'
+# speech_file = '/Users/iegan/Documents/School/W18 Classes/CS189B/logmein-capstone_2017-18/audio_media/speech_sample.wav'
+# speech_file_short = '/Users/iegan/Documents/School/F17 Classes/CS189B/logmein-capstone_2017-18/audio_media/halloween.wav'
 #
 # opts = {'run_all':True}
 #
