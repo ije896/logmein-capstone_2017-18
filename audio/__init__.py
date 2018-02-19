@@ -1,3 +1,3 @@
-from .word_detection import *
-from .pitch_detection import *
+from .word_detector import *
+from .pitch_detector import *
 from .interface import *

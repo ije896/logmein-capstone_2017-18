@@ -2,8 +2,8 @@ import sys
 import os
 import json
 
-import word_detection as wd
-import pitch_detection as pd
+from audio import word_detector as wd
+from audio import pitch_detector as pd
 
 # turn this into the audio analysis class
 # speech_file = str(sys.argv[1])
@@ -39,11 +39,20 @@ class Interface:
     def get_transcript(self):
         return self.word_detector.transcript
 
-    def get_wpm(self):
-        return self.word_detector.wpm
+    def get_avg_wpm(self):
+        return self.word_detector.avg_wpm
 
     def get_phrase_wpms(self):
         return self.word_detector.phrase_wpms
+
+    def get_cum_wpm(self):
+        return self.word_detector.phrase_wpms
+
+    def get_interval_wpm(self):
+        return self.word_detector.interval_wpm
+
+    def get_interval_lpm(self):
+        return self.word_detector.interval_lpm
 
     def get_pitches(self):
         return self.pitch_detector.pitches

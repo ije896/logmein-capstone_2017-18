@@ -12,7 +12,7 @@ class WordDetector:
         self.transcript = results['transcript']
         self.word_count = results['wc']
         self.length_of_speech = results['length']
-        self.wpm = results['wpm']
+        self.avg_wpm = results['wpm']
         self.cum_wpm = results['cum_wpm']
         self.phrase_wpms = results['phrase_wpms']
         self.interval_lpm = results['interval_lpm']
@@ -109,7 +109,7 @@ class WordDetector:
             final_interval = final_time - (time_acc - interval)
             lpm.append([final_time, letter_count/(final_interval/60)])
         return lpm
-        
+
     def calc_phrase_wpms(self, timestamps):
         phrase_wpms = []
         avg = 0
