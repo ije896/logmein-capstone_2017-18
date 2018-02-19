@@ -52,7 +52,14 @@ class Interface:
         return json.dumps(self, default=lambda o: o.__dict__,
             sort_keys=True, indent=2)
 
-# a = Interface()
+# python -i test.py
+
+# import interface
+# a = interface.Interface()
+# speech_file = '/Users/iegan/Documents/School/W18 Classes/CS189B/logmein-capstone_2017-18/audio_media/speech_sample.wav'
+
+# import interface
+# a = interface.Interface()
 # speech_file = '/Users/iegan/Documents/School/W18 Classes/CS189B/logmein-capstone_2017-18/audio_media/speech_sample.wav'
 # speech_file_short = '/Users/iegan/Documents/School/F17 Classes/CS189B/logmein-capstone_2017-18/audio_media/halloween.wav'
 #
