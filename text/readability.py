@@ -72,7 +72,7 @@ class Readability:
 	@staticmethod
 	def test_get_num_words():
 		tests = [(6, "This is a really easy sentence."), (6, "Is this one harder? Probably not."), 
-				 (2, "Exclamation point!"), (8, "the self-evident truth; blah blah blah 1992 blah")] # not sure how we should hanlde 1922 or hyphens
+				 (2, "Exclamation point!"), (8, "the self-evident truth; blah blah blah 1992 blah")] # not sure how we should handle 1922 or hyphens
 
 		for t in tests:
 			print("\ntest_get_num_words: testing ({}), expect {}".format( t[1], t[0] ))
