@@ -51,7 +51,7 @@ class PitchDetector:
     r[int(i_max):] = 0
     i = r.argmax()
     f0 = float(sr)/i
-    return f0
+    return int(f0)
 
   def reject_outliers(self, data, indeces, m = 2.):
     d = np.abs(data - np.median(data))
