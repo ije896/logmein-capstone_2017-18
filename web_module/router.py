@@ -1,6 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, request
-from Text_Analysis import text_module
-from audio_analysis import audio_analysis
 import json
 app = Flask(__name__)
 

@@ -58,7 +58,7 @@ class Interface:
 
         if art:
             art_dict = {}
-            art_dict[art] = Interface.get_articulation("research/enigma_tc_transcript.txt", "research/rkemper_take2_transcript_actual.txt")
+            art_dict['art'] = Interface.get_articulation("research/enigma_tc_transcript.txt", "research/rkemper_take2_transcript_actual.txt")
             json_list.append(art_dict)
 
         json_object = json.dumps(json_list, indent=2)
