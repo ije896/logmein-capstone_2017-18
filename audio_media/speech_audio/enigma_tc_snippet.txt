@@ -1,0 +1,10 @@
+Pitches: [(6.9523809523809526, 95.869565217391298), (9.2380952380952372, 106.00961538461539), (15.419501133786849, 153.125), (20.321995464852609, 218.31683168316832), (25.859410430839002, 139.55696202531647), (32.748299319727892, 145.06578947368422), (36.671201814058954, 112.5), (40.018140589569164, 61.764705882352942), (41.700680272108841, 202.29357798165137), (51.383219954648524, 79.316546762589923), (54.770975056689345, 234.57446808510639), (55.678004535147394, 214.07766990291262), (59.083900226757372, 239.67391304347825), (62.077097505668931, 202.29357798165137), (66.030793650793655, 222.72727272727272)]
+
+"hello good afternoon my name is mark to cost a co founder of enigma enigma is a search and discovery platform for public data but when I speak of public data what do I mean think about an event like south by southwest south by southwest has ripples in across hundreds of public databases there are containers of swag coming in from China and trying up and US customs databases there a lot of high profile attendees some of whom come in on private planes and shop in flight plan databases at night tens of thousands of people are counting the bars causing a a spike in Texas alcohol sales tax receipts databases and the list goes on this kind of public data is valuable because it's a reflection of the real world and it reveals things that you won't find by looking at Twitter hash tags or foursquare check ins but there's a problem here well this data is public and while it is out there it's not really accessible today public data comes in all kinds of different shapes and forms everything from restrictive web portals too messy FTP site "
+
+phrase_wpms: [(6.62, 201), (22.22, 174), (41.75, 200), (58.65, 167)]
+
+Wpm: 178
+
+Length: 64.61
+

@@ -4,6 +4,7 @@ import json
 
 from text import synonyms
 from text import readability
+from text import articulation
 from text import tf_idf
 from text import watson
 
@@ -15,9 +16,10 @@ class Interface:
 
     # Make a dictionary of features as booleans
     def process_filepath(self, fp, options):
-        st = False
-        sy = False
-        r  = False
+        st  = False
+        sy  = False
+        r   = False
+        art = False
 
         self.script = Interface.check_file(fp)
 
@@ -27,6 +29,7 @@ class Interface:
                     st = True
                     sy = True
                     r  = True
+                    art = True
                     break
                 elif opt == "sentiment":
                     st = True
@@ -34,6 +37,8 @@ class Interface:
                     sy = True
                 elif opt == "readability":
                     r  = True
+                elif opt == "art":
+                    art = True
                 else:
                     print("ERROR: Options are {run_all, sentiment, synonyms, readability}")
                     exit(1)
@@ -50,6 +55,11 @@ class Interface:
         if r:
             read_dict = Interface.get_readability(self.script)
             json_list.append(read_dict)
+
+        if art:
+            art_dict = {}
+            art_dict[art] = Interface.get_articulation("research/enigma_tc_transcript.txt", "research/rkemper_take2_transcript_actual.txt")
+            json_list.append(art_dict)
 
         json_object = json.dumps(json_list, indent=2)
         return json_object
@@ -83,6 +93,11 @@ class Interface:
         read_list = {'score': score, 'grade': grade}
         read = {'readability': read_list}
         return read
+
+    @staticmethod
+    # TODO: fix me cause we won't want to 
+    def get_articulation(trs_path, tts_path):
+        return articulation.Articulation.get_articulation(trs_path, tts_path)
 
     @staticmethod
     def output_readability_tests():
