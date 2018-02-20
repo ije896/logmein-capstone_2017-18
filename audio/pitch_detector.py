@@ -17,8 +17,10 @@ speech = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017
 #idx = (magnitudes>0)
 class PitchDetector:
   def __init__(self, afile):
-    self.pitches = self.run_pitch_detection(afile)
-
+    pit = self.run_pitch_detection(afile)
+    for i in range(len(pit)):
+      pit[i] = (pit[i][0], int(pit[i][1]))
+    self.pitches = pit
   def run_pitch_detection(self, afile):
     hop_length = 100
     y, sr = librosa.load(afile)
