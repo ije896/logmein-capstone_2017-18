@@ -8,15 +8,15 @@ from watson_developer_cloud import SpeechToTextV1
 class WordDetector:
     def __init__(self, afile):
         self.time_inc = 2
-        results = self.run_word_detection(afile)
-        self.transcript = results['transcript']
-        self.word_count = results['wc']
-        self.length_of_speech = results['length']
-        self.avg_wpm = results['wpm']
-        self.cum_wpm = results['cum_wpm']
-        self.phrase_wpms = results['phrase_wpms']
-        self.interval_lpm = results['interval_lpm']
-        self.interval_wpm = results['interval_wpm']
+        self.results = self.run_word_detection(afile)
+        self.transcript = self.results['transcript']
+        self.word_count = self.results['wc']
+        self.length_of_speech = self.results['length']
+        self.avg_wpm = self.results['wpm']
+        self.cum_wpm = self.results['cum_wpm']
+        self.phrase_wpms = self.results['phrase_wpms']
+        self.interval_lpm = self.results['interval_lpm']
+        self.interval_wpm = self.results['interval_wpm']
 
 
     def calc_watson_STT(self, afile):
@@ -147,8 +147,8 @@ class WordDetector:
 # wd = WordDetector()
 
 #
-# with open('nonsense_object.pkl', 'wb') as output:
-#     pickle.dump(a.word_detector.data, output, pickle.HIGHEST_PROTOCOL)
+# with open('test.pkl', 'wb') as output:
+#     pickle.dump(a, output, pickle.HIGHEST_PROTOCOL)
 #
 # with open('stt_object.pkl', 'rb') as input:
 #     mine = pickle.load(input)
