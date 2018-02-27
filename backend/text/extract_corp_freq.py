@@ -39,6 +39,9 @@ with args.freq_output as csv:
     [csv.write('{0},{1}\n'.format(key, value)) for key, value in counts.items()]
 
 
+
+
+# TODO: improve performance so that we can generate corpus quickly
 # for each file: create dictionary
 # for word, dictionary[word] = True
 # append to list
