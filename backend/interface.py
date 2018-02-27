@@ -96,3 +96,8 @@ class Interface:
 video_in = "../research/enigma_rkemper_take2.mov"
 i = Interface()
 i.process_filepath(video_in, {'run_all':True})
+
+# Virtual Environment
+	# pip3 install watson-developer-cloud 	# Text and Audio
+	# pip3 install opencv-python		# Video
+	# pip3 install google-cloud		# Video
