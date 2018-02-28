@@ -72,19 +72,19 @@ class VideoAnalysis:
         faces = response.face_annotations
         likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
                            'LIKELY', 'VERY_LIKELY')
-        sent_conf = []
+        sent_conf = {}
 
         for face in faces:
-            sent_conf.append( 'anger: {}'.format(likelihood_name[face.anger_likelihood]))
-            sent_conf.append('joy: {}'.format(likelihood_name[face.joy_likelihood]))
-            sent_conf.append( 'sorrow: {}'.format(likelihood_name[face.sorrow_likelihood]))
-            sent_conf.append( 'surprise: {}'.format(likelihood_name[face.surprise_likelihood]))
+            sent_conf["anger"] = likelihood_name[face.anger_likelihood]
+            sent_conf["joy"] = likelihood_name[face.joy_likelihood]
+            sent_conf["sorrow"] = likelihood_name[face.sorrow_likelihood]
+            sent_conf["surprise"] = likelihood_name[face.surprise_likelihood]
 
-            vertices = ['(x: {}, y: {})'.format(vertex.x, vertex.y)
+            vertices = [(vertex.x,vertex.y)
                         for vertex in face.bounding_poly.vertices]
 
             if len(vertices) != 0:
-                face_bounds = "{}".format(','.join(vertices))
+                face_bounds = vertices
                 self.coords_and_time.append({"face_bounds": face_bounds,"sec": video_time})
                 self.sentiment_and_time.append({"sentiment": sent_conf, "sec": video_time })
         os.remove(file_path)
