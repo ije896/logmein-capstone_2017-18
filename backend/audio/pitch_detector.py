@@ -5,16 +5,6 @@ import matplotlib.pyplot as plt
 import pprint
 import numpy as np
 
-sine = '/Users/iegan/Downloads/440.wav'
-major = '/Users/iegan/Downloads/major.wav'
-cscale = '/Users/iegan/Downloads/c_scale.wav'
-speech_file_short = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/halloween.wav'
-
-speech = '/Users/iegan/Documents/School/F17 Classes/CS189A/logmein-capstone_2017-18/audio_samples/speech_sample.wav'
-
-
-#pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
-#idx = (magnitudes>0)
 class PitchDetector:
   def __init__(self, afile):
     pit = self.run_pitch_detection(afile)
@@ -80,9 +70,6 @@ class PitchDetector:
 
     final = list(zip(onset_times, autocorred))
     return final
-
-  # plt.plot(*zip(*final))
-  # plt.show()
 
   # returns tuple of (time, frequency)
   def pip_track(self, magnitudes, pitches):

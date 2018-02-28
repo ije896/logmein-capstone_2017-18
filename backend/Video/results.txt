@@ -1,0 +1,1534 @@
+
+Video Analysis
+====================
+This video analyzer tracks the users movement using face tracking
+and returns sentiment and face-tracking coordinates along with a timestamp
+as a list or json object.
+-----
+VideoAnalysis.py [<video_source>]
+----
+ESC - exit
+
+{
+  "coords_and_time": [
+    {
+      "face_bounds": "(x: 497, y: 262),(x: 617, y: 262),(x: 617, y: 402),(x: 497, y: 402)",
+      "sec": 0.0
+    },
+    {
+      "face_bounds": "(x: 483, y: 264),(x: 605, y: 264),(x: 605, y: 405),(x: 483, y: 405)",
+      "sec": 1.0
+    },
+    {
+      "face_bounds": "(x: 446, y: 266),(x: 565, y: 266),(x: 565, y: 405),(x: 446, y: 405)",
+      "sec": 2.0
+    },
+    {
+      "face_bounds": "(x: 536, y: 258),(x: 662, y: 258),(x: 662, y: 406),(x: 536, y: 406)",
+      "sec": 3.0
+    },
+    {
+      "face_bounds": "(x: 654, y: 260),(x: 784, y: 260),(x: 784, y: 411),(x: 654, y: 411)",
+      "sec": 4.0
+    },
+    {
+      "face_bounds": "(x: 443, y: 247),(x: 575, y: 247),(x: 575, y: 401),(x: 443, y: 401)",
+      "sec": 5.0
+    },
+    {
+      "face_bounds": "(x: 344, y: 207),(x: 501, y: 207),(x: 501, y: 390),(x: 344, y: 390)",
+      "sec": 6.0
+    },
+    {
+      "face_bounds": "(x: 257, y: 193),(x: 421, y: 193),(x: 421, y: 383),(x: 257, y: 383)",
+      "sec": 7.0
+    },
+    {
+      "face_bounds": "(x: 38, y: 170),(x: 207, y: 170),(x: 207, y: 366),(x: 38, y: 366)",
+      "sec": 8.0
+    },
+    {
+      "face_bounds": "(x: 45, y: 170),(x: 214, y: 170),(x: 214, y: 366),(x: 45, y: 366)",
+      "sec": 9.0
+    },
+    {
+      "face_bounds": "(x: 295, y: 194),(x: 452, y: 194),(x: 452, y: 377),(x: 295, y: 377)",
+      "sec": 10.0
+    },
+    {
+      "face_bounds": "(x: 416, y: 187),(x: 580, y: 187),(x: 580, y: 378),(x: 416, y: 378)",
+      "sec": 11.0
+    },
+    {
+      "face_bounds": "(x: 497, y: 167),(x: 665, y: 167),(x: 665, y: 362),(x: 497, y: 362)",
+      "sec": 12.0
+    },
+    {
+      "face_bounds": "(x: 752, y: 185),(x: 908, y: 185),(x: 908, y: 366),(x: 752, y: 366)",
+      "sec": 13.0
+    },
+    {
+      "face_bounds": "(x: 728, y: 215),(x: 879, y: 215),(x: 879, y: 391),(x: 728, y: 391)",
+      "sec": 14.0
+    },
+    {
+      "face_bounds": "(x: 575, y: 243),(x: 716, y: 243),(x: 716, y: 407),(x: 575, y: 407)",
+      "sec": 15.0
+    },
+    {
+      "face_bounds": "(x: 523, y: 240),(x: 660, y: 240),(x: 660, y: 399),(x: 523, y: 399)",
+      "sec": 16.0
+    },
+    {
+      "face_bounds": "(x: 522, y: 202),(x: 678, y: 202),(x: 678, y: 384),(x: 522, y: 384)",
+      "sec": 17.0
+    },
+    {
+      "face_bounds": "(x: 516, y: 186),(x: 684, y: 186),(x: 684, y: 382),(x: 516, y: 382)",
+      "sec": 18.0
+    },
+    {
+      "face_bounds": "(x: 377, y: 190),(x: 533, y: 190),(x: 533, y: 371),(x: 377, y: 371)",
+      "sec": 19.0
+    },
+    {
+      "face_bounds": "(x: 218, y: 204),(x: 375, y: 204),(x: 375, y: 387),(x: 218, y: 387)",
+      "sec": 20.0
+    },
+    {
+      "face_bounds": "(x: 273, y: 169),(x: 444, y: 169),(x: 444, y: 368),(x: 273, y: 368)",
+      "sec": 21.0
+    },
+    {
+      "face_bounds": "(x: 400, y: 171),(x: 571, y: 171),(x: 571, y: 370),(x: 400, y: 370)",
+      "sec": 22.0
+    },
+    {
+      "face_bounds": "(x: 243, y: 181),(x: 409, y: 181),(x: 409, y: 374),(x: 243, y: 374)",
+      "sec": 23.0
+    },
+    {
+      "face_bounds": "(x: 232, y: 190),(x: 393, y: 190),(x: 393, y: 377),(x: 232, y: 377)",
+      "sec": 24.0
+    },
+    {
+      "face_bounds": "(x: 412, y: 189),(x: 574, y: 189),(x: 574, y: 377),(x: 412, y: 377)",
+      "sec": 25.0
+    },
+    {
+      "face_bounds": "(x: 495, y: 216),(x: 655, y: 216),(x: 655, y: 402),(x: 495, y: 402)",
+      "sec": 26.0
+    },
+    {
+      "face_bounds": "(x: 594, y: 181),(x: 775, y: 181),(x: 775, y: 391),(x: 594, y: 391)",
+      "sec": 27.0
+    },
+    {
+      "face_bounds": "(x: 720, y: 182),(x: 878, y: 182),(x: 878, y: 367),(x: 720, y: 367)",
+      "sec": 28.0
+    },
+    {
+      "face_bounds": "(x: 831, y: 199),(x: 983, y: 199),(x: 983, y: 375),(x: 831, y: 375)",
+      "sec": 29.0
+    },
+    {
+      "face_bounds": "(x: 781, y: 222),(x: 928, y: 222),(x: 928, y: 393),(x: 781, y: 393)",
+      "sec": 30.0
+    },
+    {
+      "face_bounds": "(x: 627, y: 246),(x: 762, y: 246),(x: 762, y: 403),(x: 627, y: 403)",
+      "sec": 31.0
+    },
+    {
+      "face_bounds": "(x: 605, y: 253),(x: 736, y: 253),(x: 736, y: 405),(x: 605, y: 405)",
+      "sec": 32.0
+    },
+    {
+      "face_bounds": "(x: 670, y: 219),(x: 811, y: 219),(x: 811, y: 382),(x: 670, y: 382)",
+      "sec": 33.0
+    },
+    {
+      "face_bounds": "(x: 693, y: 206),(x: 852, y: 206),(x: 852, y: 391),(x: 693, y: 391)",
+      "sec": 34.0
+    },
+    {
+      "face_bounds": "(x: 577, y: 212),(x: 729, y: 212),(x: 729, y: 388),(x: 577, y: 388)",
+      "sec": 35.0
+    },
+    {
+      "face_bounds": "(x: 492, y: 217),(x: 641, y: 217),(x: 641, y: 390),(x: 492, y: 390)",
+      "sec": 36.0
+    },
+    {
+      "face_bounds": "(x: 450, y: 224),(x: 592, y: 224),(x: 592, y: 389),(x: 450, y: 389)",
+      "sec": 37.0
+    },
+    {
+      "face_bounds": "(x: 410, y: 223),(x: 556, y: 223),(x: 556, y: 392),(x: 410, y: 392)",
+      "sec": 38.0
+    },
+    {
+      "face_bounds": "(x: 423, y: 188),(x: 589, y: 188),(x: 589, y: 381),(x: 423, y: 381)",
+      "sec": 39.0
+    },
+    {
+      "face_bounds": "(x: 446, y: 175),(x: 611, y: 175),(x: 611, y: 367),(x: 446, y: 367)",
+      "sec": 40.0
+    },
+    {
+      "face_bounds": "(x: 321, y: 173),(x: 492, y: 173),(x: 492, y: 372),(x: 321, y: 372)",
+      "sec": 41.0
+    },
+    {
+      "face_bounds": "(x: 251, y: 197),(x: 406, y: 197),(x: 406, y: 378),(x: 251, y: 378)",
+      "sec": 42.0
+    },
+    {
+      "face_bounds": "(x: 326, y: 200),(x: 476, y: 200),(x: 476, y: 374),(x: 326, y: 374)",
+      "sec": 43.0
+    },
+    {
+      "face_bounds": "(x: 417, y: 188),(x: 580, y: 188),(x: 580, y: 378),(x: 417, y: 378)",
+      "sec": 44.0
+    },
+    {
+      "face_bounds": "(x: 497, y: 206),(x: 650, y: 206),(x: 650, y: 383),(x: 497, y: 383)",
+      "sec": 45.0
+    },
+    {
+      "face_bounds": "(x: 525, y: 190),(x: 683, y: 190),(x: 683, y: 373),(x: 525, y: 373)",
+      "sec": 46.0
+    },
+    {
+      "face_bounds": "(x: 560, y: 164),(x: 729, y: 164),(x: 729, y: 361),(x: 560, y: 361)",
+      "sec": 47.0
+    },
+    {
+      "face_bounds": "(x: 713, y: 180),(x: 875, y: 180),(x: 875, y: 369),(x: 713, y: 369)",
+      "sec": 48.0
+    },
+    {
+      "face_bounds": "(x: 763, y: 189),(x: 924, y: 189),(x: 924, y: 376),(x: 763, y: 376)",
+      "sec": 49.0
+    },
+    {
+      "face_bounds": "(x: 753, y: 194),(x: 911, y: 194),(x: 911, y: 377),(x: 753, y: 377)",
+      "sec": 50.0
+    },
+    {
+      "face_bounds": "(x: 590, y: 194),(x: 748, y: 194),(x: 748, y: 378),(x: 590, y: 378)",
+      "sec": 51.0
+    },
+    {
+      "face_bounds": "(x: 524, y: 202),(x: 678, y: 202),(x: 678, y: 381),(x: 524, y: 381)",
+      "sec": 52.0
+    },
+    {
+      "face_bounds": "(x: 495, y: 210),(x: 645, y: 210),(x: 645, y: 385),(x: 495, y: 385)",
+      "sec": 53.0
+    },
+    {
+      "face_bounds": "(x: 463, y: 186),(x: 633, y: 186),(x: 633, y: 383),(x: 463, y: 383)",
+      "sec": 54.0
+    },
+    {
+      "face_bounds": "(x: 392, y: 191),(x: 555, y: 191),(x: 555, y: 380),(x: 392, y: 380)",
+      "sec": 55.0
+    },
+    {
+      "face_bounds": "(x: 379, y: 184),(x: 541, y: 184),(x: 541, y: 372),(x: 379, y: 372)",
+      "sec": 56.0
+    },
+    {
+      "face_bounds": "(x: 381, y: 192),(x: 543, y: 192),(x: 543, y: 379),(x: 381, y: 379)",
+      "sec": 57.0
+    },
+    {
+      "face_bounds": "(x: 344, y: 186),(x: 506, y: 186),(x: 506, y: 374),(x: 344, y: 374)",
+      "sec": 58.0
+    },
+    {
+      "face_bounds": "(x: 207, y: 201),(x: 361, y: 201),(x: 361, y: 380),(x: 207, y: 380)",
+      "sec": 59.0
+    },
+    {
+      "face_bounds": "(x: 153, y: 203),(x: 309, y: 203),(x: 309, y: 384),(x: 153, y: 384)",
+      "sec": 60.0
+    },
+    {
+      "face_bounds": "(x: 188, y: 200),(x: 344, y: 200),(x: 344, y: 382),(x: 188, y: 382)",
+      "sec": 61.0
+    },
+    {
+      "face_bounds": "(x: 286, y: 203),(x: 438, y: 203),(x: 438, y: 380),(x: 286, y: 380)",
+      "sec": 62.0
+    },
+    {
+      "face_bounds": "(x: 380, y: 212),(x: 525, y: 212),(x: 525, y: 380),(x: 380, y: 380)",
+      "sec": 63.0
+    },
+    {
+      "face_bounds": "(x: 434, y: 219),(x: 578, y: 219),(x: 578, y: 387),(x: 434, y: 387)",
+      "sec": 64.0
+    },
+    {
+      "face_bounds": "(x: 450, y: 209),(x: 599, y: 209),(x: 599, y: 382),(x: 450, y: 382)",
+      "sec": 65.0
+    },
+    {
+      "face_bounds": "(x: 452, y: 193),(x: 612, y: 193),(x: 612, y: 379),(x: 452, y: 379)",
+      "sec": 66.0
+    },
+    {
+      "face_bounds": "(x: 553, y: 165),(x: 720, y: 165),(x: 720, y: 359),(x: 553, y: 359)",
+      "sec": 67.0
+    },
+    {
+      "face_bounds": "(x: 778, y: 191),(x: 933, y: 191),(x: 933, y: 372),(x: 778, y: 372)",
+      "sec": 68.0
+    },
+    {
+      "face_bounds": "(x: 865, y: 205),(x: 1018, y: 205),(x: 1018, y: 384),(x: 865, y: 384)",
+      "sec": 69.0
+    },
+    {
+      "face_bounds": "(x: 872, y: 208),(x: 1025, y: 208),(x: 1025, y: 385),(x: 872, y: 385)",
+      "sec": 70.0
+    },
+    {
+      "face_bounds": "(x: 869, y: 209),(x: 1021, y: 209),(x: 1021, y: 385),(x: 869, y: 385)",
+      "sec": 71.0
+    },
+    {
+      "face_bounds": "(x: 870, y: 206),(x: 1024, y: 206),(x: 1024, y: 385),(x: 870, y: 385)",
+      "sec": 72.0
+    },
+    {
+      "face_bounds": "(x: 865, y: 194),(x: 1031, y: 194),(x: 1031, y: 387),(x: 865, y: 387)",
+      "sec": 73.0
+    },
+    {
+      "face_bounds": "(x: 860, y: 202),(x: 1021, y: 202),(x: 1021, y: 389),(x: 860, y: 389)",
+      "sec": 74.0
+    },
+    {
+      "face_bounds": "(x: 846, y: 206),(x: 1002, y: 206),(x: 1002, y: 387),(x: 846, y: 387)",
+      "sec": 75.0
+    },
+    {
+      "face_bounds": "(x: 831, y: 208),(x: 984, y: 208),(x: 984, y: 386),(x: 831, y: 386)",
+      "sec": 76.0
+    },
+    {
+      "face_bounds": "(x: 834, y: 204),(x: 988, y: 204),(x: 988, y: 383),(x: 834, y: 383)",
+      "sec": 77.0
+    },
+    {
+      "face_bounds": "(x: 833, y: 201),(x: 989, y: 201),(x: 989, y: 383),(x: 833, y: 383)",
+      "sec": 78.0
+    },
+    {
+      "face_bounds": "(x: 741, y: 202),(x: 896, y: 202),(x: 896, y: 381),(x: 741, y: 381)",
+      "sec": 79.0
+    },
+    {
+      "face_bounds": "(x: 596, y: 194),(x: 755, y: 194),(x: 755, y: 379),(x: 596, y: 379)",
+      "sec": 80.0
+    },
+    {
+      "face_bounds": "(x: 537, y: 207),(x: 691, y: 207),(x: 691, y: 386),(x: 537, y: 386)",
+      "sec": 81.0
+    },
+    {
+      "face_bounds": "(x: 461, y: 152),(x: 640, y: 152),(x: 640, y: 360),(x: 461, y: 360)",
+      "sec": 82.0
+    },
+    {
+      "face_bounds": "(x: 402, y: 162),(x: 578, y: 162),(x: 578, y: 367),(x: 402, y: 367)",
+      "sec": 83.0
+    },
+    {
+      "face_bounds": "(x: 181, y: 167),(x: 353, y: 167),(x: 353, y: 368),(x: 181, y: 368)",
+      "sec": 84.0
+    },
+    {
+      "face_bounds": "(x: 131, y: 185),(x: 298, y: 185),(x: 298, y: 379),(x: 131, y: 379)",
+      "sec": 85.0
+    },
+    {
+      "face_bounds": "(x: 130, y: 186),(x: 295, y: 186),(x: 295, y: 378),(x: 130, y: 378)",
+      "sec": 86.0
+    },
+    {
+      "face_bounds": "(x: 153, y: 184),(x: 316, y: 184),(x: 316, y: 374),(x: 153, y: 374)",
+      "sec": 87.0
+    },
+    {
+      "face_bounds": "(x: 216, y: 177),(x: 384, y: 177),(x: 384, y: 373),(x: 216, y: 373)",
+      "sec": 88.0
+    },
+    {
+      "face_bounds": "(x: 294, y: 218),(x: 441, y: 218),(x: 441, y: 388),(x: 294, y: 388)",
+      "sec": 89.0
+    },
+    {
+      "face_bounds": "(x: 307, y: 182),(x: 481, y: 182),(x: 481, y: 384),(x: 307, y: 384)",
+      "sec": 90.0
+    },
+    {
+      "face_bounds": "(x: 358, y: 181),(x: 519, y: 181),(x: 519, y: 369),(x: 358, y: 369)",
+      "sec": 91.0
+    },
+    {
+      "face_bounds": "(x: 368, y: 191),(x: 527, y: 191),(x: 527, y: 376),(x: 368, y: 376)",
+      "sec": 92.0
+    },
+    {
+      "face_bounds": "(x: 402, y: 198),(x: 556, y: 198),(x: 556, y: 376),(x: 402, y: 376)",
+      "sec": 93.0
+    },
+    {
+      "face_bounds": "(x: 423, y: 184),(x: 583, y: 184),(x: 583, y: 371),(x: 423, y: 371)",
+      "sec": 94.0
+    },
+    {
+      "face_bounds": "(x: 431, y: 132),(x: 613, y: 132),(x: 613, y: 344),(x: 431, y: 344)",
+      "sec": 95.0
+    },
+    {
+      "face_bounds": "(x: 518, y: 126),(x: 710, y: 126),(x: 710, y: 349),(x: 518, y: 349)",
+      "sec": 96.0
+    },
+    {
+      "face_bounds": "(x: 791, y: 152),(x: 969, y: 152),(x: 969, y: 360),(x: 791, y: 360)",
+      "sec": 97.0
+    },
+    {
+      "face_bounds": "(x: 831, y: 154),(x: 1015, y: 154),(x: 1015, y: 367),(x: 831, y: 367)",
+      "sec": 98.0
+    },
+    {
+      "face_bounds": "(x: 803, y: 148),(x: 986, y: 148),(x: 986, y: 361),(x: 803, y: 361)",
+      "sec": 99.0
+    },
+    {
+      "face_bounds": "(x: 659, y: 167),(x: 823, y: 167),(x: 823, y: 358),(x: 659, y: 358)",
+      "sec": 100.0
+    },
+    {
+      "face_bounds": "(x: 551, y: 197),(x: 714, y: 197),(x: 714, y: 386),(x: 551, y: 386)",
+      "sec": 101.0
+    },
+    {
+      "face_bounds": "(x: 526, y: 189),(x: 691, y: 189),(x: 691, y: 381),(x: 526, y: 381)",
+      "sec": 102.0
+    },
+    {
+      "face_bounds": "(x: 577, y: 139),(x: 754, y: 139),(x: 754, y: 345),(x: 577, y: 345)",
+      "sec": 103.0
+    },
+    {
+      "face_bounds": "(x: 584, y: 101),(x: 794, y: 101),(x: 794, y: 346),(x: 584, y: 346)",
+      "sec": 104.0
+    },
+    {
+      "face_bounds": "(x: 398, y: 153),(x: 569, y: 153),(x: 569, y: 351),(x: 398, y: 351)",
+      "sec": 105.0
+    },
+    {
+      "face_bounds": "(x: 258, y: 183),(x: 422, y: 183),(x: 422, y: 374),(x: 258, y: 374)",
+      "sec": 106.0
+    },
+    {
+      "face_bounds": "(x: 247, y: 169),(x: 419, y: 169),(x: 419, y: 369),(x: 247, y: 369)",
+      "sec": 107.0
+    },
+    {
+      "face_bounds": "(x: 258, y: 173),(x: 424, y: 173),(x: 424, y: 366),(x: 258, y: 366)",
+      "sec": 108.0
+    },
+    {
+      "face_bounds": "(x: 242, y: 179),(x: 408, y: 179),(x: 408, y: 372),(x: 242, y: 372)",
+      "sec": 109.0
+    },
+    {
+      "face_bounds": "(x: 306, y: 166),(x: 476, y: 166),(x: 476, y: 365),(x: 306, y: 365)",
+      "sec": 110.0
+    },
+    {
+      "face_bounds": "(x: 314, y: 167),(x: 482, y: 167),(x: 482, y: 363),(x: 314, y: 363)",
+      "sec": 111.0
+    },
+    {
+      "face_bounds": "(x: 315, y: 170),(x: 482, y: 170),(x: 482, y: 365),(x: 315, y: 365)",
+      "sec": 112.0
+    },
+    {
+      "face_bounds": "(x: 303, y: 170),(x: 474, y: 170),(x: 474, y: 368),(x: 303, y: 368)",
+      "sec": 113.0
+    },
+    {
+      "face_bounds": "(x: 244, y: 169),(x: 414, y: 169),(x: 414, y: 366),(x: 244, y: 366)",
+      "sec": 114.0
+    },
+    {
+      "face_bounds": "(x: 345, y: 57),(x: 547, y: 57),(x: 547, y: 291),(x: 345, y: 291)",
+      "sec": 115.0
+    }
+  ],
+  "sentiment_and_time": [
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 0.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 1.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 2.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 3.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 4.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 5.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 6.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 7.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 8.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 9.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: UNLIKELY"
+      ],
+      "sec": 10.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 11.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 12.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 13.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 14.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 15.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 16.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 17.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 18.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 19.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 20.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: POSSIBLE"
+      ],
+      "sec": 21.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 22.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 23.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 24.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: LIKELY"
+      ],
+      "sec": 25.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 26.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 27.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 28.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 29.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 30.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 31.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 32.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 33.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 34.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 35.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 36.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 37.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 38.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: LIKELY"
+      ],
+      "sec": 39.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 40.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_LIKELY"
+      ],
+      "sec": 41.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: UNLIKELY"
+      ],
+      "sec": 42.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 43.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_LIKELY"
+      ],
+      "sec": 44.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 45.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 46.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 47.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 48.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: UNLIKELY"
+      ],
+      "sec": 49.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 50.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 51.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 52.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 53.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: LIKELY"
+      ],
+      "sec": 54.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 55.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 56.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 57.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 58.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 59.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 60.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 61.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 62.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 63.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 64.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 65.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: POSSIBLE"
+      ],
+      "sec": 66.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 67.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 68.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 69.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 70.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 71.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 72.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: POSSIBLE"
+      ],
+      "sec": 73.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 74.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 75.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 76.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 77.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 78.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 79.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: UNLIKELY"
+      ],
+      "sec": 80.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 81.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_LIKELY"
+      ],
+      "sec": 82.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 83.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 84.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 85.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 86.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 87.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 88.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 89.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 90.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 91.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 92.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 93.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 94.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 95.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 96.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 97.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 98.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 99.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 100.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 101.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: POSSIBLE"
+      ],
+      "sec": 102.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 103.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_LIKELY"
+      ],
+      "sec": 104.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 105.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 106.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 107.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 108.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 109.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 110.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 111.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 112.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 113.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 114.0
+    },
+    {
+      "sentiment": [
+        "anger: VERY_UNLIKELY",
+        "joy: VERY_UNLIKELY",
+        "sorrow: VERY_UNLIKELY",
+        "surprise: VERY_UNLIKELY"
+      ],
+      "sec": 115.0
+    }
+  ],
+  "video_src": "Enigma_Rallen.mov",
+  "vide_duration": 116.0,
+  "total_frames": 1502,
+  "fps": 11.966538429260254,
+  "width": 1080,
+  "height": 720,
+  "current_frame": 1388.1184577941895,
+  "google_api_requests": 116,
+  "open_cv_requests": 0
+}

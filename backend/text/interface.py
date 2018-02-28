@@ -12,7 +12,7 @@ from text import watson
 class Interface:
     def __init__(self):
         self.syn_dict = synonyms.Synonyms()
-        self.tts_script = None
+        self.stt_script = None # Text to speech script
         self.act_script = None # Actual script (ex: for a challenge, this is the script we provide the user)
 
     # Make a dictionary of features as booleans
@@ -28,8 +28,8 @@ class Interface:
         r   = False
         art = False
 
-        #self.tts_script = Interface.check_file(fp) # Passing tts as string and not file now
-        self.tts_script = fp
+        #self.stt_script = Interface.check_file(fp) # Passing stt as string and not file now
+        self.stt_script = fp
 
         for (opt, val) in options.items():
             if val:
@@ -53,34 +53,34 @@ class Interface:
 
         json_list = []
         if st:
-            sent_dict = Interface.get_sentiment(self.tts_script)
+            sent_dict = Interface.get_sentiment(self.stt_script)
             json_list.append(sent_dict)
 
         if sy:
-            syn_list  = Interface.get_synonyms(self.tts_script, self.syn_dict)
+            syn_list  = Interface.get_synonyms(self.stt_script, self.syn_dict)
             json_list.append(syn_list)
 
         if r:
-            read_dict = Interface.get_readability(self.tts_script)
+            read_dict = Interface.get_readability(self.stt_script)
             json_list.append(read_dict)
 
         if art:
             art_dict = {}
-            art_dict[art] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.tts".format(challenge_id))
+            art_dict[art] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
             json_list.append(art_dict)
 
         json_object = json.dumps(json_list, indent=2)
         return json_object
 
     @staticmethod
-    def get_sentiment(tts_script):
-        tones = watson.WatsonAnalyzer.get_sentiment(tts_script)
+    def get_sentiment(stt_script):
+        tones = watson.WatsonAnalyzer.get_sentiment(stt_script)
         sentiment = {'sentiment': tones}
         return sentiment
 
     @staticmethod
-    def get_synonyms(tts_script, syn):
-        tfidf = tf_idf.TfIdf.get_tf_idf(tts_script)
+    def get_synonyms(stt_script, syn):
+        tfidf = tf_idf.TfIdf.get_tf_idf(stt_script)
 
         syns = {}
         idf_index = 0
@@ -94,17 +94,17 @@ class Interface:
         return syn_list
 
     @staticmethod
-    def get_readability(tts_script):
-        score = readability.Readability.f_k(tts_script)
-        grade = readability.Readability.f_k_grade_level(tts_script)
+    def get_readability(stt_script):
+        score = readability.Readability.f_k(stt_script)
+        grade = readability.Readability.f_k_grade_level(stt_script)
 
         read_list = {'score': score, 'grade': grade}
         read = {'readability': read_list}
         return read
 
     @staticmethod
-    def get_articulation(trs_path, tts):
-        return articulation.Articulation.get_articulation_str(trs_path, tts)
+    def get_articulation(trs_path, stt):
+        return articulation.Articulation.get_articulation_str(trs_path, stt)
 
     @staticmethod
     def output_readability_tests():
