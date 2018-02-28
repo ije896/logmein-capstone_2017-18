@@ -10,9 +10,12 @@ from audio import Interface as a_int
 from Video import Interface as v_int
 
 # TODO:
-    # - have audio automatically pull credentials.json
+    # - have audio automatically pull credentials.json instead of hardcoding
     # - benchmarking by module
         # - test harness to collect data for relationship btw video length and processing times (prob not quite linear)
+    # - make a process_video.py instead of having the script at the bottom of this interface
+    # (optional) make a "config" txt file that sets audio_out, video_in, and the link to our "scripts" directory (which contains the script for each challengeid)
+    # (optional) set audio_out to be sha2 hash of video - this will help us avoid namespace colissions and also avoid re-running analysis for a previously processed video
 
 class Interface:
 
@@ -115,5 +118,5 @@ i.process_filepath(video_in, {'run_all':True, 'challenge_id':'enigma_tc_transcri
 	# pip3 install watson-developer-cloud 	        # Text and Audio
 	# pip3 install opencv-python		            # Video
     # pip3 install --upgrade google-cloud-vision    # Video
-    # export GOOGLE_APPLICATION_CREDENTIALS=YOUR_LOCAL_DIRECTORY/logmein-capstone_2017-18/Backend/Video/google_api_credentials.json
+    # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/logmein-capstone_2017-18/Backend/Video/google_api_credentials.json
 	# pip3 install google-cloud		                # Video, not positive if needed
