@@ -28,7 +28,7 @@ class VideoAnalysis:
         self.coords_and_time = [] #a tuple of x, y coord, sec
         self.sentiment_and_time = []
         self.video_src = video_src
-        self.vide_duration = None
+        self.video_duration = None
         self.total_frames = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FPS)
         self.width = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -106,18 +106,6 @@ class VideoAnalysis:
 
             else:
                 break
-        self.vide_duration = video_time
+                
+        self.video_duration = video_time
 
-def main():
-    try:
-        video_src = sys.argv[1]
-    except:
-        video_src = 0
-
-    print(__doc__)
-    app = VideoAnalysis(video_src)
-    app.to_json()
-    cv2.destroyAllWindows()
-
-if __name__ == '__main__':
-    main()

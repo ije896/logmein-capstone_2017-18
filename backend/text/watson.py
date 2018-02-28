@@ -14,10 +14,10 @@ class WatsonAnalyzer:
 	@staticmethod
 	def parse_analysis(data):
 		emotion_tone =  data["document_tone"]["tone_categories"][0]["tones"]
-		social_tone =  data["document_tone"]["tone_categories"][1]["tones"]
+		social_tone  =  data["document_tone"]["tone_categories"][1]["tones"]
 
 		emotion = {}
-		social = {}
+		social  = {}
 
 		# Parse items out of
 		for item in emotion_tone:
@@ -49,6 +49,14 @@ class WatsonAnalyzer:
 	@staticmethod
 	def get_sentiment(text):
 		return WatsonAnalyzer.tone_analysis(text)
+
+
+# TODO: VIRTUAL ENVIRONMENT
+
+	# pip3 install watson-developer-cloud 	# audio & text
+	# pip3 install opencv-python			# video
+	# pip3 install google-cloud             # video
+
 
 
 

@@ -5,7 +5,7 @@ import os
 import subprocess
 import pickle
 
-from text import Interface as t_int
+from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 

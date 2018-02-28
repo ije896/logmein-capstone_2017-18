@@ -60,18 +60,18 @@ class Articulation:
     # Takes string instead of list for convenience
     @staticmethod
     def get_wer(trs, tts):
-        trs  =  trs.split()
+        trs = trs.split()
         tts = tts.split()
 
         assert(len(trs) <= (2**32)-1)
         assert(len(tts) <= (2**32)-1)
 
-        return wer(trs, tts)
+        return Articulation.wer(trs, tts)
 
     # Strips excess punctuation, converts to lower in order to offer a "fair" comparison
     @staticmethod
     def normalize(transcript):
-        words = get_words(transcript)
+        words = Articulation.get_words(transcript)
         return ' '.join(words).lower()
 
     # Conveniently reused from our text module
@@ -96,7 +96,7 @@ class Articulation:
     # Returns word error rate divided by # of words in correct transcript (trs)
     @staticmethod
     def articulation(trs, tts):
-        return get_wer(trs, tts) / len(trs.split())
+        return Articulation.get_wer(trs, tts) / len(trs.split())
 
 
     # Disgustingly hacky way to scale our potentially unbounded word-error-rate to something that makes sense
@@ -109,8 +109,8 @@ class Articulation:
     @staticmethod   
     def get_art_as_pct(trs, tts):
         trs_len = len(trs.split())
-        wer = get_wer(trs, tts)
-        art = articulation(trs, tts)
+        wer = Articulation.get_wer(trs, tts)
+        art = Articulation.articulation(trs, tts)
 
 
         if art >= 1:
@@ -120,8 +120,8 @@ class Articulation:
     
     @staticmethod
     def test_get_art_as_pct():
-        assert(get_art_as_pct("this is perfect", "this is perfect") == 100)
-        assert(get_art_as_pct("zeropercent", "so this result should totally give us 0 percent because art > 1") == 0)
+        assert(Articulation.get_art_as_pct("this is perfect", "this is perfect") == 100)
+        assert(Articulation.get_art_as_pct("zeropercent", "so this result should totally give us 0 percent because art > 1") == 0)
 
 
 
@@ -133,18 +133,28 @@ class Articulation:
     # Main execution
     @staticmethod
     def get_articulation(trs_path, tts_path):
-        trs_path = "research/enigma_tc_transcript.txt"
-        tts_path = "research/rkemper_take2_transcript_actual.txt"
-
         with open(trs_path, 'r', encoding='ascii', errors='ignore') as f:
             trs = unicodedata.normalize('NFKD', f.read())
-            trs = normalize(trs)
+            trs = Articulation.normalize(trs)
 
         with open(tts_path) as f:
             tts = f.read()
-            tts = normalize(tts)
+            tts = Articulation.normalize(tts)
 
-        return get_art_as_pct(trs, tts)
+        return Articulation.get_art_as_pct(trs, tts)
+
+
+    # Hacky articulation function that takes tts as a string instead of a filepath
+        # For now, we'll keep trs_path as a path, but might want to change in future (time permitting)
+    @staticmethod
+    def get_articulation_str(trs_path, tts):
+        with open(trs_path, 'r', encoding='ascii', errors='ignore') as f:
+            trs = unicodedata.normalize('NFKD', f.read())
+            trs = Articulation.normalize(trs)
+
+        tts = Articulation.normalize(tts)
+
+        return Articulation.get_art_as_pct(trs, tts)
 
 
 

@@ -13,15 +13,23 @@ class Interface:
         self.pitch_detector = None
 
     def process_filepath(self, afile, options):
-        word = False
+        challenge_id = options['challenge_id']
+
+        if challenge_id is None:
+            print("ERROR: No challenge_id provided. Exiting\n")
+            return -1
+
+        # TODO: decide if challenge_id determines which metrics we provide
+        
+        word  = False
         pitch = False
         for(opt, val) in options.items():
             if val:
                 if opt == 'run_all':
-                    word = True
+                    word  = True
                     pitch = True
                 elif opt == 'word':
-                    word = True
+                    word  = True
                 elif opt == 'pitch':
                     pitch = True
         if word:
