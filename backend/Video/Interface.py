@@ -5,6 +5,14 @@ class Interface:
 
     @staticmethod
     def process_filepath(file_path, options):
+        challenge_id = options['challenge_id']
+
+        if challenge_id is None:
+            print("ERROR: No challenge_id provided. Exiting\n")
+            return -1
+
+        # TODO: decide if challenge_id determines which metrics we provide
+
         sentiment = False
         coords = False
         vid_analysis = VideoAnalysis(file_path)
