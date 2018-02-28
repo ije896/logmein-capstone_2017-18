@@ -21,8 +21,8 @@ class WordDetector:
 
     def calc_watson_STT(self, afile):
         speech_to_text = SpeechToTextV1(
-        username= "4c2c6f6c-d4ef-4458-b479-98bc900320f2",
-        password= "BKNAbarogTNu",
+        username= "ee9e0c82-00ff-4708-867e-4ec0f98b37c3",
+        password= "xiixxXL1va0o",
         x_watson_learning_opt_out=False
         )
         print(json.dumps(speech_to_text.get_model('en-US_BroadbandModel'), indent=2))

@@ -9,6 +9,10 @@ from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 
+# TODO:
+    # - have audio automatically pull credentials.json
+    # - benchmarking by module
+        # - test harness to collect data for relationship btw video length and processing times (prob not quite linear)
 
 class Interface:
 
@@ -60,7 +64,7 @@ class Interface:
 
         stt = a.get_transcript()
         #print("text_to_speech: {}".format(stt))
-        # print("audio_dict: {}\n".format(a_dict))
+        print("audio_dict: {}\n".format(a_dict))
 
         t_json = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
         t_dict = json.loads(t_json)
