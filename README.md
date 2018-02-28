@@ -55,6 +55,7 @@ As always, remember to have your virtual env up before installing any of these d
 pip3 install --upgrade google-cloud-vision
 pip3 install opencv-python
 export GOOGLE_APPLICATION_CREDENTIALS=YOUR_LOCAL_DIRECTORY/logmein-capstone_2017-18/backend/Video/google_api_credentials.json
+
 ```
 
 ### Want more insight about what's happening here?
