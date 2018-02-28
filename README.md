@@ -42,20 +42,20 @@ video_obj = VideoAnalysis(<video_path>)
 video_details = video_obj.to_json()
 ```
 
-In addition, a HeatMap class has also been defined to visualize the extracted coordinates obtained using the VideoAnalaysis module. Some dummy data has been placed for demonstration, but that could be easily changed by instantiating a new HeatMap object and passing to it coordinates from a video you analyzed. You can use it in this way:
-
-```
-coords = video_obj.get_coords()
-heatmap = HeatMap(coords)
-heatmap.plot()
-```
-
 ### Dependencies
 The video module uses the following python packages which might need to be installed in your virtual environment:
 * OpenCV 3.3
 * Numpy
-* Matplot
-* Google Vision API (ask me for the api auth if you want to test it)
+* Google Vision API.
+
+#### Installing dependencies
+
+As always, remember to have your virtual env up before installing any of these dependencies.
+```
+pip3 install --upgrade google-cloud-vision
+pip3 install opencv-python
+export GOOGLE_APPLICATION_CREDENTIALS=YOUR_LOCAL_DIRECTORY/logmein-capstone_2017-18/Video/google_api_credentials.json
+```
 
 ### Want more insight about what's happening here?
 
