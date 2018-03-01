@@ -5,8 +5,9 @@ import re           # to get video duration, bitrate
 
 class Process_Video:
 
-    def __init__(self, video_path):
+    def __init__(self, video_path, audio_path):
         self.video_in    = video_path
+        self.audio_out   = audio_path
         self.debug_level = 2
 
         self.duration = self.get_vid_duration() # secs
@@ -19,7 +20,7 @@ class Process_Video:
 
     def analyze_video(self):
         self.results_iface = Interface()
-        return self.results_iface.process_filepath(video_in, {'run_all':True, 'challenge_id':'enigma_tc_transcript.txt'})
+        return self.results_iface.process_filepath({'run_all':True, 'challenge_id':'enigma_tc_transcript.txt', 'video_in':self.video_in, 'audio_out':self.audio_out})
 
     # Returns duration of video in seconds by parsing an ffmpeg cmd
     def get_vid_duration(self):
@@ -91,12 +92,17 @@ class Process_Video:
 
 if __name__ == "__main__":
 
-    video_in = "../research/enigma_rkemper_take2.mov"
-    pv = Process_Video(video_in)
+    video_in  = "../research/Enigma_Rallen.mov"
+    audio_out = "./backend_audio_out.wav"
+    pv = Process_Video(video_in, audio_out)
 
     print("\n\nBENCHMARKS\n\n")
     print("decouple: {}s, audio: {}s, video: {}s, text: {}s".format(pv.get_decouple_bench(), pv.get_audio_bench(), pv.get_video_bench(), pv.get_text_bench()))
 
+
+# TEST VIDEOS
+    # "../research/enigma_rkemper_take2.mov"
+    # "../research/Enigma_Rallen.mov"
 
 # VIRTUAL ENVIRONMENT
     # pip3 install watson-developer-cloud           # Text and Audio

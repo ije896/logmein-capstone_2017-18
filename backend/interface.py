@@ -26,8 +26,6 @@ import time
 class Interface:
 
     def __init__(self):
-        self.audio_out = "./backend_audio_out.wav"
-
         self.benchmark = True
         # benchmarks in seconds
         self.decouple_bench = -1
@@ -35,20 +33,31 @@ class Interface:
         self.audio_bench    = -1
         self.text_bench     = -1
 
-    def process_filepath(self, fp, options):
-        challenge_id = options['challenge_id']
-        stt_path = "../research/{}.stt".format(challenge_id)
+    def process_filepath(self, options):
+        challenge_id = options.get('challenge_id', None)
+        video_in     = options.get('video_in',     None)
+        audio_out    = options.get('audio_out',    None)
 
         if challenge_id is None:
             print("ERROR: No challenge_id provided. Exiting\n")
             return -1
+
+        if video_in is None:
+            print("ERROR: No video_in provided. Exiting\n")
+            return -1
+
+        if audio_out is None:
+            print("ERROR: No audio_out provided. Exiting\n")
+            return -1
+
+        stt_path = "../research/{}.stt".format(challenge_id)
 
         text  = False
         audio = False
         video = False
 
         start = time.time()
-        decouple_status = Interface.decouple_av(fp)
+        decouple_status = Interface.decouple_av(video_in, audio_out)
         self.decouple_bench = time.time() - start
 
         if (decouple_status[0] == -1):
@@ -75,7 +84,7 @@ class Interface:
         v = v_int()
 
         start = time.time()
-        a.process_filepath(self.audio_out, {'run_all': True, 'challenge_id': challenge_id})
+        a.process_filepath(audio_out, {'run_all': True, 'challenge_id': challenge_id})
         self.audio_bench = time.time() - start
 
         a_json = a.to_json()
@@ -103,13 +112,15 @@ class Interface:
 
 
         print("\n\n Final results dictionary: \n\n {} \n".format(final_dict))
+
+        if (benchmark):
+            print()
         return final_dict
 
     @staticmethod
     # Returns tuple of (status, audioout [path]) ex: no file => (-1, ""), there is a file => (0, "./backend_audio_out.wav")
     # Status = -1 if shit got fucked, 0 otherwise
-    def decouple_av(videoin):
-        audio_out = "./backend_audio_out.wav"
+    def decouple_av(videoin, audio_out):
         if Interface.check_fp(videoin) == -1:
             return (-1, "")
 
