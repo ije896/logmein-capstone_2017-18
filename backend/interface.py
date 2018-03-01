@@ -13,9 +13,11 @@ from Video import Interface as v_int
     # - have audio automatically pull credentials.json instead of hardcoding
     # - benchmarking by module
         # - test harness to collect data for relationship btw video length and processing times (prob not quite linear)
-    # - make a process_video.py instead of having the script at the bottom of this interface
+    # - make a process_video.py instead of having the script at the bottom of this interface [consider exporting google credentials automatically too]
     # (optional) make a "config" txt file that sets audio_out, video_in, and the link to our "scripts" directory (which contains the script for each challengeid)
-    # (optional) set audio_out to be sha2 hash of video - this will help us avoid namespace colissions and also avoid re-running analysis for a previously processed video
+    # (optional) set audio_out to be sha2 hash of video - this will help us avoid namespace collisions and also avoid re-running analysis for a previously processed video
+    # (super optional) save audio results (cache them) so we don't need to wait 20 minutes every time we do a full run-through
+
 
 class Interface:
 
@@ -68,8 +70,7 @@ class Interface:
         #print("text_to_speech: {}".format(stt))
         print("audio_dict: {}\n".format(a_dict))
 
-        t_json = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
-        t_dict = json.loads(t_json)
+        t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
         print("text_dict: {}\n".format(t_dict))
 
         v_dict = v.process_filepath(fp, {'run_all': True, 'challenge_id': challenge_id})
@@ -83,9 +84,6 @@ class Interface:
 
         print("\n\n Final results dictionary: \n\n {} \n".format(final_dict))
         return final_dict
-
-
-        
 
     @staticmethod
     # Returns tuple of (status, audioout [path]) ex: no file => (-1, ""), there is a file => (0, "./backend_audio_out.wav")
@@ -108,14 +106,3 @@ class Interface:
         else:
             print("Warning: Either file is missing or is not readable")
             return -1
-
-video_in = "../research/enigma_rkemper_take2.mov"
-i = Interface()
-i.process_filepath(video_in, {'run_all':True, 'challenge_id':'enigma_tc_transcript.txt'})
-
-# Virtual Environment
-	# pip3 install watson-developer-cloud 	        # Text and Audio
-	# pip3 install opencv-python		            # Video
-    # pip3 install --upgrade google-cloud-vision    # Video
-    # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/logmein-capstone_2017-18/Backend/Video/google_api_credentials.json
-	# pip3 install google-cloud		                # Video, not positive if needed
