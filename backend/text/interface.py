@@ -55,18 +55,22 @@ class Interface:
         results = {}
         if st:
             sent_dict = Interface.get_sentiment(self.stt_script)
-            results['sentiment'] = sent_dict
+            print("\nsent_dict = {}\n".format(sent_dict))
+            results['sentiment'] = sent_dict['sentiment']
 
         if sy:
             syn_list  = Interface.get_synonyms(self.stt_script, self.syn_dict)
-            results['synonyms'] = syn_list
+            print("\nsyn_list = {}\n".format(syn_list))
+            results['synonyms'] = syn_list['synonyms']
 
         if r:
             read_dict = Interface.get_readability(self.stt_script)
-            results['readability'] = read_dict
+            print("\nread_dict = {}\n".format(read_dict))
+            results['readability'] = read_dict['readability']
 
         if art:
-            results['articulation'] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
+            art_pct = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
+            results['articulation'] = art_pct
 
         return results
 
