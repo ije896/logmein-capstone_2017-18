@@ -20,15 +20,25 @@ class Interface:
         challenge_id = options['challenge_id']
 
         if challenge_id is None:
-            print("ERROR: No challenge_id provided. Exiting\n")
-            return -1
+            challenge_id_err = "ERROR: No challenge_id provided. Exiting\n"
+            print(challenge_id)
+            return challenge_id
+
+        # TODO: cut out the middle man and just use trs as string instead of trs_path (requires changing articulation.py)
+        trs_path  = "../research/{}".format(challenge_id)
+        trs_check = Interface.check_file(trs_path)
+
+        if (not trs_check[0]):
+            trs_check_err = "ERROR: no script stored in path {}".format(trs_path)
+            print(trs_check_errrs)
+            return trs_check_err
+
 
         st  = False
         sy  = False
         r   = False
         art = False
 
-        #self.stt_script = Interface.check_file(fp) # Passing stt as string and not file now
         self.stt_script = fp
 
         for (opt, val) in options.items():
@@ -69,8 +79,10 @@ class Interface:
             results['readability'] = read_dict['readability']
 
         if art:
-            art_pct = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
+            art_pct = Interface.get_articulation(trs_path, self.stt_script)
             results['articulation'] = art_pct
+
+            print("\nart_pct: {}\n".format(art_pct))
 
         return results
 
@@ -112,6 +124,7 @@ class Interface:
     def output_readability_tests():
         readability.Readability.output_tests()
 
+    # Returns (True, data_in_file) on success, or (False, None) on failure
     @staticmethod
     def check_file(fp):
         #Try to open it as a file
@@ -119,6 +132,6 @@ class Interface:
             file_object = open(fp, 'r')
             text = file_object.read()
             file_object.close()
-            return text
+            return (True, text)
         except:
-            return fp
+            return (False, None)
