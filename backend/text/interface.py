@@ -12,7 +12,7 @@ from text import watson
 class Interface:
     def __init__(self):
         self.syn_dict = synonyms.Synonyms()
-        self.stt_script = None # Text to speech script
+        self.stt_script = None # Speech to text script
         self.act_script = None # Actual script (ex: for a challenge, this is the script we provide the user)
 
     # Make a dictionary of features as booleans
@@ -32,6 +32,7 @@ class Interface:
         self.stt_script = fp
 
         for (opt, val) in options.items():
+            print("(opt, val) = ({}, {})".format(opt, val))
             if val:
                 if opt == "run_all":
                     st  = True
@@ -66,7 +67,7 @@ class Interface:
 
         if art:
             art_dict = {}
-            art_dict[art] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
+            art_dict['articulation'] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
             json_list.append(art_dict)
 
         json_object = json.dumps(json_list, indent=2)
