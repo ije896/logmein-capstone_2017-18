@@ -9,6 +9,10 @@ from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 
+# Benchmarking
+
+import time
+
 # TODO:
     # - have audio automatically pull credentials.json instead of hardcoding
     # - benchmarking by module
@@ -22,8 +26,14 @@ from Video import Interface as v_int
 class Interface:
 
     def __init__(self):
-        print("__init__ [backend]: STUB")
         self.audio_out = "./backend_audio_out.wav"
+
+        self.benchmark = True
+        # benchmarks in seconds
+        self.decouple_bench = -1
+        self.video_bench    = -1
+        self.audio_bench    = -1
+        self.text_bench     = -1
 
     def process_filepath(self, fp, options):
         challenge_id = options['challenge_id']
@@ -37,7 +47,9 @@ class Interface:
         audio = False
         video = False
 
+        start = time.time()
         decouple_status = Interface.decouple_av(fp)
+        self.decouple_bench = time.time() - start
 
         if (decouple_status[0] == -1):
             print("ERROR: no video file at given filepath. Exiting\n")
@@ -62,18 +74,26 @@ class Interface:
         a = a_int()
         v = v_int()
 
+        start = time.time()
         a.process_filepath(self.audio_out, {'run_all': True, 'challenge_id': challenge_id})
+        self.audio_bench = time.time() - start
+
         a_json = a.to_json()
         a_dict = json.loads(a_json)
 
         stt = a.get_transcript()
-        #print("text_to_speech: {}".format(stt))
         print("audio_dict: {}\n".format(a_dict))
 
+        start = time.time()
         t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
+        self.text_bench = time.time() - start
+
         print("text_dict: {}\n".format(t_dict))
 
+        start = time.time()
         v_dict = v.process_filepath(fp, {'run_all': True, 'challenge_id': challenge_id})
+        self.video_bench = time.time() - start
+
         print("video_dict: {}\n".format(v_dict))
 
         final_dict = {}
