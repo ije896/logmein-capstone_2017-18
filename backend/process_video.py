@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 from interface import Interface
 import subprocess
-import re
-
-
+import re           # to get video duration, bitrate
 
 class Process_Video:
 
@@ -91,17 +89,20 @@ class Process_Video:
         if (self.debug_level >= debug_flag):
             print(debug_message)
 
-    # VIRTUAL ENVIRONMENT
-        # pip3 install watson-developer-cloud           # Text and Audio
-        # pip3 install opencv-python                    # Video
-        # pip3 install --upgrade google-cloud-vision    # Video
-        # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/logmein-capstone_2017-18/Backend/Video/google_api_credentials.json
-        # pip3 install google-cloud                     # Video, not positive if needed (probably not)
-
 if __name__ == "__main__":
 
     video_in = "../research/enigma_rkemper_take2.mov"
     pv = Process_Video(video_in)
 
     print("\n\nBENCHMARKS\n\n")
-    print("decouple: {}s, audio: {}s, video: {}s, text: {}s".format(pv.get_decouple_bench, pv.get_audio_bench, pv.get_video_bench, pv.get_text_bench))
+    print("decouple: {}s, audio: {}s, video: {}s, text: {}s".format(pv.get_decouple_bench(), pv.get_audio_bench(), pv.get_video_bench(), pv.get_text_bench()))
+
+
+# VIRTUAL ENVIRONMENT
+    # pip3 install watson-developer-cloud           # Text and Audio
+    # pip3 install opencv-python                    # Video
+    # pip3 install --upgrade google-cloud-vision    # Video
+    # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/logmein-capstone_2017-18/Backend/Video/google_api_credentials.json
+    # pip3 install google-cloud                     # Video, not positive if needed (probably not)
+
+
