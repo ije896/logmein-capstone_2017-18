@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     print("\n\nBENCHMARKS\n\n")
     print("decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(pv.get_decouple_bench(), pv.get_audio_bench(), pv.get_video_bench(), pv.get_text_bench()))
-    print("duration: {}s, bitrate: {} kb/s\n".format(self.duration, self.bitrate))
+    print("duration: {}s, bitrate: {} kb/s\n".format(pv.duration, pv.bitrate))
 
 
 # TEST VIDEOS
