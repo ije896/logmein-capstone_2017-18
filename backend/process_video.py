@@ -20,7 +20,7 @@ class Process_Video:
 
     def analyze_video(self):
         self.results_iface = Interface()
-        return self.results_iface.process_filepath({'run_all':True, 'challenge_id':'enigma_tc_transcript.txt', 'video_in':self.video_in, 'audio_out':self.audio_out})
+        return self.results_iface.process_filepath({'run_all':True, 'challenge_id':'sally_sells_twister.txt', 'video_in':self.video_in, 'audio_out':self.audio_out})
 
     # Returns duration of video in seconds by parsing an ffmpeg cmd
     def get_vid_duration(self):
@@ -33,7 +33,7 @@ class Process_Video:
         result = subprocess.getoutput(av_cmd)
 
 
-        duration_regex = re.compile('\d\d:\d\d:\d\d.\d\d')
+        duration_regex = re.compile('\d\d:\d\d:\d\d\.\d\d')
         duration = duration_regex.findall(result)[0] # grab the duration part, which should only have 1 result
         self.debug("get_vid_duration(): result = {}".format(duration), 1)
 
@@ -57,11 +57,14 @@ class Process_Video:
 
         result = subprocess.getoutput(av_cmd)
 
-        bitrate_str = re.findall('bitrate: \d*', result)[0] # grab the bitrate part, which should only have 1 result
+        bitrate_str = re.findall('bitrate: \d+', result)[0] # grab the bitrate part, which should only have 1 result
 
         self.debug("get_vid_bitrate(): bitrate_str = {}\n".format(bitrate_str), 2)
 
-        bitrate = int(re.findall('\d\d\d\d', bitrate_str)[0])
+        bitrate_match = re.findall('\d+', bitrate_str)
+        if (len(bitrate_match) <= 0):
+            print("\nWARNING: could not match on bitrate.\n")
+        bitrate = int(bitrate_match[0])
 
         kbps_regex = re.compile('kb')
         kbps = kbps_regex.findall(result)
@@ -92,13 +95,31 @@ class Process_Video:
 
 if __name__ == "__main__":
 
-    video_in  = "../research/Enigma_Rallen.mov"
+    video_in  = "../research/sally_sells_twister.mp4"
     audio_out = "./backend_audio_out.wav"
     pv = Process_Video(video_in, audio_out)
 
     print("\n\nBENCHMARKS\n\n")
-    print("decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(pv.get_decouple_bench(), pv.get_audio_bench(), pv.get_video_bench(), pv.get_text_bench()))
-    print("duration: {}s, bitrate: {} kb/s\n".format(pv.duration, pv.bitrate))
+    dc = pv.get_decouple_bench()
+    au = pv.get_audio_bench   ()
+    vi = pv.get_video_bench   ()
+    tx = pv.get_text_bench    ()
+    
+    tot = dc + au + vi + tx
+    # threaded metric: Assume we run audio/video at same time (text is too fast to benefit from async threading)
+    if (au > vi):
+        threaded = tot - vi     
+    else:
+        threaded = tot - au
+    dur = pv.duration
+    bit = pv.bitrate
+
+    dur_bit = dur * bit
+
+    print("decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(dc, au, vi, tx))
+    print("total_time: {}s, hypothetical_av_threaded_time: {}s".format(tot, threaded))
+    print("duration: {}s, bitrate: {} kb/s\n".format(dur, bit))
+    print("tot_time / duration: {}, tot_time / (duration * bitrate): {}, thread_time / duration: {}, thread_time / (duration * bitrate): {}".format(tot/dur, tot/dur_bit, threaded/dur, threaded/dur_bit))
 
 
 # TEST VIDEOS
