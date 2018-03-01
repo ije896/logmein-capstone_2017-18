@@ -52,26 +52,23 @@ class Interface:
                     print("ERROR: Options are {run_all, sentiment, synonyms, readability, art}")
                     exit(1)
 
-        json_list = []
+        results = {}
         if st:
             sent_dict = Interface.get_sentiment(self.stt_script)
-            json_list.append(sent_dict)
+            results['sentiment'] = sent_dict
 
         if sy:
             syn_list  = Interface.get_synonyms(self.stt_script, self.syn_dict)
-            json_list.append(syn_list)
+            results['synonyms'] = syn_list
 
         if r:
             read_dict = Interface.get_readability(self.stt_script)
-            json_list.append(read_dict)
+            results['readability'] = read_dict
 
         if art:
-            art_dict = {}
-            art_dict['articulation'] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
-            json_list.append(art_dict)
+            results['articulation'] = Interface.get_articulation("../research/{}".format(challenge_id), "../research/{}.stt".format(challenge_id))
 
-        json_object = json.dumps(json_list, indent=2)
-        return json_object
+        return results
 
     @staticmethod
     def get_sentiment(stt_script):
