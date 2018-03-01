@@ -31,7 +31,6 @@ class Interface:
             print("ERROR: No challenge_id provided. Exiting\n")
             return -1
 
-
         text  = False
         audio = False
         video = False
@@ -40,7 +39,7 @@ class Interface:
 
         if (decouple_status[0] == -1):
             print("ERROR: no video file at given filepath. Exiting\n")
-            return decouple_status
+            return decouple_status[0]
 
         # # No errors, so proceed w/ interfaces
         # for (opt, val) in options.items():
@@ -89,12 +88,12 @@ class Interface:
         
 
     @staticmethod
-    # Returns tuple of (status, audioout [path]) ex: no file => (-1, "./backend_audio_out.wav"), there is a file => (0, "./backend_audio_out.wav")
+    # Returns tuple of (status, audioout [path]) ex: no file => (-1, ""), there is a file => (0, "./backend_audio_out.wav")
     # Status = -1 if shit got fucked, 0 otherwise
     def decouple_av(videoin):
         audio_out = "./backend_audio_out.wav"
         if Interface.check_fp(videoin) == -1:
-            return (-1, audio_out)
+            return (-1, "")
 
 
         av_cmd = "ffmpeg -i " + videoin + " -ab 160k -ac 2 -ar 44100 -vn -y " + audio_out
