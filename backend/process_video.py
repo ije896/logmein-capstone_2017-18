@@ -14,7 +14,7 @@ class Process_Video:
         self.bitrate  = self.get_vid_bitrate () # kbps 
 
         self.results_iface = None # Will get initialized in following analyze_video() call
-        self.results  = self.analyze_video()
+        self.results       = self.analyze_video() # analyze_video() => result as dictionary
 
         self.outp_bench = True # Determines if we print out benchmarks
 

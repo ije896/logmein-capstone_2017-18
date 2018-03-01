@@ -9,9 +9,9 @@ from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 
-# Benchmarking
 
-import time
+import time # Benchmarking
+
 
 # TODO:
     # - have audio automatically pull credentials.json instead of hardcoding
@@ -100,7 +100,7 @@ class Interface:
         print("text_dict: {}\n".format(t_dict))
 
         start = time.time()
-        v_dict = v.process_filepath(fp, {'run_all': True, 'challenge_id': challenge_id})
+        v_dict = v.process_filepath(video_in, {'run_all': True, 'challenge_id': challenge_id})
         self.video_bench = time.time() - start
 
         print("video_dict: {}\n".format(v_dict))
@@ -113,8 +113,6 @@ class Interface:
 
         print("\n\n Final results dictionary: \n\n {} \n".format(final_dict))
 
-        if (benchmark):
-            print()
         return final_dict
 
     @staticmethod
