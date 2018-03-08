@@ -1,9 +1,9 @@
-# Presentation Helper
-This repository contains the work done for the UCSB course, CS189A-B, for the company LogMeIn
+# Stage Presence
+(The backend for the application)
 
-- A visual and aural analyzer that helps you improve your presentation skills
-- Web app (thin-client) that records you using your webcam and gives you scores and gives you recommendations for your presentation
+Stage Presence is a web-app that helps you to refine your presentation skills.
 
+Below are descriptions of the backend modules and their functionality.
 
 # MODULES
 
@@ -65,14 +65,27 @@ You can dive in into some OpenCV documentation [here](https://opencv-python-tutr
 Or read though some basic Python-OpenCV tuts [here](https://pythonprogramming.net/haar-cascade-face-eye-detection-python-opencv-tutorial/?completed=/mog-background-reduction-python-opencv-tutorial/).
 
 ## Audio Module
-
-The Audio module analyzes the speech to extract the following features:
+This module analyzes the audio from the speech to extract the following features:
 - Words per minute (over the entire speech, and during continuous phrases)
+- Letters per minute
+- Pitch of speaker over time (autocorrelation approximation)
+- The STT transcript of the speech
 
-Future:
-- Volume tracking of speaker
-- Pitch tracking of speaker
+You can use this module by instantiating an audio interface object and passing it a filepath to a .wav file:
 
-Dependencies:
+```
+from audio import interface
+a = interface.Interface()
+a.process_filepath(filepath, options)
+```
+
+The object 'a' will then contain a dictionary of the features decribed above.
+
+### Dependencies:
+The following Python libraries are required for the Audio module
 * Watson Developer Cloud
 * Librosa
+* SciPy
+* NumPy
+* MatPlotLib
+
