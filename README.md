@@ -10,6 +10,10 @@ From the perspective of the frontend (flask server), the only communication poin
 
 The backend automatically performs A/V decoupling so it can send a pure audio file to the audio module.
 
+## Performance
+
+To improve performance, we split off the independent processing branches. We spawn a video thread (which blocks once it starts waiting for I/O from Google's Cloud Vision API), while the main branch of execution analyzes the audio and then passes the results to text.
+
 
 # MODULES
 
@@ -43,6 +47,7 @@ text_json = text_obj.process_filepath(file, options)
 
 ### Dependencies
 * Watson Tone Analyzer API
+* Requires STT transcript from audio (not a venv dependency, but still a dependency)
 
 ## Video Module
 
@@ -76,15 +81,27 @@ You can dive in into some OpenCV documentation [here](https://opencv-python-tutr
 Or read though some basic Python-OpenCV tuts [here](https://pythonprogramming.net/haar-cascade-face-eye-detection-python-opencv-tutorial/?completed=/mog-background-reduction-python-opencv-tutorial/).
 
 ## Audio Module
-
-The Audio module analyzes the speech to extract the following features:
+This module analyzes the audio from the speech to extract the following features:
 - Words per minute (over the entire speech, and during continuous phrases)
-- Pitch tracking of speaker
+- Letters per minute
+- Pitch of speaker over time (autocorrelation approximation)
+- The STT transcript of the speech
 
-Future:
-- Volume tracking of speaker
+You can use this module by instantiating an audio interface object and passing it a filepath to a .wav file:
 
-Dependencies:
+```
+from audio import interface
+a = interface.Interface()
+a.process_filepath(filepath, options)
+```
+
+The object 'a' will then contain a dictionary of the features decribed above.
+
+### Dependencies:
+The following Python libraries are required for the Audio module
 * Watson Developer Cloud
 * Librosa
-* Numpy
+* SciPy
+* NumPy
+* MatPlotLib
+
