@@ -2,6 +2,8 @@
 from interface import Interface
 import subprocess
 import re           # to get video duration, bitrate
+import time # Benchmarking
+
 
 class Process_Video:
 
@@ -97,30 +99,35 @@ if __name__ == "__main__":
 
     video_in  = "../research/sally_sells_twister.mp4"
     audio_out = "./backend_audio_out.wav"
+    start = time.time()
     pv = Process_Video(video_in, audio_out)
+    end   = time.time()
 
     print("\n\nBENCHMARKS\n\n")
     dc = pv.get_decouple_bench()
     au = pv.get_audio_bench   ()
     vi = pv.get_video_bench   ()
     tx = pv.get_text_bench    ()
+
+    # TODO: fix metrics now that we're parallelizing (numbers are wrong)
     
+    tot_time = end - start
     tot = dc + au + vi + tx
     # threaded metric: Assume we run audio/video at same time (text is too fast to benefit from async threading)
-    if (au > vi):
+    if (au + tx > vi):
         threaded = tot - vi     
     else:
-        threaded = tot - au
+        threaded = tot - au - tx
     dur = pv.duration
     bit = pv.bitrate
 
     dur_bit = dur * bit
 
-    print("decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(dc, au, vi, tx))
-    print("total_time: {}s, hypothetical_av_threaded_time: {}s".format(tot, threaded))
+    print("[modules times] decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(dc, au, vi, tx))
+    print("[module times] total linear time: {}s \t [parallel times] (actual time): {}s \t TIME SAVED:{}\n".format(tot, tot_time, tot-tot_time))
     print("duration: {}s, bitrate: {} kb/s\n".format(dur, bit))
-    print("tot_time / duration: {}, tot_time / (duration * bitrate): {}, thread_time / duration: {}, thread_time / (duration * bitrate): {}".format(tot/dur, tot/dur_bit, threaded/dur, threaded/dur_bit))
-
+    # TODO: change next line to use "tot_time" instead of "tot"
+    print("[LINEAR] tot_time / duration: {}, tot_time / (duration * bitrate): {}, [ACTUAL] thread_time / duration: {}, thread_time / (duration * bitrate): {}\n".format(tot/dur, tot/dur_bit, tot_time/dur, tot_time/dur_bit))
 
 # TEST VIDEOS
     # "../research/enigma_rkemper_take2.mov"

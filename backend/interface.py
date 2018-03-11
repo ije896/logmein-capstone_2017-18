@@ -9,6 +9,10 @@ from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 
+# Parallelization
+from multiprocessing import Pool
+from functools import partial
+import threading
 
 import time # Benchmarking
 
@@ -32,6 +36,47 @@ class Interface:
         self.video_bench    = -1
         self.audio_bench    = -1
         self.text_bench     = -1
+
+    # Could decouple here as well, but need to figure out how to handle errors (how to asynchronously exit from video process if decouple fails)
+        # TODO: decouple here when we figure out error handling
+    # Returns (audio_dict, text_dict) on success
+    def proc_audio_text(self, a, t, audio_out, challenge_id):
+        print("[debug] proc_audio_text({}, {}, {})\n".format(a, audio_out, challenge_id))
+        start = time.time()
+        print("[debug] proc_audio_text: starting\n")
+        a.process_filepath(audio_out, {'run_all': True, 'challenge_id': challenge_id})
+        print("[debug] proc_audio_text: ending\n")
+        self.audio_bench = time.time() - start
+
+        a_json = a.to_json()
+        a_dict = json.loads(a_json)
+
+        stt = a.get_transcript()
+        print("audio_dict: {}\n".format(a_dict))
+
+        start = time.time()
+        t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
+        self.text_bench = time.time() - start
+
+        print("text_dict: {}\n".format(t_dict))
+
+        return (a_dict, t_dict)
+
+    # Returns video_dict on success
+    def proc_video(self, v, video_in, challenge_id, v_dict_retval):
+        print("[debug] proc_video({}, {}, {})\n".format(v, video_in, challenge_id))
+        start = time.time()
+        print("[debug] proc_video: starting\n")
+        v_dict = v.process_filepath(video_in, {'run_all': True, 'challenge_id': challenge_id})
+        print("[debug] proc_video: ending\n")
+        self.video_bench = time.time() - start
+
+        print("video_dict: {}\n".format(v_dict))
+
+        v_dict_retval = v_dict # ugly hack b/c join doesn't return
+        return v_dict
+
+
 
     def process_filepath(self, options):
         challenge_id = options.get('challenge_id', None)
@@ -79,31 +124,25 @@ class Interface:
         #         elif opt = 'video':
         #             video = True
 
+        # TODO: use Pool p to multiprocess a/v decouple and q
+        p = Pool(processes=2)
+
+
         t = t_int()
         a = a_int()
         v = v_int()
 
-        start = time.time()
-        a.process_filepath(audio_out, {'run_all': True, 'challenge_id': challenge_id})
-        self.audio_bench = time.time() - start
+        v_dict = {}
 
-        a_json = a.to_json()
-        a_dict = json.loads(a_json)
+        # Spawn a video thread and run audio_text in the main execution thread
+        #audio_text = threading.Thread(target=self.proc_audio_text, args=(a, t, audio_out, challenge_id))
+        video      = threading.Thread(target=self.proc_video, args=(v, video_in, challenge_id, v_dict))
 
-        stt = a.get_transcript()
-        print("audio_dict: {}\n".format(a_dict))
+        #audio_text.start()
+        video.start()
+        a_dict, t_dict = self.proc_audio_text(a, t, audio_out, challenge_id)
 
-        start = time.time()
-        t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
-        self.text_bench = time.time() - start
-
-        print("text_dict: {}\n".format(t_dict))
-
-        start = time.time()
-        v_dict = v.process_filepath(video_in, {'run_all': True, 'challenge_id': challenge_id})
-        self.video_bench = time.time() - start
-
-        print("video_dict: {}\n".format(v_dict))
+        video.join()
 
         final_dict = {}
         final_dict['audio'] = a_dict
