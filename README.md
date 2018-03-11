@@ -4,7 +4,7 @@ This repository contains the work done for the UCSB course, CS189A-B, for the co
 - A visual and aural analyzer that helps you improve your presentation skills
 - Web app (thin-client) that takes in a filepath for a video recorded by the user and returns an analysis including scores for each metric as well as recommendations based on the values of the metrics
 
-# Integrated Backend
+# INTEGRATED BACKEND
 
 From the perspective of the frontend (flask server), the only communication point is the backend's interface (backend/interface.py). The interface takes in a filepath and challenge_id, and returns a dictionary of all the results. If the backend/process_video.py script is used, it automatically records benchmarks for processing time and stores them in backend/results/\[SHA1 hash of input video file].
 
