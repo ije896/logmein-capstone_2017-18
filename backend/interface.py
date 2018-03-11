@@ -9,23 +9,21 @@ from text  import Interface as t_int
 from audio import Interface as a_int
 from Video import Interface as v_int
 
+
 # Parallelization
-from multiprocessing import Pool
-from functools import partial
 import threading
 
-import time # Benchmarking
+
+# Benchmarking
+import time 
 
 
 # TODO:
     # - have audio automatically pull credentials.json instead of hardcoding
     # - benchmarking by module
         # - test harness to collect data for relationship btw video length and processing times (prob not quite linear)
-    # - make a process_video.py instead of having the script at the bottom of this interface [consider exporting google credentials automatically too]
     # (optional) make a "config" txt file that sets audio_out, video_in, and the link to our "scripts" directory (which contains the script for each challengeid)
-    # (optional) set audio_out to be sha2 hash of video - this will help us avoid namespace collisions and also avoid re-running analysis for a previously processed video
-    # (super optional) save audio results (cache them) so we don't need to wait 20 minutes every time we do a full run-through
-
+    # (optional) set audio_out to be sha1 hash of video - this will help us avoid namespace collisions and also avoid re-running analysis for a previously processed video
 
 class Interface:
 
@@ -37,8 +35,7 @@ class Interface:
         self.audio_bench    = -1
         self.text_bench     = -1
 
-    # Could decouple here as well, but need to figure out how to handle errors (how to asynchronously exit from video process if decouple fails)
-        # TODO: decouple here when we figure out error handling
+
     # Returns (audio_dict, text_dict) on success
     def proc_audio_text(self, a, t, audio_out, challenge_id):
         print("[debug] proc_audio_text({}, {}, {})\n".format(a, audio_out, challenge_id))
