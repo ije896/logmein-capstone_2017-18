@@ -2,7 +2,7 @@
 from interface import Interface
 import subprocess
 import re           # to get video duration, bitrate
-import time # Benchmarking
+import time         # Benchmarking
 
 
 class Process_Video:
@@ -11,6 +11,7 @@ class Process_Video:
         self.video_in    = video_path
         self.audio_out   = audio_path
         self.debug_level = 2
+        self.log_results = True
 
         self.duration = self.get_vid_duration() # secs
         self.bitrate  = self.get_vid_bitrate () # kbps 
@@ -111,23 +112,54 @@ if __name__ == "__main__":
 
     # TODO: fix metrics now that we're parallelizing (numbers are wrong)
     
-    tot_time = end - start
-    tot = dc + au + vi + tx
+    real_time = end - start
+    linear_time = dc + au + vi + tx
     # threaded metric: Assume we run audio/video at same time (text is too fast to benefit from async threading)
     if (au + tx > vi):
-        threaded = tot - vi     
+        threaded = linear_time - vi     
     else:
-        threaded = tot - au - tx
+        threaded = linear_time - au - tx
     dur = pv.duration
     bit = pv.bitrate
 
     dur_bit = dur * bit
 
-    print("[modules times] decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(dc, au, vi, tx))
-    print("[module times] total linear time: {}s \t [parallel times] (actual time): {}s \t TIME SAVED:{}\n".format(tot, tot_time, tot-tot_time))
-    print("duration: {}s, bitrate: {} kb/s\n".format(dur, bit))
-    # TODO: change next line to use "tot_time" instead of "tot"
-    print("[LINEAR] tot_time / duration: {}, tot_time / (duration * bitrate): {}, [ACTUAL] thread_time / duration: {}, thread_time / (duration * bitrate): {}\n".format(tot/dur, tot/dur_bit, tot_time/dur, tot_time/dur_bit))
+    outp = "\n\n"
+
+    outp += "[modules times] decouple: {}s, audio: {}s, video: {}s, text: {}s\n".format(dc, au, vi, tx)
+    outp += "[module times] total linear time: {}s \t [parallel times] (actual time): {}s \t TIME SAVED:{}\n".format(linear_time, real_time, linear_time-real_time)
+    outp += ("duration: {}s, bitrate: {} kb/s\n".format(dur, bit))
+
+    outp += ("[ACTUAL] thread_time / duration: {}, thread_time / (duration * bitrate): {}, [LINEAR] real_time / duration: {}, real_time / (duration * bitrate): {}\n".format(real_time/dur, real_time/dur_bit, linear_time/dur, linear_time/dur_bit))
+
+    print(outp)
+
+    if (pv.log_results):
+        import hashlib
+
+        sha1 = hashlib.sha1()
+
+        BUF_SIZE = 65536  # read stuff in 64kb chunks!
+        with open(video_in, 'rb') as f:
+            while True:
+                data = f.read(BUF_SIZE)
+                if not data:
+                    break
+                sha1.update(data)
+
+        vid_hash = sha1.hexdigest()
+
+        print("\nVideo={} => SHA1={}\n".format(video_in, vid_hash))
+
+        vid_results_path = "./results/{}".format(vid_hash)        
+        # write results to video_path
+
+        print("\n[process_video] about to write results to {}\n".format(vid_results_path))
+        # TODO: check if file exists, if it doesn't open in write mode, if it does open in append mode
+        with open (vid_results_path, 'a') as report:
+            report.write(outp)
+            print("\n done writing \n")
+
 
 # TEST VIDEOS
     # "../research/enigma_rkemper_take2.mov"
