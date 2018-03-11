@@ -8,15 +8,15 @@ from watson_developer_cloud import SpeechToTextV1
 class WordDetector:
     def __init__(self, afile):
         self.time_inc = 2
-        self.results = self.run_word_detection(afile)
-        self.transcript = self.results['transcript']
-        self.word_count = self.results['wc']
+        self.results          = self.run_word_detection(afile)
+        self.transcript       = self.results['transcript']
+        self.word_count       = self.results['wc']
         self.length_of_speech = self.results['length']
-        self.avg_wpm = self.results['wpm']
-        self.cum_wpm = self.results['cum_wpm']
-        self.phrase_wpms = self.results['phrase_wpms']
-        self.interval_lpm = self.results['interval_lpm']
-        self.interval_wpm = self.results['interval_wpm']
+        self.avg_wpm          = self.results['wpm']
+        self.cum_wpm          = self.results['cum_wpm']
+        self.phrase_wpms      = self.results['phrase_wpms']
+        self.interval_lpm     = self.results['interval_lpm']
+        self.interval_wpm     = self.results['interval_wpm']
 
 
     def calc_watson_STT(self, afile):
@@ -115,11 +115,10 @@ class WordDetector:
         avg = 0
         for phrase in timestamps:
             phrase_len = self.calc_length(phrase) #phrase in mins
-            wc = self.calc_word_count(phrase)
-            wpm = self.calc_avg_wpm(phrase_len, wc)
-            time = self.calc_phrase_time(phrase)
-            tup = (time, wpm)
-            phrase_wpms.append(tup)
+            wc         = self.calc_word_count(phrase)
+            wpm        = self.calc_avg_wpm(phrase_len, wc)
+            time       = self.calc_phrase_time(phrase)
+            phrase_wpms.append((time, wpm))
         return phrase_wpms
 
     def calc_transcript(self, timestamps):
@@ -132,15 +131,15 @@ class WordDetector:
         final = {}
         stt = self.calc_watson_STT(sfile)
         timestamps, simple_ts = self.scrub_json(stt)
-        wc = self.calc_word_count(simple_ts)
-        final['transcript'] = self.calc_transcript(simple_ts)
-        final['wc'] = wc
-        final['length'] = self.calc_length(simple_ts)
-        final['wpm'] = self.calc_avg_wpm(final['length'], wc)
-        final['cum_wpm'] = self.calc_cum_wpm(simple_ts, 2)
+        wc  = self.calc_word_count(simple_ts)
+        final['transcript']   = self.calc_transcript(simple_ts)
+        final['wc']           = wc
+        final['length']       = self.calc_length(simple_ts)
+        final['wpm']          = self.calc_avg_wpm(final['length'], wc)
+        final['cum_wpm']      = self.calc_cum_wpm(simple_ts, 2)
         final['interval_wpm'] = self.calc_interval_wpm(simple_ts, 2)
         final['interval_lpm'] = self.calc_interval_lpm(simple_ts, 2)
-        final['phrase_wpms'] = self.calc_phrase_wpms(timestamps)
+        final['phrase_wpms']  = self.calc_phrase_wpms(timestamps)
         return final
 
 

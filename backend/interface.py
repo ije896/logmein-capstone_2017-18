@@ -124,10 +124,6 @@ class Interface:
         #         elif opt = 'video':
         #             video = True
 
-        # TODO: use Pool p to multiprocess a/v decouple and q
-        p = Pool(processes=2)
-
-
         t = t_int()
         a = a_int()
         v = v_int()
@@ -135,10 +131,8 @@ class Interface:
         v_dict = {}
 
         # Spawn a video thread and run audio_text in the main execution thread
-        #audio_text = threading.Thread(target=self.proc_audio_text, args=(a, t, audio_out, challenge_id))
         video      = threading.Thread(target=self.proc_video, args=(v, video_in, challenge_id, v_dict))
 
-        #audio_text.start()
         video.start()
         a_dict, t_dict = self.proc_audio_text(a, t, audio_out, challenge_id)
 

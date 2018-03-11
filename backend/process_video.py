@@ -155,7 +155,6 @@ if __name__ == "__main__":
         # write results to video_path
 
         print("\n[process_video] about to write results to {}\n".format(vid_results_path))
-        # TODO: check if file exists, if it doesn't open in write mode, if it does open in append mode
         with open (vid_results_path, 'a') as report:
             report.write(outp)
             print("\n done writing \n")

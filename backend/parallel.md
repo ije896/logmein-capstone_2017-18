@@ -4,4 +4,4 @@ THREADING    - audio->text, video
 
 TODO:
     - fix audio interval error (short videos crash)
-    - multiprocess decouple and convert
+    - multiprocess decouple and convert to mp4 if necessary
