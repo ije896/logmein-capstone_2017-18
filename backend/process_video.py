@@ -3,6 +3,7 @@ from interface import Interface
 import subprocess
 import re           # to get video duration, bitrate
 import time         # Benchmarking
+import os
 
 
 class Process_Video:
@@ -155,6 +156,7 @@ if __name__ == "__main__":
         # write results to video_path
 
         print("\n[process_video] about to write results to {}\n".format(vid_results_path))
+        os.makedirs(os.path.dirname(vid_results_path), exist_ok=True) # Will make dir if it doesn't exist, won't complain if it does exist
         with open (vid_results_path, 'a') as report:
             report.write(outp)
             print("\n done writing \n")
