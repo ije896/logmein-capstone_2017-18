@@ -1,0 +1,18 @@
+Capstone backend vision
+
+	- DATA PROCESSING / BENCHMARKING / API KEY MANAGEMENT
+
+		- load in creds for each w/ config file (pointers to json files), track minute usage
+			- todo: confirm what our rate limits ore on video/text side
+		
+		- sha256 file tracking, run analysis on unanalyzed
+
+		- (opt) compile benchmarks on set, see if our theory that duration * bitrate is the biggest predictor of processing time across diff videos
+		
+		- demo research: get data on tongue twister vids, targeting <30 second processing time
+
+	- A/V THREADING
+		- (should cut times by ~80% for tongue twister)
+
+	- create readme for zach (not that much to say really)
+

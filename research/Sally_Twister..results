@@ -46,9 +46,9 @@ video_dict: {'sentiment_and_time': [{'sentiment': {'anger': 'VERY_UNLIKELY', 'jo
 BENCHMARKS
 
 
-decouple: 0.05671882629394531s, audio: 32.351603984832764s, video: 39.57964611053467s, text: 0.7164151668548584s
+decouple: 0.10750484466552734s, audio: 34.414259910583496s, video: 37.15961813926697s, text: 0.7568440437316895s
 
-total_time: 72.70438408851624s, hypothetical_av_threaded_time: 33.12473797798157s
+total_time: 72.43822693824768s, hypothetical_av_threaded_time: 38.023967027664185s
 duration: 19.34s, bitrate: 332 kb/s
 
-tot_time / duration: 3.759275288961543, tot_time / (duration * bitrate): 0.01132311834024561, thread_time / duration: 1.712757909926658, thread_time / (duration * bitrate): 0.00515890936724897
+tot_time / duration: 3.745513285328215, tot_time / (duration * bitrate): 0.011281666522072936, thread_time / duration: 1.9660789569629877, thread_time / (duration * bitrate): 0.0059219245691656255

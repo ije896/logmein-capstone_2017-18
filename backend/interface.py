@@ -10,18 +10,20 @@ from audio import Interface as a_int
 from Video import Interface as v_int
 
 
-import time # Benchmarking
+# Parallelization
+import threading
+
+
+# Benchmarking
+import time 
 
 
 # TODO:
     # - have audio automatically pull credentials.json instead of hardcoding
     # - benchmarking by module
         # - test harness to collect data for relationship btw video length and processing times (prob not quite linear)
-    # - make a process_video.py instead of having the script at the bottom of this interface [consider exporting google credentials automatically too]
     # (optional) make a "config" txt file that sets audio_out, video_in, and the link to our "scripts" directory (which contains the script for each challengeid)
-    # (optional) set audio_out to be sha2 hash of video - this will help us avoid namespace collisions and also avoid re-running analysis for a previously processed video
-    # (super optional) save audio results (cache them) so we don't need to wait 20 minutes every time we do a full run-through
-
+    # (optional) set audio_out to be sha1 hash of video - this will help us avoid namespace collisions and also avoid re-running analysis for a previously processed video
 
 class Interface:
 
@@ -32,6 +34,46 @@ class Interface:
         self.video_bench    = -1
         self.audio_bench    = -1
         self.text_bench     = -1
+
+
+    # Returns (audio_dict, text_dict) on success
+    def proc_audio_text(self, a, t, audio_out, challenge_id):
+        print("[debug] proc_audio_text({}, {}, {})\n".format(a, audio_out, challenge_id))
+        start = time.time()
+        print("[debug] proc_audio_text: starting\n")
+        a.process_filepath(audio_out, {'run_all': True, 'challenge_id': challenge_id})
+        print("[debug] proc_audio_text: ending\n")
+        self.audio_bench = time.time() - start
+
+        a_json = a.to_json()
+        a_dict = json.loads(a_json)
+
+        stt = a.get_transcript()
+        print("audio_dict: {}\n".format(a_dict))
+
+        start = time.time()
+        t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
+        self.text_bench = time.time() - start
+
+        print("text_dict: {}\n".format(t_dict))
+
+        return (a_dict, t_dict)
+
+    # Returns video_dict on success
+    def proc_video(self, v, video_in, challenge_id, v_dict_retval):
+        print("[debug] proc_video({}, {}, {})\n".format(v, video_in, challenge_id))
+        start = time.time()
+        print("[debug] proc_video: starting\n")
+        v_dict = v.process_filepath(video_in, {'run_all': True, 'challenge_id': challenge_id})
+        print("[debug] proc_video: ending\n")
+        self.video_bench = time.time() - start
+
+        print("video_dict: {}\n".format(v_dict))
+
+        v_dict_retval = v_dict # ugly hack b/c join doesn't return
+        return v_dict
+
+
 
     def process_filepath(self, options):
         challenge_id = options.get('challenge_id', None)
@@ -83,27 +125,15 @@ class Interface:
         a = a_int()
         v = v_int()
 
-        start = time.time()
-        a.process_filepath(audio_out, {'run_all': True, 'challenge_id': challenge_id})
-        self.audio_bench = time.time() - start
+        v_dict = {}
 
-        a_json = a.to_json()
-        a_dict = json.loads(a_json)
+        # Spawn a video thread and run audio_text in the main execution thread
+        video      = threading.Thread(target=self.proc_video, args=(v, video_in, challenge_id, v_dict))
 
-        stt = a.get_transcript()
-        print("audio_dict: {}\n".format(a_dict))
+        video.start()
+        a_dict, t_dict = self.proc_audio_text(a, t, audio_out, challenge_id)
 
-        start = time.time()
-        t_dict = t.process_filepath(stt, {'run_all': True, 'challenge_id': challenge_id})
-        self.text_bench = time.time() - start
-
-        print("text_dict: {}\n".format(t_dict))
-
-        start = time.time()
-        v_dict = v.process_filepath(video_in, {'run_all': True, 'challenge_id': challenge_id})
-        self.video_bench = time.time() - start
-
-        print("video_dict: {}\n".format(v_dict))
+        video.join()
 
         final_dict = {}
         final_dict['audio'] = a_dict
