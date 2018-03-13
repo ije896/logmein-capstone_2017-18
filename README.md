@@ -13,10 +13,6 @@ The backend automatically performs A/V decoupling so it can send a pure audio fi
 ## Performance
 
 To improve performance, we split off the independent processing branches. We spawn a video thread (which blocks once it starts waiting for I/O from Google's Cloud Vision API), while the main branch of execution analyzes the audio and then passes the results to text.
-=======
-Stage Presence is a web-app that helps you to refine your presentation skills.
-
-Below are descriptions of the backend modules and their functionality.
 
 # MODULES
 
