@@ -1,5 +1,5 @@
-# Presentation Helper
-This repository contains the work done for the UCSB course, CS189A-B, for the company LogMeIn
+# Stage Presence
+(The backend for the application)
 
 - A visual and aural analyzer that helps you improve your presentation skills
 - Web app (thin-client) that takes in a filepath for a video recorded by the user and returns an analysis including scores for each metric as well as recommendations based on the values of the metrics
@@ -13,7 +13,10 @@ The backend automatically performs A/V decoupling so it can send a pure audio fi
 ## Performance
 
 To improve performance, we split off the independent processing branches. We spawn a video thread (which blocks once it starts waiting for I/O from Google's Cloud Vision API), while the main branch of execution analyzes the audio and then passes the results to text.
+=======
+Stage Presence is a web-app that helps you to refine your presentation skills.
 
+Below are descriptions of the backend modules and their functionality.
 
 # MODULES
 
