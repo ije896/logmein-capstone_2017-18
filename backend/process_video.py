@@ -14,11 +14,11 @@ class Process_Video:
         self.debug_level = 2
         self.log_results = True
 
-        self.duration = self.get_vid_duration() # secs
-        self.bitrate  = self.get_vid_bitrate () # kbps 
+        self.duration = self.get_vid_duration()   # secs
+        self.bitrate  = self.get_vid_bitrate ()   # kbps 
 
-        self.results_iface = None # Will get initialized in following analyze_video() call
-        self.results       = self.analyze_video() # analyze_video() => result as dictionary
+        self.results_iface = None                 # Will get initialized following analyze_video() call
+        self.results       = self.analyze_video() # analyze_video(self) => result as dictionary
 
         self.outp_bench = True # Determines if we print out benchmarks
 
