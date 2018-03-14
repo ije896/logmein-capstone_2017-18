@@ -35,6 +35,8 @@ class Interface:
         self.audio_bench    = -1
         self.text_bench     = -1
 
+        self.v_dict = {}    # store v_dict in self so when we spawn our proc_video thread, we can return result by mutating self.v_dict 
+
 
     # Returns (audio_dict, text_dict) on success
     def proc_audio_text(self, a, t, audio_out, challenge_id):
@@ -60,7 +62,7 @@ class Interface:
         return (a_dict, t_dict)
 
     # Returns video_dict on success
-    def proc_video(self, v, video_in, challenge_id, v_dict_retval):
+    def proc_video(self, v, video_in, challenge_id):
         print("[debug] proc_video({}, {}, {})\n".format(v, video_in, challenge_id))
         start = time.time()
         print("[debug] proc_video: starting\n")
@@ -70,7 +72,7 @@ class Interface:
 
         print("video_dict: {}\n".format(v_dict))
 
-        v_dict_retval = v_dict # ugly hack b/c join doesn't return
+        self.v_dict = v_dict
         return v_dict
 
 
@@ -125,10 +127,8 @@ class Interface:
         a = a_int()
         v = v_int()
 
-        v_dict = {}
-
         # Spawn a video thread and run audio_text in the main execution thread
-        video      = threading.Thread(target=self.proc_video, args=(v, video_in, challenge_id, v_dict))
+        video      = threading.Thread(target=self.proc_video, args=(v, video_in, challenge_id))
 
         video.start()
         a_dict, t_dict = self.proc_audio_text(a, t, audio_out, challenge_id)
@@ -137,7 +137,7 @@ class Interface:
 
         final_dict = {}
         final_dict['audio'] = a_dict
-        final_dict['video'] = v_dict
+        final_dict['video'] = self.v_dict
         final_dict['text' ] = t_dict
 
 
