@@ -103,4 +103,3 @@ The following Python libraries are required for the Audio module
 * SciPy
 * NumPy
 * MatPlotLib
-
