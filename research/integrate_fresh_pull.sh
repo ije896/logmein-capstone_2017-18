@@ -2,7 +2,7 @@
 # Copies paths const => uses sed to fix import differences between backend and frontend => optionally runs router.py
 
 echo "Copying paths_CONST.py over\n"
-cp $HOME/CS189AB/paths_CONST.py /Users/user/CS189AB/stagepresence/web-services/backend/paths_CONST.py
+cp $HOME/CS189AB/paths_CONST.py $HOME/CS189AB/stagepresence/web-services/backend/paths_CONST.py
 cd $HOME/CS189AB/stagepresence/web-services/backend/
 echo "Done copying paths_CONST.py over\n"
 pwd
