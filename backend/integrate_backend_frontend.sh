@@ -2,9 +2,9 @@
 
     # replace imports in interface.py
 
-    sed -i'.bak' 's/from text  import Interface as t_int/from backend.text  import interface as t_int/'   Interface.py
+    sed -i'.bak' 's/from text  import Interface as t_int/from backend.text  import interface as t_int/' Interface.py
     sed -i'.bak' 's/from audio import Interface as a_int/from backend.audio import interface as a_int/' Interface.py
-    sed -i'.bak' 's/from Video import Interface as t_int/from backend.Video import Interface as t_int/'  Interface.py
+    sed -i'.bak' 's/from Video import Interface as v_int/from backend.Video import Interface as v_int/' Interface.py
 
     # replace text initialization in interface.py
 
