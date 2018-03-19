@@ -21,21 +21,21 @@ from google.cloud import vision
 from google.cloud.vision import types
 
 face_cascade = cv2.CascadeClassifier('./Video/haarcascade_frontalface_default.xml')
-client = vision.ImageAnnotatorClient()
+client       = vision.ImageAnnotatorClient()
 
 class VideoAnalysis:
     def __init__(self, video_src):
-        self.coords_and_time = [] #a tuple of x, y coord, sec
-        self.sentiment_and_time = []
-        self.video_src = video_src
-        self.video_duration = None
-        self.total_frames = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
-        self.fps = cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FPS)
-        self.width = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_WIDTH))
-        self.height = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_HEIGHT))
-        self.current_frame = 0
+        self.coords_and_time     = []  #a tuple of x, y coord, sec
+        self.sentiment_and_time  = []
+        self.video_src           = video_src
+        self.video_duration      = None
+        self.total_frames        = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_COUNT))
+        self.fps                 = cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FPS)
+        self.width               = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_WIDTH))
+        self.height              = int(cv2.VideoCapture(video_src).get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.current_frame       = 0
         self.google_api_requests = 0
-        self.open_cv_requests = 0
+        self.open_cv_requests    = 0
         self.run();
 
     def get_coords(self):
@@ -69,15 +69,15 @@ class VideoAnalysis:
         image = types.Image(content=content)
 
         response = client.face_detection(image=image)
-        faces = response.face_annotations
+        faces    = response.face_annotations
         likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
                            'LIKELY', 'VERY_LIKELY')
         sent_conf = {}
 
         for face in faces:
-            sent_conf["anger"] = likelihood_name[face.anger_likelihood]
-            sent_conf["joy"] = likelihood_name[face.joy_likelihood]
-            sent_conf["sorrow"] = likelihood_name[face.sorrow_likelihood]
+            sent_conf["anger"]    = likelihood_name[face.anger_likelihood]
+            sent_conf["joy"]      = likelihood_name[face.joy_likelihood]
+            sent_conf["sorrow"]   = likelihood_name[face.sorrow_likelihood]
             sent_conf["surprise"] = likelihood_name[face.surprise_likelihood]
 
             vertices = [(vertex.x,vertex.y)
